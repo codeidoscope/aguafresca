@@ -34,11 +34,11 @@ public class MockServerConnection implements ServerConnection {
 
     }
 
-    public String sentResponse() {
+    String sentResponse() {
         return message;
     }
 
-    public void setInput(String input) {
+    void setInput(String input) {
         this.input = input;
     }
 }

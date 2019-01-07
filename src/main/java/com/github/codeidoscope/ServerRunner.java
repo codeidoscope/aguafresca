@@ -1,5 +1,8 @@
 package com.github.codeidoscope;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class ServerRunner {
     private ServerConnection serverConnection;
     ServerRunner(ServerConnection serverConnection) {
@@ -7,7 +10,7 @@ public class ServerRunner {
     }
 
     void startServer(int portNumber) {
-        System.out.println("Connection made to port " + portNumber);
+        ServerLogger.serverLogger.log(Level.INFO, "Connection made to port " + portNumber);
         serverConnection.createServerSocket(portNumber);
         serverConnection.listenForClientConnection();
         try {

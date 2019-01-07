@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.logging.Level;
 
 class TCPServerConnection implements ServerConnection {
     private ServerSocket serverSocket;
@@ -51,7 +52,7 @@ class TCPServerConnection implements ServerConnection {
 
     @Override
     public void closeConnection() {
-        System.out.println("Closing connection - Bye! \uD83D\uDC4B");
+        ServerLogger.serverLogger.log(Level.INFO, "Closing connection - Bye! \uD83D\uDC4B");
         try {
             serverSocket.close();
         } catch (IOException e) {
