@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 
 public class ServerRunner {
     private ServerConnection serverConnection;
+    private boolean serverShouldContinueRunning = true;
     ServerRunner(ServerConnection serverConnection) {
         this.serverConnection = serverConnection;
     }
@@ -12,23 +13,24 @@ public class ServerRunner {
     void startServer(int portNumber) {
         ServerLogger.serverLogger.log(Level.INFO, "Connection made to port " + portNumber);
         serverConnection.createServerSocket(portNumber);
-        serverConnection.listenForClientConnection();
-        try {
-            String url = parseRequest(serverConnection.getInput());
+        do {
+            serverConnection.listenForClientConnection();
+            try {
+                String url = parseRequest(serverConnection.getInput());
+                String response;
+                if (url.equals("/valid")) {
+                    response = "HTTP/1.1 200 OK\r\n";
+                } else {
+                    response = "HTTP/1.1 404 Not Found\r\n";
+                }
 
-            String response;
-            if (url.equals("/valid")) {
-                response = "HTTP/1.1 200 OK\r\n";
-            } else {
-                response = "HTTP/1.1 404 Not Found\r\n";
+                serverConnection.sendOutput(response);
+
+                serverConnection.closeClientConnection();
+            } catch (RuntimeException e) {
+                System.err.println(e);
             }
-
-            serverConnection.sendOutput(response);
-
-            serverConnection.closeClientConnection();
-        } catch (RuntimeException e) {
-            System.err.println(e);
-        }
+        } while (serverShouldContinueRunning);
         serverConnection.closeConnection();
     }
 
