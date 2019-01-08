@@ -9,7 +9,7 @@ class ServerRunnerTest {
     @Test
     void testGetValidResourceReturnsCorrectResponse() {
         String input = "GET /valid HTTP/1.1\n\r\n";
-        String output = "HTTP/1.1 200 OK\r\n";
+        String output = "HTTP/1.1 200 OK\n\r\nHello World";
         MockServerConnection serverConnection = new MockServerConnection();
         serverConnection.setInput(input);
         ServerRunner serverRunner = new ServerRunner(serverConnection);

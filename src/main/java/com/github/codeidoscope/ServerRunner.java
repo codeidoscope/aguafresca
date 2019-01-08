@@ -1,28 +1,21 @@
 package com.github.codeidoscope;
 
 import java.util.logging.Level;
-import java.util.logging.Logger;
 
-public class ServerRunner {
+class ServerRunner {
+    private final RequestParser requestParser = new RequestParser();
+    private final Router router = new Router();
     private ServerConnection serverConnection;
-    private boolean serverShouldContinueRunning = true;
     ServerRunner(ServerConnection serverConnection) {
         this.serverConnection = serverConnection;
     }
 
     void startServer(int portNumber) {
         ServerLogger.serverLogger.log(Level.INFO, "Connection made to port " + portNumber);
-        serverConnection.createServerSocket(portNumber);
-        do {
-            serverConnection.listenForClientConnection();
+        serverConnection.createServerSocket(portNumber);         serverConnection.listenForClientConnection();
             try {
-                String url = parseRequest(serverConnection.getInput());
-                String response;
-                if (url.equals("/valid")) {
-                    response = "HTTP/1.1 200 OK\r\n";
-                } else {
-                    response = "HTTP/1.1 404 Not Found\r\n";
-                }
+                Request request = requestParser.parse(serverConnection.getInput());
+                String response = router.route(request);
 
                 serverConnection.sendOutput(response);
 
@@ -30,13 +23,7 @@ public class ServerRunner {
             } catch (RuntimeException e) {
                 System.err.println(e);
             }
-        } while (serverShouldContinueRunning);
         serverConnection.closeConnection();
-    }
-
-    private String parseRequest(String input) {
-        var headers = input.split("\n\r\n")[0].split(" ");
-        return headers[1];
     }
 
 }
