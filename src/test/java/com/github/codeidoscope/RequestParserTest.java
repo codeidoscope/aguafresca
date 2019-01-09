@@ -32,4 +32,14 @@ class RequestParserTest {
         assertEquals(parsedRequest.getPath(), "/a_path");
         assertEquals(parsedRequest.getProtocol(), "HTTP/1.0");
     }
+
+    @Test
+    void constructsAPathFromAFilePathAndDirectoryPath() {
+        String directoryPath = System.getProperty("user.dir");
+        String filePath = "/foo.text";
+        String expectedConstructedPath = directoryPath + filePath;
+        String constructedPath = requestParser.constructFilePath(filePath);
+
+        assertEquals(constructedPath, expectedConstructedPath);
+    }
 }
