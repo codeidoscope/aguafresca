@@ -12,7 +12,8 @@ class ServerRunner {
 
     void startServer(int portNumber) {
         ServerLogger.serverLogger.log(Level.INFO, "Connection made to port " + portNumber);
-        serverConnection.createServerSocket(portNumber);         serverConnection.listenForClientConnection();
+        serverConnection.createServerSocket(portNumber);
+        serverConnection.listenForClientConnection();
             try {
                 Request request = requestParser.parse(serverConnection.getInput());
                 String response = router.route(request);
