@@ -20,6 +20,8 @@ class RouterTest {
 
         Response expectedResponse = new Response("HTTP/1.1 200 OK", "Hello World");
 
-        assertEquals(router.route(request), expectedResponse);
+        assertEquals(router.route(request).getHeaders(), expectedResponse.getHeaders());
+        assertEquals(router.route(request).getBody(), expectedResponse.getBody());
+
     }
 }
