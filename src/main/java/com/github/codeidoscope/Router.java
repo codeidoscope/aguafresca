@@ -1,18 +1,14 @@
 package com.github.codeidoscope;
 
 import java.util.HashMap;
+import java.util.Map;
 
 class Router {
-    private HashMap<Route, RouteHandler> routes = new HashMap<>();
+    private Map<Route, RouteHandler> routes = new HashMap<>();
 
     Response route(Request request) {
-        Response response = null;
-        for(Route route : routes.keySet()) {
-            if(route.getPath().equals(request.getPath())){
-                response = routes.get(route).respondToRequest(request);
-            }
-        }
-        return response;
+        Route route = new Route(request.getPath(), request.getMethod());
+        return routes.get(route).respondToRequest(request);
     }
 
     void setHandlerForRoute(Route route, RouteHandler handler) {
