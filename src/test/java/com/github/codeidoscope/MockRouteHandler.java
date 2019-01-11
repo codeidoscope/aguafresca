@@ -7,9 +7,10 @@ import java.nio.file.Paths;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-class FooTextFileHandler implements RouteHandler {
+class MockRouteHandler implements RouteHandler {
     @Override
     public Response respondToRequest(Request request) {
+
         String filePath = Configuration.getInstance().getDirectoryPath() + "/public" + request.getPath();
         String body = "";
 
@@ -20,11 +21,10 @@ class FooTextFileHandler implements RouteHandler {
         }
 
         String statusCode = "200 OK";
-        String date = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
+        String date = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.parse("2019-01-11T10:30:00Z[Europe/London]"));
         String contentLength = "" + body.getBytes(StandardCharsets.UTF_8).length;
-        System.out.println(contentLength);
         String contentType = "text/plain";
-        String headers = request.getProtocol() + " " + statusCode + "\n"  + "Date: " + date + "\n" + "Content-Type: " + contentType + "\n" + "Content-Length: " + contentLength;
+        String headers = request.getProtocol() + " " + statusCode + "\n" + "Date: " + date + "\n" + "Content-Type: " + contentType + "\n" + "Content-Length: " + contentLength;
 
         return new Response(headers, body);
     }

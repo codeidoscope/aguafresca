@@ -4,12 +4,13 @@ import java.util.logging.Level;
 
 class ServerRunner {
     private final RequestParser requestParser = new RequestParser();
-    private Router router;
+    private final ResponseSerialiser responseSerialiser = new ResponseSerialiser();
+    private Router serverRouter;
     private ServerConnection serverConnection;
 
-    ServerRunner(ServerConnection serverConnection, Router router) {
+    ServerRunner(ServerConnection serverConnection, Router serverRouter) {
         this.serverConnection = serverConnection;
-        this.router = router;
+        this.serverRouter = serverRouter;
     }
 
     void startServer(int portNumber) {
@@ -18,9 +19,10 @@ class ServerRunner {
         serverConnection.listenForClientConnection();
         try {
             Request request = requestParser.parse(serverConnection.getInput());
-            Response response = router.route(request);
+            Response response = serverRouter.route(request);
+            String serialisedResponse = responseSerialiser.serialise(response);
 
-//                serverConnection.sendOutput(response);
+            serverConnection.sendOutput(serialisedResponse);
 
             serverConnection.closeClientConnection();
         } catch (RuntimeException e) {
