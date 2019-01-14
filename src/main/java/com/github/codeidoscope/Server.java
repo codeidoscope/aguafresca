@@ -7,8 +7,9 @@ public class Server {
         ServerRouter serverRouter = createValidPathList(new ServerRouter());
         ServerRunner serverRunner = new ServerRunner(serverConnection, serverRouter);
 
-        int portNumber = Integer.parseInt(args[1]);
-        serverRunner.startServer(portNumber);
+        Configuration.getInstance().setPortNumber(Integer.parseInt(args[1]));
+        Configuration.getInstance().setSubPath(args[3]);
+        serverRunner.startServer(Configuration.getInstance().getPortNumber());
     }
 
     private static ServerRouter createValidPathList(ServerRouter serverRouter) {

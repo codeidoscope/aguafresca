@@ -10,7 +10,10 @@ import java.time.format.DateTimeFormatter;
 class FooTextFileHandler implements RouteHandler {
     @Override
     public Response respondToRequest(Request request) {
-        String filePath = Configuration.getInstance().getDirectoryPath() + "/public" + request.getPath();
+        String directoryPath = Configuration.getInstance().getDirectoryPath();
+        String subPath = Configuration.getInstance().getSubPath();
+        String filePath = directoryPath + subPath + request.getPath();
+
         String body = "";
 
         try {

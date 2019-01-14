@@ -4,7 +4,8 @@ class Configuration {
 
     private static Configuration INSTANCE;
     private String directoryPath = System.getProperty("user.dir");
-    private String portNumber = "8080";
+    private int portNumber = 8080;
+    private String subPath = null;
 
     static Configuration getInstance() {
         if (INSTANCE == null) {
@@ -22,11 +23,19 @@ class Configuration {
         return directoryPath;
     }
 
-    void setPortNumber(String portNumber) {
+    void setPortNumber(int portNumber) {
         this.portNumber = portNumber;
     }
 
-    String getPortNumber() {
+    int getPortNumber() {
         return portNumber;
+    }
+
+    String getSubPath() {
+        return subPath;
+    }
+
+    void setSubPath(String subPath) {
+        this.subPath = subPath;
     }
 }

@@ -24,7 +24,7 @@ class ConfigurationTest {
 
     @Test
     void setsTheGivenPortNumberAsPortNumber() {
-        String portNumber = "4000";
+        int portNumber = 4000;
         configuration.setPortNumber(portNumber);
 
         assertEquals(configuration.getPortNumber(), portNumber);
@@ -32,7 +32,7 @@ class ConfigurationTest {
 
     @Test
     void returns8080AsTheDefaultPortWhenNoneIsSpecified() {
-        String defaultPort = "8080";
+        int defaultPort = 8080;
         assertEquals(configuration.getPortNumber(), defaultPort);
     }
 }
