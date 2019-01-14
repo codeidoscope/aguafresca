@@ -6,9 +6,9 @@ public class Server {
         ServerConnection serverConnection = new TCPServerConnection();
         ServerRouter serverRouter = createValidPathList(new ServerRouter());
         ServerRunner serverRunner = new ServerRunner(serverConnection, serverRouter);
+        UserInputValidator userInputValidator = new UserInputValidator();
 
-        Configuration.getInstance().setPortNumber(Integer.parseInt(args[1]));
-        Configuration.getInstance().setSubPath(args[3]);
+        userInputValidator.validate(args);
         serverRunner.startServer(Configuration.getInstance().getPortNumber());
     }
 
