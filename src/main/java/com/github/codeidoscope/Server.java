@@ -13,13 +13,14 @@ public class Server {
     }
 
     private static ServerRouter createValidPathList(ServerRouter serverRouter) {
-        Route fooTextFileRoute = new Route("/foo.txt", "GET");
-        RouteHandler fooTextFileHandler = new FooTextFileHandler();
-        serverRouter.setHandlerForRoute(fooTextFileRoute, fooTextFileHandler);
-
-        Route defaultRoute = new Route("/", "GET");
+        RouteHandler textFileHandler = new TextFileHandler();
         RouteHandler defaultRouteHandler = new DefaultRouteHandler();
-        serverRouter.setHandlerForRoute(defaultRoute, defaultRouteHandler);
+
+        serverRouter.setHandlerForRoute(new Route("/foo.txt", "GET"), textFileHandler);
+        serverRouter.setHandlerForRoute(new Route("/bar.txt", "GET"), textFileHandler);
+        serverRouter.setHandlerForRoute(new Route("/baz.txt", "GET"), textFileHandler);
+
+        serverRouter.setHandlerForRoute(new Route("/", "GET"), defaultRouteHandler);
 
         return serverRouter;
     }

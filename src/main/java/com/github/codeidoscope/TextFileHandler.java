@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-class FooTextFileHandler implements RouteHandler {
+class TextFileHandler implements RouteHandler {
     @Override
     public Response respondToRequest(Request request) {
         String directoryPath = Configuration.getInstance().getDirectoryPath();
@@ -27,7 +27,7 @@ class FooTextFileHandler implements RouteHandler {
         String contentLength = "" + body.getBytes(StandardCharsets.UTF_8).length;
         System.out.println(contentLength);
         String contentType = "text/plain";
-        String headers = request.getProtocol() + " " + statusCode + "\n"  + "Date: " + date + "\n" + "Content-Type: " + contentType + "\n" + "Content-Length: " + contentLength;
+        String headers = request.getProtocol() + " " + statusCode + "\n" + "Date: " + date + "\n" + "Content-Type: " + contentType + "\n" + "Content-Length: " + contentLength;
 
         return new Response(headers, body);
     }
