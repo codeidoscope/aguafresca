@@ -5,7 +5,7 @@ public class Server {
     public static void main(String[] args) {
         ServerConnection serverConnection = new TCPServerConnection();
         ServerRouter serverRouter = createValidPathList(new ServerRouter());
-        ServerRunner serverRunner = new ServerRunner(serverConnection, serverRouter);
+        ServerRunner serverRunner = new HttpServerRunner(serverConnection, serverRouter);
         UserInputValidator userInputValidator = new UserInputValidator();
 
         userInputValidator.validate(args);

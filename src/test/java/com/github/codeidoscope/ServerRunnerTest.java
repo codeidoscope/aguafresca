@@ -14,7 +14,7 @@ class ServerRunnerTest {
         String output = "HTTP/1.1 200 OK\n\r\nHello World";
         MockServerConnection serverConnection = new MockServerConnection();
         serverConnection.setInput(input);
-        ServerRunner serverRunner = new ServerRunner(serverConnection, mockServerRouter);
+        ServerRunner serverRunner = new MockServerRunner(serverConnection, mockServerRouter);
 
         serverRunner.startServer(8080);
         assertEquals(output, serverConnection.sentResponse());
@@ -28,7 +28,7 @@ class ServerRunnerTest {
         String output = "HTTP/1.1 404 Not Found\n\r\n404 Not Found";
         MockServerConnection serverConnection = new MockServerConnection();
         serverConnection.setInput(input);
-        ServerRunner serverRunner = new ServerRunner(serverConnection, mockServerRouter);
+        ServerRunner serverRunner = new MockServerRunner(serverConnection, mockServerRouter);
 
         serverRunner.startServer(8080);
         assertEquals(output, serverConnection.sentResponse());
