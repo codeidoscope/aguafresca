@@ -5,7 +5,7 @@ class Configuration {
     private static Configuration INSTANCE;
     private String directoryPath = System.getProperty("user.dir");
     private int portNumber = 8080;
-    private String subPath = null;
+    private String subPath = "";
 
     static Configuration getInstance() {
         if (INSTANCE == null) {

@@ -11,7 +11,7 @@ class UserInputValidatorTest {
     void setUp() {
         Configuration.getInstance().setPortNumber(8080);
         Configuration.getInstance().setDirectoryPath(System.getProperty("user.dir"));
-        Configuration.getInstance().setSubPath(null);
+        Configuration.getInstance().setSubPath("");
     }
 
     @Test
