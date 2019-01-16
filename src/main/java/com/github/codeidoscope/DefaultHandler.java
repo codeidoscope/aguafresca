@@ -4,7 +4,7 @@ import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-class DefaultRouteHandler implements RouteHandler {
+class DefaultHandler implements RouteHandler {
     @Override
     public Response respondToRequest(Request request) {
         String body = "404 - NOT FOUND";
