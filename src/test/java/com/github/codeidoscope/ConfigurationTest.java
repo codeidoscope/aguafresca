@@ -15,14 +15,6 @@ class ConfigurationTest {
     }
 
     @Test
-    void returnsTheDirectoryPath() {
-        String directoryPath = "./public";
-        configuration.setContentRootPath(directoryPath);
-
-        assertEquals(configuration.getContentRootPath(), directoryPath);
-    }
-
-    @Test
     void setsTheGivenPortNumberAsPortNumber() {
         int portNumber = 4000;
         configuration.setPortNumber(portNumber);

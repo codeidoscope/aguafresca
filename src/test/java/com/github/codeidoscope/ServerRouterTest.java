@@ -11,7 +11,6 @@ class ServerRouterTest {
     void setUp() {
         Configuration.getInstance().setPortNumber(8080);
         Configuration.getInstance().setContentRootPath(System.getProperty("user.dir"));
-        DirectoryHandler.htmlContent = new StringBuilder();
     }
 
     @Test
