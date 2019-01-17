@@ -59,7 +59,7 @@ class DirectoryHandlerTest {
     @Test
     void returnsAnHtmlLinkStringGivenAFilePath() {
         String filePath = new File(Configuration.getInstance().getDirectoryPath() + "/foo.txt").getAbsolutePath();
-        String testHtmlLink = String.format("<a href=\"%s\">%s</a>", filePath, directoryHandler.extractPath(filePath));
+        String testHtmlLink = String.format("<li><a href=\"%s\">%s</a></li>", filePath, directoryHandler.extractPath(filePath));
         String htmlLink = directoryHandler.createHtmlLink(filePath);
 
         assertEquals(testHtmlLink, htmlLink);
@@ -76,9 +76,9 @@ class DirectoryHandlerTest {
         String filePathBaz = new File(Configuration.getInstance().getDirectoryPath() + "/baz.txt").getAbsolutePath();
         String htmlLinkBaz = directoryHandler.createHtmlLink(filePathBaz);
 
-        String testHtmlContent = "<a href=\"/Users/marion/Desktop/Engineering/aguafresca/foo.txt\">/foo.txt</a>" +
-                "<a href=\"/Users/marion/Desktop/Engineering/aguafresca/bar.txt\">/bar.txt</a>" +
-                "<a href=\"/Users/marion/Desktop/Engineering/aguafresca/baz.txt\">/baz.txt</a>";
+        String testHtmlContent = "<li><a href=\"/Users/marion/Desktop/Engineering/aguafresca/foo.txt\">/foo.txt</a></li>" +
+                "<li><a href=\"/Users/marion/Desktop/Engineering/aguafresca/bar.txt\">/bar.txt</a></li>" +
+                "<li><a href=\"/Users/marion/Desktop/Engineering/aguafresca/baz.txt\">/baz.txt</a></li>";
 
         directoryHandler.addToHtmlContent(htmlLinkFoo);
         directoryHandler.addToHtmlContent(htmlLinkBar);
@@ -99,10 +99,25 @@ class DirectoryHandlerTest {
                 "<head>\n" +
                 "</head>\n" +
                 "<body>\n" +
-                "<a href=\"/Users/marion/Desktop/Engineering/aguafresca/foo.txt\">/foo.txt</a>\n" +
+                "<li><a href=\"/Users/marion/Desktop/Engineering/aguafresca/foo.txt\">/foo.txt</a></li>\n" +
                 "</body>\n" +
                 "</html>\n";
-        String htmlBody = directoryHandler.addToHtmlBody(htmlContent);
+        String htmlBody = directoryHandler.addHtmlContentToBody(htmlContent);
         assertEquals(testHtmlBody, htmlBody);
+    }
+
+    @Test
+    void generatesHtmlPageBasedOnContentOfDirectory() {
+        String directoryPath = Configuration.getInstance().getDirectoryPath() + "/testdirectory";
+        String expectedBody = "<!DOCTYPE html>\n" +
+                "<head>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "<li><a href=\"/testdirectory/othertestfile.txt\">/testdirectory/othertestfile.txt</a></li><li><a href=\"/testdirectory/testfile.txt\">/testdirectory/testfile.txt</a></li>\n" +
+                "</body>\n" +
+                "</html>\n";
+        String body = directoryHandler.generateBodyFromDirectory(directoryPath);
+
+        assertEquals(expectedBody, body);
     }
 }
