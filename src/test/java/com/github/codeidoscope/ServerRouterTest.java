@@ -1,10 +1,18 @@
 package com.github.codeidoscope;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ServerRouterTest {
+
+    @BeforeEach
+    void setUp() {
+        Configuration.getInstance().setPortNumber(8080);
+        Configuration.getInstance().setContentRootPath(System.getProperty("user.dir"));
+        DirectoryHandler.htmlContent = new StringBuilder();
+    }
 
     @Test
     void returnsTheCorrectResponseGivenARequest() {

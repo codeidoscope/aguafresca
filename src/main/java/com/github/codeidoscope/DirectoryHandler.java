@@ -13,9 +13,8 @@ public class DirectoryHandler implements RouteHandler {
 
     @Override
     public Response respondToRequest(Request request) {
-        String directoryPath = Configuration.getInstance().getDirectoryPath();
-        String subPath = Configuration.getInstance().getSubPath();
-        String filePath = directoryPath + subPath;
+        String contentRootPath = Configuration.getInstance().getContentRootPath();
+        String filePath = contentRootPath + request.getPath();
 
         String body = generateBodyFromDirectory(filePath);
 
@@ -28,27 +27,12 @@ public class DirectoryHandler implements RouteHandler {
         return new Response(headers, body);
     }
 
-    String extractPath(String path) {
-        if (!Configuration.getInstance().getSubPath().equals("")) {
-            path = path.replace(Configuration.getInstance().getSubPath(), "");
-        }
-        path = path.replace(Configuration.getInstance().getDirectoryPath(), "");
-
-        return path;
-    }
-
-    String extractDirectoryPath(String path) {
-        if (!Configuration.getInstance().getSubPath().equals("")) {
-            path = path.replace(Configuration.getInstance().getDirectoryPath(), "");
-        } else {
-            path = path.replace(Configuration.getInstance().getDirectoryPath(), "") + "/";
-        }
-
-        return path;
+    String removeBasePathFromPath(String path){
+        return path.replace(Configuration.getInstance().getContentRootPath(), "");
     }
 
     String createHtmlLink(String filePath) {
-        return String.format("<li><a href=\"%s\">%s</a></li>", filePath, extractPath(filePath));
+        return String.format("<li><a href=\"%s\">%s</a></li>", filePath, removeBasePathFromPath(filePath));
     }
 
     void addToHtmlContent(String content) {
@@ -57,7 +41,7 @@ public class DirectoryHandler implements RouteHandler {
 
     String addHtmlContentToBody(String htmlContent) {
         String htmlFileToString = "";
-        String htmlTemplatePath = Configuration.getInstance().getDirectoryPath() + "/public/directorylisting.html";
+        String htmlTemplatePath = Configuration.getInstance().getContentRootPath() + "/public/directorylisting.html";
 
         try {
             htmlFileToString = new String(Files.readAllBytes(Paths.get(htmlTemplatePath)));
@@ -75,12 +59,12 @@ public class DirectoryHandler implements RouteHandler {
             for (File file : files) {
                 if (file.isDirectory()) {
                     String directoryPath = file.getAbsolutePath();
-                    directoryPath = extractDirectoryPath(directoryPath);
+                    directoryPath = removeBasePathFromPath(directoryPath);
                     String link = createHtmlLink(directoryPath);
                     addToHtmlContent(link);
                 } else {
                     String filePath = file.getAbsolutePath();
-                    filePath = extractPath(filePath);
+                    filePath = removeBasePathFromPath(filePath);
                     String link = createHtmlLink(filePath);
                     addToHtmlContent(link);
                 }

@@ -10,8 +10,7 @@ class UserInputValidatorTest {
     @BeforeEach
     void setUp() {
         Configuration.getInstance().setPortNumber(8080);
-        Configuration.getInstance().setDirectoryPath(System.getProperty("user.dir"));
-        Configuration.getInstance().setSubPath("");
+        Configuration.getInstance().setContentRootPath(System.getProperty("user.dir"));
     }
 
     @Test
@@ -22,7 +21,7 @@ class UserInputValidatorTest {
 
         userInputValidator.validate(arguments);
         assertEquals(8080, Configuration.getInstance().getPortNumber());
-        assertEquals(userDirectory, Configuration.getInstance().getDirectoryPath());
+        assertEquals(userDirectory, Configuration.getInstance().getContentRootPath());
     }
 
     @Test
@@ -33,26 +32,6 @@ class UserInputValidatorTest {
         userInputValidator.validate(arguments);
 
         assertEquals(1234, Configuration.getInstance().getPortNumber());
-        assertEquals("/testdir", Configuration.getInstance().getSubPath());
-    }
-
-    @Test
-    void parsesDirectoryGivenByUserInArgumentsToExtractSubdirectory() {
-        UserInputValidator userInputValidator = new UserInputValidator();
-        String[] arguments = {"--port", "1234", "--directory", "./testdir"};
-
-        userInputValidator.validate(arguments);
-        assertEquals(1234, Configuration.getInstance().getPortNumber());
-        assertEquals("/testdir", Configuration.getInstance().getSubPath());
-    }
-
-    @Test
-    void parsesDirectoryGivenByUserInArgumentsToExtractSubdirectory2() {
-        UserInputValidator userInputValidator = new UserInputValidator();
-        String path = "./testdir";
-
-        String parsedPath = userInputValidator.parseDirectoryPath(path);
-        Configuration.getInstance().setSubPath(parsedPath);
-        assertEquals("/testdir", Configuration.getInstance().getSubPath());
+        assertEquals("/testdir", Configuration.getInstance().getContentRootPath());
     }
 }

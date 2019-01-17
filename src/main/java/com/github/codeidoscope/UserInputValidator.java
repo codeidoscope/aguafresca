@@ -6,12 +6,8 @@ class UserInputValidator {
             if (arguments[0].equalsIgnoreCase("--port") &&
                     arguments[2].equalsIgnoreCase("--directory")) {
                 Configuration.getInstance().setPortNumber(Integer.parseInt(arguments[1]));
-                Configuration.getInstance().setSubPath(parseDirectoryPath(arguments[3]));
+                Configuration.getInstance().setContentRootPath(arguments[3]);
             }
         }
-    }
-
-    String parseDirectoryPath(String path) {
-        return path.replace(".", "");
     }
 }

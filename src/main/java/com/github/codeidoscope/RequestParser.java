@@ -16,6 +16,6 @@ class RequestParser {
     }
 
     String constructFilePath(String filePath) {
-        return Configuration.getInstance().getDirectoryPath() + filePath;
+        return Configuration.getInstance().getContentRootPath() + filePath;
     }
 }

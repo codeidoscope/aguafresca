@@ -17,9 +17,9 @@ class ConfigurationTest {
     @Test
     void returnsTheDirectoryPath() {
         String directoryPath = "./public";
-        configuration.setDirectoryPath(directoryPath);
+        configuration.setContentRootPath(directoryPath);
 
-        assertEquals(configuration.getDirectoryPath(), directoryPath);
+        assertEquals(configuration.getContentRootPath(), directoryPath);
     }
 
     @Test

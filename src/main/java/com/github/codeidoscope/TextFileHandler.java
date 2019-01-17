@@ -10,9 +10,8 @@ import java.time.format.DateTimeFormatter;
 class TextFileHandler implements RouteHandler {
     @Override
     public Response respondToRequest(Request request) {
-        String directoryPath = Configuration.getInstance().getDirectoryPath();
-        String subPath = Configuration.getInstance().getSubPath();
-        String filePath = directoryPath + subPath + request.getPath();
+        String contentRootPath = Configuration.getInstance().getContentRootPath();
+        String filePath = contentRootPath + request.getPath();
 
         String body = "";
 

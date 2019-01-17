@@ -11,7 +11,7 @@ class MockRouteHandler implements RouteHandler {
     @Override
     public Response respondToRequest(Request request) {
 
-        String filePath = Configuration.getInstance().getDirectoryPath() + "/public" + request.getPath();
+        String filePath = Configuration.getInstance().getContentRootPath() + "/public" + request.getPath();
         String body = "";
 
         try {

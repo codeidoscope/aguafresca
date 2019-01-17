@@ -3,9 +3,8 @@ package com.github.codeidoscope;
 class Configuration {
 
     private static Configuration INSTANCE;
-    private String directoryPath = System.getProperty("user.dir");
+    private String contentRootPath = System.getProperty("user.dir");
     private int portNumber = 8080;
-    private String subPath = "";
 
     static Configuration getInstance() {
         if (INSTANCE == null) {
@@ -15,12 +14,12 @@ class Configuration {
         return INSTANCE;
     }
 
-    void setDirectoryPath(String directoryPath) {
-        this.directoryPath = directoryPath;
+    void setContentRootPath(String contentRootPath) {
+        this.contentRootPath = contentRootPath;
     }
 
-    String getDirectoryPath() {
-        return directoryPath;
+    String getContentRootPath() {
+        return contentRootPath;
     }
 
     void setPortNumber(int portNumber) {
@@ -29,13 +28,5 @@ class Configuration {
 
     int getPortNumber() {
         return portNumber;
-    }
-
-    String getSubPath() {
-        return subPath;
-    }
-
-    void setSubPath(String subPath) {
-        this.subPath = subPath;
     }
 }
