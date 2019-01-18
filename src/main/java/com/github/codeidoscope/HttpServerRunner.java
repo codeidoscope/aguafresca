@@ -21,13 +21,16 @@ class HttpServerRunner implements ServerRunner {
         while (serverShouldContinueRunning) {
             serverConnection.listenForClientConnection();
             try {
+                String input = serverConnection.getInput();
+                if (input != null) {
+                    Request request = requestParser.parse(input);
+                    Response response = serverRouter.route(request);
+                    String serialisedResponse = responseSerialiser.serialise(response);
 
-                Request request = requestParser.parse(serverConnection.getInput());
-                Response response = serverRouter.route(request);
-                String serialisedResponse = responseSerialiser.serialise(response);
+                    serverConnection.sendOutput(serialisedResponse);
 
-                serverConnection.sendOutput(serialisedResponse);
-
+                    serverConnection.closeClientConnection();
+                }
                 serverConnection.closeClientConnection();
             } catch (RuntimeException e) {
                 System.err.println(e);
