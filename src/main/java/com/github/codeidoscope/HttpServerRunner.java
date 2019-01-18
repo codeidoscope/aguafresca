@@ -18,9 +18,10 @@ class HttpServerRunner implements ServerRunner {
     public void startServer(int portNumber) {
         ServerLogger.serverLogger.log(Level.INFO, "Connection made to port " + portNumber);
         serverConnection.createServerSocket(portNumber);
-        do {
+        while (serverShouldContinueRunning) {
             serverConnection.listenForClientConnection();
             try {
+
                 Request request = requestParser.parse(serverConnection.getInput());
                 Response response = serverRouter.route(request);
                 String serialisedResponse = responseSerialiser.serialise(response);
@@ -31,7 +32,7 @@ class HttpServerRunner implements ServerRunner {
             } catch (RuntimeException e) {
                 System.err.println(e);
             }
-        } while (serverShouldContinueRunning);
+        }
         serverConnection.closeConnection();
     }
 
