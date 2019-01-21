@@ -33,7 +33,7 @@ public class DirectoryHandler implements RouteHandler {
     }
 
     String createHtmlLink(String filePath) {
-        return String.format("<li><a href=\"%s\">%s</a></li>", filePath, filePath);
+        return String.format("<li><a href=\"/%s\">%s</a></li>", filePath, filePath);
     }
 
     void addToHtmlContent(String content, StringBuilder htmlContent) {
