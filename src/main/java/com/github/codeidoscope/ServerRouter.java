@@ -3,7 +3,6 @@ package com.github.codeidoscope;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.FileHandler;
 
 class ServerRouter implements Router {
     private Map<Route, RouteHandler> routes = new HashMap<>();

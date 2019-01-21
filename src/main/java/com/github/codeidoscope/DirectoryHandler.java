@@ -3,7 +3,6 @@ package com.github.codeidoscope;
 import java.io.File;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.ZonedDateTime;
@@ -41,16 +40,8 @@ public class DirectoryHandler implements RouteHandler {
     }
 
     String addHtmlContentToBody(StringBuilder htmlContent) {
-        String htmlFileToString = "";
-        String htmlTemplatePath = System.getProperty("user.dir") + "/directorylisting.html";
-
-        try {
-            htmlFileToString = new String(Files.readAllBytes(Paths.get(htmlTemplatePath)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return htmlFileToString.replace("$body", htmlContent);
+        String htmlTemplatePath = "<!DOCTYPE html>\n<head>\n</head>\n<body>\n$body\n</body>\n</html>\n";
+        return htmlTemplatePath.replace("$body", htmlContent);
     }
 
     String generateBodyFromDirectory(String path) {
