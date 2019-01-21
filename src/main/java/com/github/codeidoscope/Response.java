@@ -13,15 +13,7 @@ public class Response {
         return headers;
     }
 
-    public void setHeaders(String headers) {
-        this.headers = headers;
-    }
-
     String getBody() {
         return body;
-    }
-
-    public void setBody(String body) {
-        this.body = body;
     }
 }
