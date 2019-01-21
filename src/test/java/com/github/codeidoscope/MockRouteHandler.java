@@ -9,7 +9,7 @@ import java.time.format.DateTimeFormatter;
 
 class MockRouteHandler implements RouteHandler {
     @Override
-    public Response respondToRequest(Request request) {
+    public Response respondToRequest(Request request) throws IOException {
 
         String filePath = Configuration.getInstance().getContentRootPath() + "/public" + request.getPath();
         String body = "";

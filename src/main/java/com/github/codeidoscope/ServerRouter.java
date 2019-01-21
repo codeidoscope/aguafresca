@@ -1,6 +1,7 @@
 package com.github.codeidoscope;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,7 +9,7 @@ class ServerRouter implements Router {
     private Map<Route, RouteHandler> routes = new HashMap<>();
 
     @Override
-    public Response route(Request request) {
+    public Response route(Request request) throws IOException {
         File file = new File(Configuration.getInstance().getContentRootPath() + request.getPath());
         Route route = new Route(request.getPath(), request.getMethod());
         if (routes.get(route) != null) {

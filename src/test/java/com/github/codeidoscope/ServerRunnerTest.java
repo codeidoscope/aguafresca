@@ -2,12 +2,14 @@ package com.github.codeidoscope;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ServerRunnerTest {
 
     @Test
-    void testGetValidResourceReturnsCorrectResponse() {
+    void testGetValidResourceReturnsCorrectResponse() throws IOException {
         MockRouter mockServerRouter = new MockRouter();
         mockServerRouter.addRoute("/valid", new Response("HTTP/1.1 200 OK", "Hello World"));
         String input = "GET /valid HTTP/1.1\n\r\n";
@@ -21,7 +23,7 @@ class ServerRunnerTest {
     }
 
     @Test
-    void testGetInvalidResourceReturnsCorrectResponse() {
+    void testGetInvalidResourceReturnsCorrectResponse() throws IOException {
         MockRouter mockServerRouter = new MockRouter();
         mockServerRouter.addRoute("/", new Response("HTTP/1.1 404 Not Found", "404 Not Found"));
         String input = "GET / HTTP/1.1\n\r\n";

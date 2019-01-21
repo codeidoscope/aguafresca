@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,14 +13,17 @@ class DirectoryHandlerTest {
     private DirectoryHandler directoryHandler = new DirectoryHandler();
     private String contentRootPath = Configuration.getInstance().getContentRootPath();
 
+    DirectoryHandlerTest() throws IOException {
+    }
+
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         Configuration.getInstance().setPortNumber(8080);
         Configuration.getInstance().setContentRootPath(System.getProperty("user.dir"));
     }
 
     @Test
-    void extractsTheBasePathFromAGivenPath() {
+    void extractsTheBasePathFromAGivenPath() throws IOException {
         String filePath = contentRootPath + "/foo.txt";
         String expectedExtractedPath = "foo.txt";
         String extractedPath = directoryHandler.removeBasePathFromPath(filePath);
@@ -28,7 +32,7 @@ class DirectoryHandlerTest {
     }
 
     @Test
-    void returnsAnHtmlLinkStringGivenAFilePath() {
+    void returnsAnHtmlLinkStringGivenAFilePath() throws IOException {
         String filePath = new File(contentRootPath + "/foo.txt").getAbsolutePath();
         String extractedPath = directoryHandler.removeBasePathFromPath(filePath);
         String testHtmlLink = String.format("<li><a href=\"/%s\">%s</a></li>", extractedPath, extractedPath);
@@ -74,7 +78,7 @@ class DirectoryHandlerTest {
     }
 
     @Test
-    void generatesHtmlPageBasedOnContentOfDirectory() {
+    void generatesHtmlPageBasedOnContentOfDirectory() throws IOException {
         String directoryPath = Configuration.getInstance().getContentRootPath() + "/testdirectory";
         String expectedBody = "<!DOCTYPE html>\n" +
                 "<head>\n" +

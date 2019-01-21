@@ -3,18 +3,20 @@ package com.github.codeidoscope;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ServerRouterTest {
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         Configuration.getInstance().setPortNumber(8080);
         Configuration.getInstance().setContentRootPath(System.getProperty("user.dir"));
     }
 
     @Test
-    void returnsTheCorrectResponseGivenARequest() {
+    void returnsTheCorrectResponseGivenARequest() throws IOException {
         Request request = new Request();
         request.setMethod("GET");
         request.setPath("/foo.txt");

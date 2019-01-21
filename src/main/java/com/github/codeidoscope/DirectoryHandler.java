@@ -10,7 +10,7 @@ import java.time.format.DateTimeFormatter;
 
 public class DirectoryHandler implements RouteHandler {
     @Override
-    public Response respondToRequest(Request request) {
+    public Response respondToRequest(Request request) throws IOException {
         String contentRootPath = Configuration.getInstance().getContentRootPath();
         String filePath = contentRootPath + request.getPath();
 
@@ -25,7 +25,7 @@ public class DirectoryHandler implements RouteHandler {
         return new Response(headers, body);
     }
 
-    String removeBasePathFromPath(String path) {
+    String removeBasePathFromPath(String path) throws IOException {
         Path absolutePath = Paths.get(path);
         Path relativePath = Paths.get(Configuration.getInstance().getContentRootPath()).relativize(absolutePath);
         return relativePath.toString();
@@ -44,18 +44,14 @@ public class DirectoryHandler implements RouteHandler {
         return htmlTemplatePath.replace("$body", htmlContent);
     }
 
-    String generateBodyFromDirectory(String path) {
+    String generateBodyFromDirectory(String path) throws IOException {
         StringBuilder htmlContent = new StringBuilder();
         File[] files = new File(path).listFiles();
 
         if (files != null) {
             for (File file : files) {
                 String filePath = null;
-                try {
-                    filePath = file.getCanonicalPath();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                filePath = file.getCanonicalPath();
                 filePath = removeBasePathFromPath(filePath);
                 String link = createHtmlLink(filePath);
                 addToHtmlContent(link, htmlContent);

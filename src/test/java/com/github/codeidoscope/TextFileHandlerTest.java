@@ -2,12 +2,14 @@ package com.github.codeidoscope;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class TextFileHandlerTest {
 
     @Test
-    void returnsAResponseWithTheCorrectBody() {
+    void returnsAResponseWithTheCorrectBody() throws IOException {
         MockRouteHandler mockRouteHandler = new MockRouteHandler();
         Request request = new Request();
         request.setPath("/foo.txt");

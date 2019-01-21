@@ -3,18 +3,20 @@ package com.github.codeidoscope;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class UserInputValidatorTest {
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         Configuration.getInstance().setPortNumber(8080);
         Configuration.getInstance().setContentRootPath(System.getProperty("user.dir"));
     }
 
     @Test
-    void setsPortAndDirectoryToDefaultValuesWhenUserInputIsIncorrect() {
+    void setsPortAndDirectoryToDefaultValuesWhenUserInputIsIncorrect() throws IOException {
         UserInputValidator userInputValidator = new UserInputValidator();
         String[] arguments = {"--directory", "1234", "--port", "/testdir"};
         String userDirectory = System.getProperty("user.dir");
@@ -25,7 +27,7 @@ class UserInputValidatorTest {
     }
 
     @Test
-    void setsPortAndDirectoryAccordingToUserInputWhenInputIsCorrect() {
+    void setsPortAndDirectoryAccordingToUserInputWhenInputIsCorrect() throws IOException {
         UserInputValidator userInputValidator = new UserInputValidator();
         String[] arguments = {"--port", "1234", "--directory", "/testdir"};
 

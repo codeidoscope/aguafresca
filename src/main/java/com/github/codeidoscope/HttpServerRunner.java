@@ -1,5 +1,6 @@
 package com.github.codeidoscope;
 
+import java.io.IOException;
 import java.util.logging.Level;
 
 class HttpServerRunner implements ServerRunner {
@@ -15,26 +16,22 @@ class HttpServerRunner implements ServerRunner {
     }
 
     @Override
-    public void startServer(int portNumber) {
+    public void startServer(int portNumber) throws RuntimeException, IOException {
         ServerLogger.serverLogger.log(Level.INFO, "Connection made to port " + portNumber);
         serverConnection.createServerSocket(portNumber);
         while (serverShouldContinueRunning) {
             serverConnection.listenForClientConnection();
-            try {
-                String input = serverConnection.getInput();
-                if (input != null) {
-                    Request request = requestParser.parse(input);
-                    Response response = serverRouter.route(request);
-                    String serialisedResponse = responseSerialiser.serialise(response);
+            String input = serverConnection.getInput();
+            if (input != null) {
+                Request request = requestParser.parse(input);
+                Response response = serverRouter.route(request);
+                String serialisedResponse = responseSerialiser.serialise(response);
 
-                    serverConnection.sendOutput(serialisedResponse);
+                serverConnection.sendOutput(serialisedResponse);
 
-                    serverConnection.closeClientConnection();
-                }
                 serverConnection.closeClientConnection();
-            } catch (RuntimeException e) {
-                System.err.println(e);
             }
+            serverConnection.closeClientConnection();
         }
         serverConnection.closeConnection();
     }

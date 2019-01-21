@@ -1,7 +1,9 @@
 package com.github.codeidoscope;
 
+import java.io.IOException;
+
 class UserInputValidator {
-    void validate(String[] arguments) {
+    void validate(String[] arguments) throws IOException {
         if (arguments.length == 4) {
             if (arguments[0].equalsIgnoreCase("--port") &&
                     arguments[2].equalsIgnoreCase("--directory")) {

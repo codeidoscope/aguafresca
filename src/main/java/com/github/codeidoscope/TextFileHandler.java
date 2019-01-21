@@ -9,17 +9,11 @@ import java.time.format.DateTimeFormatter;
 
 class TextFileHandler implements RouteHandler {
     @Override
-    public Response respondToRequest(Request request) {
+    public Response respondToRequest(Request request) throws IOException {
         String contentRootPath = Configuration.getInstance().getContentRootPath();
         String filePath = contentRootPath + request.getPath();
 
-        String body = "";
-
-        try {
-            body = new String(Files.readAllBytes(Paths.get(filePath)));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String body = new String(Files.readAllBytes(Paths.get(filePath)));
 
         String statusCode = "200 OK";
         String date = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());

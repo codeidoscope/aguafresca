@@ -9,7 +9,7 @@ class Configuration {
     private String contentRootPath;
     private int portNumber = 8080;
 
-    static Configuration getInstance() {
+    static Configuration getInstance() throws IOException {
         if (INSTANCE == null) {
             INSTANCE = new Configuration();
         }
@@ -17,21 +17,16 @@ class Configuration {
         return INSTANCE;
     }
 
-    Configuration() {
+    Configuration() throws IOException {
         contentRootPath = makeCanonicalPath(System.getProperty("user.dir"));
     }
 
-    private String makeCanonicalPath(String path) {
+    private String makeCanonicalPath(String path) throws IOException {
         File file = new File(path);
-        try {
-            return file.getCanonicalPath();
-        } catch (IOException e) {
-            e.printStackTrace();
-            throw new RuntimeException("Couldn't get a file, duh!");
-        }
+        return file.getCanonicalPath();
     }
 
-    void setContentRootPath(String contentRootPath) {
+    void setContentRootPath(String contentRootPath) throws IOException {
         this.contentRootPath = makeCanonicalPath(contentRootPath);
     }
 

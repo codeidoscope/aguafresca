@@ -1,16 +1,18 @@
 package com.github.codeidoscope;
 
 
+import java.io.IOException;
+
 public interface ServerConnection {
-    void createServerSocket(int portNumber);
+    void createServerSocket(int portNumber) throws IOException;
 
-    void listenForClientConnection();
+    void listenForClientConnection() throws IOException;
 
-    String getInput();
+    String getInput() throws IOException;
 
     void sendOutput(String message);
 
-    void closeConnection();
+    void closeConnection() throws IOException;
 
-    void closeClientConnection();
+    void closeClientConnection() throws IOException;
 }

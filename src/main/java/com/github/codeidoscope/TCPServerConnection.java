@@ -17,32 +17,20 @@ class TCPServerConnection implements ServerConnection {
     private OutputStream outputStream;
 
     @Override
-    public void createServerSocket(int portNumber) {
-        try {
-            serverSocket = new ServerSocket(portNumber);
-        } catch (IOException e) {
-            System.err.println(e);
-        }
+    public void createServerSocket(int portNumber) throws IOException {
+        serverSocket = new ServerSocket(portNumber);
     }
 
     @Override
-    public void listenForClientConnection() {
-        try {
-            socket = serverSocket.accept();
-            inputStream = socket.getInputStream();
-            outputStream = socket.getOutputStream();
-        } catch (IOException e) {
-            System.err.println(e);
-        }
+    public void listenForClientConnection() throws IOException {
+        socket = serverSocket.accept();
+        inputStream = socket.getInputStream();
+        outputStream = socket.getOutputStream();
     }
 
     @Override
-    public String getInput() {
-        try {
-            return new BufferedReader(new InputStreamReader(inputStream)).readLine();
-        } catch (IOException e) {
-            throw new RuntimeException();
-        }
+    public String getInput() throws IOException {
+        return new BufferedReader(new InputStreamReader(inputStream)).readLine();
     }
 
     @Override
@@ -51,24 +39,16 @@ class TCPServerConnection implements ServerConnection {
     }
 
     @Override
-    public void closeConnection() {
+    public void closeConnection() throws IOException {
         ServerLogger.serverLogger.log(Level.INFO, "Closing connection - Bye! \uD83D\uDC4B");
-        try {
-            serverSocket.close();
-        } catch (IOException e) {
-            System.err.println(e);
-        }
+        serverSocket.close();
     }
 
     @Override
-    public void closeClientConnection() {
-        try {
-            inputStream.close();
-            outputStream.close();
-            socket.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void closeClientConnection() throws IOException {
+        inputStream.close();
+        outputStream.close();
+        socket.close();
     }
 
 }
