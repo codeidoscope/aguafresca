@@ -1,25 +1,27 @@
 package com.github.codeidoscope;
 
-import java.util.Arrays;
-
 public class Response {
-    private String headers;
-    private byte[] body;
+    private Header headers;
+    private Body body;
 
-    Response(String headers, byte[] body) {
+    Response(Header headers, Body body) {
         this.headers = headers;
         this.body = body;
     }
 
-    String getHeaders() {
-        return headers;
+    byte[] getHeaders() {
+        return headers.toBytes();
     }
 
     byte[] getBody() {
-        return body;
+        return body.toBytes();
     }
 
     String getBodyString() {
-        return Arrays.toString(body);
+        return body.getString();
+    }
+
+    String getHeadersString() {
+        return headers.getHeaderString();
     }
 }

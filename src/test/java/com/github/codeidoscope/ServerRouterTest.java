@@ -27,14 +27,11 @@ class ServerRouterTest {
         RouteHandler mockRouteHandler = new MockRouteHandler();
         serverRouter.setHandlerForRoute(fooTextFileRoute, mockRouteHandler);
 
-        String headers = "HTTP/1.1 200 OK\n" +
-                "Date: Fri, 11 Jan 2019 10:30:00 GMT\n" +
-                "Content-Type: text/plain\n" +
-                "Content-Length: 50";
+        Header headers = new Header("HTTP/1.1 200 OK\nDate: Fri, 11 Jan 2019 10:30:00 GMT\nContent-Type: text/plain\nContent-Length: 50".getBytes());
 
-        Response expectedResponse = new Response(headers, "This file has some text in it. Isn't that great?!\n".getBytes());
+        Response expectedResponse = new Response(headers, new Body("This file has some text in it. Isn't that great?!\n".getBytes()));
 
-        assertEquals(serverRouter.route(request).getHeaders(), expectedResponse.getHeaders());
+        assertEquals(serverRouter.route(request).getHeadersString(), expectedResponse.getHeadersString());
         assertEquals(serverRouter.route(request).getBodyString(), expectedResponse.getBodyString());
 
     }

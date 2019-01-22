@@ -13,13 +13,14 @@ public class DirectoryHandler implements RouteHandler {
         String contentRootPath = Configuration.getInstance().getContentRootPath();
         String filePath = contentRootPath + request.getPath();
 
-        byte[] body = generateBodyFromDirectory(filePath).getBytes();
+        Body body = new Body(generateBodyFromDirectory(filePath).getBytes());
 
         String statusCode = "200 OK";
         String date = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
-        String contentLength = "" + body.length;
+        String contentLength = "" + body.getLength();
         String contentType = "text/html";
-        String headers = request.getProtocol() + " " + statusCode + "\n" + "Date: " + date + "\n" + "Content-Type: " + contentType + "\n" + "Content-Length: " + contentLength;
+        String headersString = request.getProtocol() + " " + statusCode + "\n" + "Date: " + date + "\n" + "Content-Type: " + contentType + "\n" + "Content-Length: " + contentLength;
+        Header headers = new Header(headersString.getBytes());
 
         return new Response(headers, body);
     }

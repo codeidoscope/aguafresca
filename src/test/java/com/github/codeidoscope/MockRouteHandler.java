@@ -11,13 +11,14 @@ class MockRouteHandler implements RouteHandler {
     public Response respondToRequest(Request request) throws IOException {
         String filePath = Configuration.getInstance().getContentRootPath() + "/public" + request.getPath();
 
-        byte[] body = Files.readAllBytes(Paths.get(filePath));
+        Body body = new Body(Files.readAllBytes(Paths.get(filePath)));
 
         String statusCode = "200 OK";
         String date = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.parse("2019-01-11T10:30:00Z[Europe/London]"));
-        String contentLength = "" + body.length;
+        String contentLength = "" + body.getLength();
         String contentType = "text/plain";
-        String headers = request.getProtocol() + " " + statusCode + "\n" + "Date: " + date + "\n" + "Content-Type: " + contentType + "\n" + "Content-Length: " + contentLength;
+        String headersString = request.getProtocol() + " " + statusCode + "\n" + "Date: " + date + "\n" + "Content-Type: " + contentType + "\n" + "Content-Length: " + contentLength;
+        Header headers = new Header(headersString.getBytes());
 
         return new Response(headers, body);
     }
