@@ -21,10 +21,10 @@ class TextFileHandlerTest {
                 "Content-Type: text/plain\n" +
                 "Content-Length: 50";
 
-        Response expectedResponse = new Response(headers, "This file has some text in it. Isn't that great?!\n");
+        Response expectedResponse = new Response(headers, "This file has some text in it. Isn't that great?!\n".getBytes());
         Response requestResponse = mockRouteHandler.respondToRequest(request);
 
         assertEquals(expectedResponse.getHeaders(), requestResponse.getHeaders());
-        assertEquals(expectedResponse.getBody(), requestResponse.getBody());
+        assertEquals(expectedResponse.getBodyString(), requestResponse.getBodyString());
     }
 }

@@ -10,7 +10,7 @@ public interface ServerConnection {
 
     String getInput() throws IOException;
 
-    void sendOutput(String message);
+    void sendOutput(byte[] message) throws IOException;
 
     void closeConnection() throws IOException;
 

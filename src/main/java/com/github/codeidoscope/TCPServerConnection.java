@@ -1,11 +1,11 @@
 package com.github.codeidoscope;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
@@ -34,8 +34,8 @@ class TCPServerConnection implements ServerConnection {
     }
 
     @Override
-    public void sendOutput(String message) {
-        new PrintWriter(outputStream, true).println(message);
+    public void sendOutput(byte[] message) throws IOException {
+        new DataOutputStream(outputStream).write(message);
     }
 
     @Override

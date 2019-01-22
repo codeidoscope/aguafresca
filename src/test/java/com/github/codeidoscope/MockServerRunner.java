@@ -1,5 +1,6 @@
 package com.github.codeidoscope;
 
+import java.io.IOException;
 import java.util.logging.Level;
 
 public class MockServerRunner implements ServerRunner {
@@ -14,21 +15,17 @@ public class MockServerRunner implements ServerRunner {
     }
 
     @Override
-    public void startServer(int portNumber) {
+    public void startServer(int portNumber) throws IOException, RuntimeException {
         ServerLogger.serverLogger.log(Level.INFO, "Connection made to port " + portNumber);
         mockServerConnection.createServerSocket(portNumber);
         mockServerConnection.listenForClientConnection();
-            try {
-                Request request = requestParser.parse(mockServerConnection.getInput());
-                Response response = mockServerRouter.route(request);
-                String serialisedResponse = responseSerialiser.serialise(response);
+        Request request = requestParser.parse(mockServerConnection.getInput());
+        Response response = mockServerRouter.route(request);
+        byte[] serialisedResponse = responseSerialiser.serialise(response);
 
-                mockServerConnection.sendOutput(serialisedResponse);
+        mockServerConnection.sendOutput(serialisedResponse);
 
-                mockServerConnection.closeClientConnection();
-            } catch (RuntimeException e) {
-                System.err.println(e);
-            }
+        mockServerConnection.closeClientConnection();
         mockServerConnection.closeConnection();
     }
 }

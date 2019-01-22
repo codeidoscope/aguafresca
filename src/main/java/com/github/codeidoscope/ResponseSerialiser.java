@@ -1,8 +1,16 @@
 package com.github.codeidoscope;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 class ResponseSerialiser {
 
-    String serialise(Response response) {
-        return response.getHeaders() + "\n\r\n" + response.getBody();
+    byte[] serialise(Response response) throws IOException {
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        outputStream.write(response.getHeaders().getBytes());
+        outputStream.write("\n\r\n".getBytes());
+        outputStream.write(response.getBody());
+        return outputStream.toByteArray();
     }
 }

@@ -25,7 +25,7 @@ class HttpServerRunner implements ServerRunner {
             if (input != null) {
                 Request request = requestParser.parse(input);
                 Response response = serverRouter.route(request);
-                String serialisedResponse = responseSerialiser.serialise(response);
+                byte[] serialisedResponse = responseSerialiser.serialise(response);
 
                 serverConnection.sendOutput(serialisedResponse);
 

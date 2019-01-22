@@ -32,10 +32,10 @@ class ServerRouterTest {
                 "Content-Type: text/plain\n" +
                 "Content-Length: 50";
 
-        Response expectedResponse = new Response(headers, "This file has some text in it. Isn't that great?!\n");
+        Response expectedResponse = new Response(headers, "This file has some text in it. Isn't that great?!\n".getBytes());
 
         assertEquals(serverRouter.route(request).getHeaders(), expectedResponse.getHeaders());
-        assertEquals(serverRouter.route(request).getBody(), expectedResponse.getBody());
+        assertEquals(serverRouter.route(request).getBodyString(), expectedResponse.getBodyString());
 
     }
 }

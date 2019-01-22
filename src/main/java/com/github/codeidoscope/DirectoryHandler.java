@@ -2,7 +2,6 @@ package com.github.codeidoscope;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.ZonedDateTime;
@@ -14,11 +13,11 @@ public class DirectoryHandler implements RouteHandler {
         String contentRootPath = Configuration.getInstance().getContentRootPath();
         String filePath = contentRootPath + request.getPath();
 
-        String body = generateBodyFromDirectory(filePath);
+        byte[] body = generateBodyFromDirectory(filePath).getBytes();
 
         String statusCode = "200 OK";
         String date = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
-        String contentLength = "" + body.getBytes(StandardCharsets.UTF_8).length;
+        String contentLength = "" + body.length;
         String contentType = "text/html";
         String headers = request.getProtocol() + " " + statusCode + "\n" + "Date: " + date + "\n" + "Content-Type: " + contentType + "\n" + "Content-Length: " + contentLength;
 

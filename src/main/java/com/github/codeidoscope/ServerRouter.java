@@ -14,9 +14,9 @@ class ServerRouter implements Router {
         Route route = new Route(request.getPath(), request.getMethod());
         if (routes.get(route) != null) {
             return routes.get(route).respondToRequest(request);
-        } else if (file.isFile()){
+        } else if (file.isFile()) {
             return new TextFileHandler().respondToRequest(request);
-        } else if (file.isDirectory()){
+        } else if (file.isDirectory()) {
             return new DirectoryHandler().respondToRequest(request);
         } else {
             return new DefaultHandler().respondToRequest(request);

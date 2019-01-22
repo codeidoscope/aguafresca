@@ -1,7 +1,7 @@
 package com.github.codeidoscope;
 
 public class MockServerConnection implements ServerConnection {
-    private String message;
+    private byte[] message;
     private String input;
 
     @Override
@@ -20,7 +20,7 @@ public class MockServerConnection implements ServerConnection {
     }
 
     @Override
-    public void sendOutput(String message) {
+    public void sendOutput(byte[] message) {
         this.message = message;
     }
 
@@ -34,7 +34,7 @@ public class MockServerConnection implements ServerConnection {
 
     }
 
-    String sentResponse() {
+    byte[] sentResponse() {
         return message;
     }
 

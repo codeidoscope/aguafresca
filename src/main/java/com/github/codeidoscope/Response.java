@@ -1,10 +1,12 @@
 package com.github.codeidoscope;
 
+import java.util.Arrays;
+
 public class Response {
     private String headers;
-    private String body;
+    private byte[] body;
 
-    Response(String headers, String body) {
+    Response(String headers, byte[] body) {
         this.headers = headers;
         this.body = body;
     }
@@ -13,7 +15,11 @@ public class Response {
         return headers;
     }
 
-    String getBody() {
+    byte[] getBody() {
         return body;
+    }
+
+    String getBodyString() {
+        return Arrays.toString(body);
     }
 }
