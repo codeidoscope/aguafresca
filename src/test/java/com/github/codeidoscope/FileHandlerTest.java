@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class TextFileHandlerTest {
+class FileHandlerTest {
 
     @Test
     void returnsAResponseWithTheCorrectBody() throws IOException {

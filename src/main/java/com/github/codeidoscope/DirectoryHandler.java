@@ -4,25 +4,19 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class DirectoryHandler implements RouteHandler {
     @Override
     public Response respondToRequest(Request request) throws IOException {
+        RequestHeaderGenerator requestHeaderGenerator = new RequestHeaderGenerator();
+
         String contentRootPath = Configuration.getInstance().getContentRootPath();
         String filePath = contentRootPath + request.getPath();
 
         Body body = new Body(generateBodyFromDirectory(filePath).getBytes());
+        Header header = requestHeaderGenerator.generate("200 OK", getMimeType(request), body.getLength());
 
-        String statusCode = "200 OK";
-        String date = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
-        String contentLength = "" + body.getLength();
-        String contentType = "text/html";
-        String headersString = request.getProtocol() + " " + statusCode + "\n" + "Date: " + date + "\n" + "Content-Type: " + contentType + "\n" + "Content-Length: " + contentLength;
-        Header headers = new Header(headersString.getBytes());
-
-        return new Response(headers, body);
+        return new Response(header, body);
     }
 
     String removeBasePathFromPath(String path) throws IOException {
@@ -58,5 +52,9 @@ public class DirectoryHandler implements RouteHandler {
             }
         }
         return addHtmlContentToBody(htmlContent);
+    }
+
+    private String getMimeType(Request request) {
+        return javax.activation.MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(request.getPath());
     }
 }
