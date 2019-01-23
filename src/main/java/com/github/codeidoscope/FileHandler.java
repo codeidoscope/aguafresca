@@ -7,12 +7,12 @@ import java.nio.file.Paths;
 class FileHandler implements RouteHandler {
     @Override
     public Response respondToRequest(Request request) throws IOException {
-        RequestHeaderGenerator requestHeaderGenerator = new RequestHeaderGenerator();
+        HeaderGenerator headerGenerator = new HeaderGenerator();
         String contentRootPath = Configuration.getInstance().getContentRootPath();
         String filePath = contentRootPath + request.getPath();
 
         Body body = new Body(Files.readAllBytes(Paths.get(filePath)));
-        Header header = requestHeaderGenerator.generate("200 OK", getMimeType(request), body.getLength());
+        Header header = headerGenerator.generate("200 OK", getMimeType(request), body.getLength());
 
         return new Response(header, body);
     }

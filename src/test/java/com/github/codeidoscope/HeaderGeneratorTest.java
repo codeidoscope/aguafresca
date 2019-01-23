@@ -2,13 +2,17 @@ package com.github.codeidoscope;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class HeaderGeneratorTest {
 
     @Test
     void aNewHeaderObjectWithCorrectDataIsCreated() {
-        HeaderGenerator headerGenerator = new MockHeaderGenerator();
+        String dateTime = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.parse("2019-01-11T10:30:00Z[Europe/London]"));
+        HeaderGenerator headerGenerator = new HeaderGenerator(dateTime);
         String statusCode = "200 OK";
         String type = "text/plain";
         int length = 2547;
