@@ -18,7 +18,7 @@ class MockRouteHandler implements RouteHandler {
         String contentLength = "" + body.getLength();
         String contentType = "text/plain";
         String headersString = request.getProtocol() + " " + statusCode + "\n" + "Date: " + date + "\n" + "Content-Type: " + contentType + "\n" + "Content-Length: " + contentLength;
-        Header headers = new Header(headersString.getBytes());
+        Header headers = new Header(headersString);
 
         return new Response(headers, body);
     }

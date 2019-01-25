@@ -13,7 +13,7 @@ public class DirectoryHandler implements RouteHandler {
         String contentRootPath = Configuration.getInstance().getContentRootPath();
         String filePath = contentRootPath + request.getPath();
 
-        Body body = new Body(generateBodyFromDirectory(filePath).getBytes());
+        Body body = new Body(generateBodyFromDirectory(filePath));
         Header header = headerGenerator.generate("200 OK", getMimeType(request), body.getLength());
 
         return new Response(header, body);

@@ -9,6 +9,10 @@ class Body {
         this.body = body;
     }
 
+    Body(String body) {
+        this.body = body.getBytes();
+    }
+
     byte[] toBytes() {
         return body;
     }

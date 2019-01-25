@@ -9,6 +9,10 @@ class Header {
         this.header = header;
     }
 
+    Header(String header) {
+        this.header = header.getBytes();
+    }
+
     byte[] toBytes() {
         return header;
     }
