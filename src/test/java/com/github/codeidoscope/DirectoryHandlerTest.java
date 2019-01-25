@@ -65,7 +65,6 @@ class DirectoryHandlerTest {
         String htmlLinkFoo = directoryHandler.createHtmlLink("foo.txt");
         directoryHandler.addToHtmlContent(htmlLinkFoo, htmlContent);
 
-        String htmlBody = directoryHandler.addHtmlContentToBody(htmlContent);
         String testHtmlBody = "<!DOCTYPE html>\n" +
                 "<head>\n" +
                 "</head>\n" +
@@ -73,6 +72,7 @@ class DirectoryHandlerTest {
                 "<li><a href=\"/foo.txt\">foo.txt</a></li>\n" +
                 "</body>\n" +
                 "</html>\n";
+        String htmlBody = directoryHandler.addHtmlContentToBody(htmlContent);
 
         assertEquals(testHtmlBody, htmlBody);
     }
@@ -90,5 +90,27 @@ class DirectoryHandlerTest {
         String body = directoryHandler.generateBodyFromDirectory(directoryPath);
 
         assertEquals(expectedBody, body);
+    }
+
+    @Test
+    void returnsARequestContainingAGeneratedBody() throws IOException {
+        DirectoryHandler directoryHandler = new DirectoryHandler();
+
+        Request request = new Request();
+        request.setMethod("GET");
+        request.setProtocol("HTTP/1.1");
+        request.setPath("/testdirectory");
+
+        Body expectedBody = new Body("<!DOCTYPE html>\n" +
+                "<head>\n" +
+                "</head>\n" +
+                "<body>\n" +
+                "<li><a href=\"/testdirectory/othertestfile.txt\">testdirectory/othertestfile.txt</a></li><li><a href=\"/testdirectory/testfile.txt\">testdirectory/testfile.txt</a></li>\n" +
+                "</body>\n" +
+                "</html>\n");
+        Response response = directoryHandler.respondToRequest(request);
+
+        // Do I need to check the header as well?
+        assertEquals(expectedBody.getBodyString(), response.getBodyToString());
     }
 }

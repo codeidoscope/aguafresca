@@ -44,7 +44,7 @@ public class DirectoryHandler implements RouteHandler {
 
         if (files != null) {
             for (File file : files) {
-                String filePath = null;
+                String filePath;
                 filePath = file.getCanonicalPath();
                 filePath = removeBasePathFromPath(filePath);
                 String link = createHtmlLink(filePath);
