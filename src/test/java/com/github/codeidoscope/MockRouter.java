@@ -11,10 +11,6 @@ public class MockRouter implements Router {
         return routes.get(request.getPath());
     }
 
-    @Override
-    public void setHandlerForRoute(Route route, RouteHandler handler) {
-    }
-
     void addRoute(String path, Response response) {
         routes.put(path, response);
     }
