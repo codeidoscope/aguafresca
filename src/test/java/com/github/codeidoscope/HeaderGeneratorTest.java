@@ -15,9 +15,9 @@ class HeaderGeneratorTest {
         HeaderGenerator headerGenerator = new HeaderGenerator(dateTime);
         String statusCode = "200 OK";
         String type = "text/plain";
-        int length = 2547;
+        int length = 1234;
 
-        String headerString = "HTTP/1.1 200 OK\nDate: Fri, 11 Jan 2019 10:30:00 GMT\nMIME type: text/plain\nContent-Length: 2547\nAccept-Ranges: bytes";
+        String headerString = "HTTP/1.1 200 OK\nDate: Fri, 11 Jan 2019 10:30:00 GMT\nContent-Type: text/plain\nContent-Length: 1234\nAccept-Ranges: bytes";
         Header expectedHeader = new Header(headerString);
 
         Header generatedHeader = headerGenerator.generate(statusCode, type, length);

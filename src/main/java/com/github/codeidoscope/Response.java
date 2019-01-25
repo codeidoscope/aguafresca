@@ -9,19 +9,19 @@ public class Response {
         this.body = body;
     }
 
-    byte[] getHeaders() {
+    byte[] getHeadersToBytes() {
         return headers.toBytes();
     }
 
-    byte[] getBody() {
+    String getHeadersToString() {
+        return headers.getHeaderString();
+    }
+
+    byte[] getBodyToBytes() {
         return body.toBytes();
     }
 
-    String getBodyString() {
-        return body.getString();
-    }
-
-    String getHeadersString() {
-        return headers.getHeaderString();
+    String getBodyToString() {
+        return body.getBodyString();
     }
 }

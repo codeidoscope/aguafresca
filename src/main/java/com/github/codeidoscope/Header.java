@@ -1,13 +1,9 @@
 package com.github.codeidoscope;
 
-import java.util.Arrays;
+import java.nio.charset.StandardCharsets;
 
 class Header {
     private final byte[] header;
-
-    Header(byte[] header) {
-        this.header = header;
-    }
 
     Header(String header) {
         this.header = header.getBytes();
@@ -18,6 +14,6 @@ class Header {
     }
 
     String getHeaderString() {
-        return Arrays.toString(header);
+        return new String(header, StandardCharsets.UTF_8);
     }
 }

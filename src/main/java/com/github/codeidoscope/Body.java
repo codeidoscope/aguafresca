@@ -1,6 +1,6 @@
 package com.github.codeidoscope;
 
-import java.util.Arrays;
+import java.nio.charset.StandardCharsets;
 
 class Body {
     private final byte[] body;
@@ -17,8 +17,8 @@ class Body {
         return body;
     }
 
-    String getString() {
-        return Arrays.toString(body);
+    String getBodyString() {
+        return new String(body, StandardCharsets.UTF_8);
     }
 
     int getLength() {
