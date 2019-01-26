@@ -19,7 +19,7 @@ class HeaderGenerator {
     Header generate(String statusCode, String type, int length) {
         String header = PROTOCOL + " " + statusCode + "\n"
                 + "Date: " + getDateTimeNow + "\n"
-                + "Content-Type: " + type + "\n"
+                + "MIME-Type: " + type + "\n"
                 + "Content-Length: " + length + "\n"
                 + "Accept-Ranges: " + ACCEPT_RANGES;
 
