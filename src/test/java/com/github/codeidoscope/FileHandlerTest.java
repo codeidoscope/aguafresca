@@ -22,7 +22,7 @@ class FileHandlerTest {
         Response expectedResponse = new Response(headers, body);
         Response requestResponse = fileHandler.respondToRequest(request);
 
-//        assertEquals(expectedResponse.getHeadersToString(), requestResponse.getHeadersToString());
+        assertFalse(requestResponse.getHeadersToString().isEmpty());
         assertEquals(expectedResponse.getBodyToString(), requestResponse.getBodyToString());
     }
 }

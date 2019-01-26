@@ -22,7 +22,7 @@ class DefaultHandlerTest {
         Response expectedResponse = new Response(headers, body);
         Response requestResponse = defaultHandler.respondToRequest(request);
 
-//        assertEquals(expectedResponse.getHeadersToString(), requestResponse.getHeadersToString());
+        assertFalse(requestResponse.getHeadersToString().isEmpty());
         assertEquals(expectedResponse.getBodyToString(), requestResponse.getBodyToString());
     }
 

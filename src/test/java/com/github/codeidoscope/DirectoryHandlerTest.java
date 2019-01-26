@@ -110,7 +110,7 @@ class DirectoryHandlerTest {
                 "</html>\n");
         Response response = directoryHandler.respondToRequest(request);
 
-        // Do I need to check the header as well?
+        assertFalse(response.getHeadersToString().isEmpty());
         assertEquals(expectedBody.getBodyString(), response.getBodyToString());
     }
 }
