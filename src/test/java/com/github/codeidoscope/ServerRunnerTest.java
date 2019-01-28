@@ -17,7 +17,8 @@ class ServerRunnerTest {
         byte[] output = "HTTP/1.1 200 OK\n\r\nHello World".getBytes();
         MockServerConnection serverConnection = new MockServerConnection();
         serverConnection.setInput(input);
-        ServerRunner serverRunner = new MockServerRunner(serverConnection, mockServerRouter);
+        HttpServerRunner serverRunner = new HttpServerRunner(serverConnection, mockServerRouter);
+        serverConnection.setServerRunner(serverRunner);
 
         serverRunner.startServer(8080);
         assertEquals(Arrays.toString(output), Arrays.toString(serverConnection.sentResponse()));
@@ -31,7 +32,8 @@ class ServerRunnerTest {
         byte[] output = "HTTP/1.1 404 Not Found\n\r\n404 Not Found".getBytes();
         MockServerConnection serverConnection = new MockServerConnection();
         serverConnection.setInput(input);
-        ServerRunner serverRunner = new MockServerRunner(serverConnection, mockServerRouter);
+        HttpServerRunner serverRunner = new HttpServerRunner(serverConnection, mockServerRouter);
+        serverConnection.setServerRunner(serverRunner);
 
         serverRunner.startServer(8080);
         assertEquals(Arrays.toString(output), Arrays.toString(serverConnection.sentResponse()));

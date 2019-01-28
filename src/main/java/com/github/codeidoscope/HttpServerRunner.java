@@ -28,12 +28,15 @@ class HttpServerRunner implements ServerRunner {
                 byte[] serialisedResponse = responseSerialiser.serialise(response);
 
                 serverConnection.sendOutput(serialisedResponse);
-
                 serverConnection.closeClientConnection();
             }
             serverConnection.closeClientConnection();
         }
         serverConnection.closeConnection();
+    }
+
+    void stopServer() {
+        serverShouldContinueRunning = false;
     }
 
 }

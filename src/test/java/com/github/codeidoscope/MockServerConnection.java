@@ -3,6 +3,7 @@ package com.github.codeidoscope;
 public class MockServerConnection implements ServerConnection {
     private byte[] message;
     private String input;
+    private HttpServerRunner serverRunner;
 
     @Override
     public void createServerSocket(int portNumber) {
@@ -22,6 +23,7 @@ public class MockServerConnection implements ServerConnection {
     @Override
     public void sendOutput(byte[] message) {
         this.message = message;
+        stopServerRunner();
     }
 
     @Override
@@ -40,5 +42,13 @@ public class MockServerConnection implements ServerConnection {
 
     void setInput(String input) {
         this.input = input;
+    }
+
+    void setServerRunner(HttpServerRunner serverRunner){
+        this.serverRunner = serverRunner;
+    }
+
+    private void stopServerRunner(){
+        serverRunner.stopServer();
     }
 }
