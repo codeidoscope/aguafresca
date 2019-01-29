@@ -27,7 +27,7 @@ class HeaderGenerator {
         return new Header(header);
     }
 
-    private String generateContentDisposition(String type, int length) {
+    String generateContentDisposition(String type, int length) {
         int TenMbInBytes = 10485760;
         if (type.equals("application/pdf") && length > TenMbInBytes) {
             return "Content-Disposition: attachment\n";
