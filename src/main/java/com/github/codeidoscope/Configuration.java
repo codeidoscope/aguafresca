@@ -41,4 +41,9 @@ class Configuration {
     int getPortNumber() {
         return portNumber;
     }
+
+    void validateArgsAndSetParams(String[] arguments) throws IOException {
+        UserInputValidator userInputValidator = new UserInputValidator();
+        userInputValidator.validate(arguments);
+    }
 }
