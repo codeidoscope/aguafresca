@@ -19,10 +19,20 @@ class HeaderGenerator {
     Header generate(String statusCode, String type, int length) {
         String header = PROTOCOL + " " + statusCode + "\n"
                 + "Date: " + getDateTimeNow + "\n"
-                + "MIME-Type: " + type + "\n"
+                + "Content-Type" + type + "\n"
                 + "Content-Length: " + length + "\n"
-                + "Accept-Ranges: " + ACCEPT_RANGES;
+                + "Accept-Ranges: " + ACCEPT_RANGES
+                + generateContentDisposition(type, length);
 
         return new Header(header);
+    }
+
+    private String generateContentDisposition(String type, int length) {
+        int TenMbInBytes = 10485760;
+        if (type.equals("application/pdf") && length > TenMbInBytes) {
+            return "Content-Disposition: attachment\n";
+        } else {
+            return "";
+        }
     }
 }

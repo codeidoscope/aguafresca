@@ -12,12 +12,12 @@ class FileHandler implements RouteHandler {
         String filePath = contentRootPath + request.getPath();
 
         Body body = new Body(Files.readAllBytes(Paths.get(filePath)));
-        Header header = headerGenerator.generate("200 OK", getMimeType(request), body.getLength());
+        Header header = headerGenerator.generate("200 OK", getContentType(filePath), body.getLength());
 
         return new Response(header, body);
     }
 
-    private String getMimeType(Request request) {
-        return javax.activation.MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(request.getPath());
+    private String getContentType(String path) throws IOException {
+        return Files.probeContentType(Paths.get(path));
     }
 }

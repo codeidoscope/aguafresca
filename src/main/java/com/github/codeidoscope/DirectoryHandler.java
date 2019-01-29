@@ -14,7 +14,7 @@ public class DirectoryHandler implements RouteHandler {
         String filePath = contentRootPath + request.getPath();
 
         Body body = new Body(generateBodyFromDirectory(filePath));
-        Header header = headerGenerator.generate("200 OK", getMimeType(request), body.getLength());
+        Header header = headerGenerator.generate("200 OK", "text/html", body.getLength());
 
         return new Response(header, body);
     }
@@ -52,9 +52,5 @@ public class DirectoryHandler implements RouteHandler {
             }
         }
         return addHtmlContentToBody(htmlContent);
-    }
-
-    private String getMimeType(Request request) {
-        return javax.activation.MimetypesFileTypeMap.getDefaultFileTypeMap().getContentType(request.getPath());
     }
 }
