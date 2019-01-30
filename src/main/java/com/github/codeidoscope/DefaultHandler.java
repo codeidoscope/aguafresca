@@ -15,7 +15,7 @@ class DefaultHandler implements RouteHandler {
         int bodyLength = body.getLength();
         Boolean shouldBeAttachment = handlerHelpers.shouldBeAttachment(contentType, bodyLength);
 
-        Header header = headerGenerator.generate("404 Not Found", contentType, bodyLength, shouldBeAttachment);
+        Header header = headerGenerator.generate(StatusCodes.Status.NOT_FOUND.message, contentType, bodyLength, shouldBeAttachment);
 
         return new Response(header, body);
     }

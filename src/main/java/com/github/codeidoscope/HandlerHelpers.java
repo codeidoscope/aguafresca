@@ -5,6 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 class HandlerHelpers {
+    private final int TENMEGABYTESINBYTES = 10485760;
 
     HandlerHelpers() {
     }
@@ -14,8 +15,7 @@ class HandlerHelpers {
     }
 
     Boolean shouldBeAttachment(String type, int length) {
-        int TenMbInBytes = 10485760;
-        return type.equals("application/pdf") && length > TenMbInBytes;
+        return type.equals("application/pdf") && length > TENMEGABYTESINBYTES;
     }
 
     String generateFilePath(Request request) throws IOException {

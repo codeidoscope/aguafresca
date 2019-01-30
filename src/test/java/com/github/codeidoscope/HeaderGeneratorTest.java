@@ -9,11 +9,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class HeaderGeneratorTest {
+    private StatusCodes statusCodes;
+
     @Test
     void aNewHeaderObjectWithCorrectDataIsCreated() {
         String dateTime = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.parse("2019-01-11T10:30:00Z[Europe/London]"));
         HeaderGenerator headerGenerator = new HeaderGenerator(dateTime);
-        String statusCode = "200 OK";
         String type = "text/plain";
         int length = 1234;
         Boolean shouldBeAttachment = true;
@@ -25,7 +26,7 @@ class HeaderGeneratorTest {
                 "Accept-Ranges: bytes" +
                 "\nContent-Disposition: attachment";
         Header expectedHeader = new Header(headerString);
-        Header generatedHeader = headerGenerator.generate(statusCode, type, length, shouldBeAttachment);
+        Header generatedHeader = headerGenerator.generate(StatusCodes.Status.OK.message, type, length, shouldBeAttachment);
 
         assertEquals(expectedHeader.getHeaderString(), generatedHeader.getHeaderString());
     }
@@ -34,7 +35,6 @@ class HeaderGeneratorTest {
     void generatedHeaderShouldHaveFieldsOnSeparateNewLines() {
         String dateTime = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.parse("2019-01-11T10:30:00Z[Europe/London]"));
         HeaderGenerator headerGenerator = new HeaderGenerator(dateTime);
-        String statusCode = "200 OK";
         String type = "text/plain";
         int length = 1234;
         Boolean shouldBeAttachment = true;
@@ -46,7 +46,7 @@ class HeaderGeneratorTest {
                 "Accept-Ranges: bytes" +
                 "Content-Disposition: attachment";
         Header expectedHeader = new Header(erroneousHeaderString);
-        Header generatedHeader = headerGenerator.generate(statusCode, type, length, shouldBeAttachment);
+        Header generatedHeader = headerGenerator.generate(StatusCodes.Status.OK.message, type, length, shouldBeAttachment);
 
         assertNotEquals(expectedHeader.getHeaderString(), generatedHeader.getHeaderString());
     }

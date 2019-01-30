@@ -20,7 +20,7 @@ public class DirectoryHandler implements RouteHandler {
         int bodyLength = body.getLength();
         Boolean shouldBeAttachment = handlerHelpers.shouldBeAttachment(contentType, bodyLength);
 
-        Header header = headerGenerator.generate("200 OK", contentType, bodyLength, shouldBeAttachment);
+        Header header = headerGenerator.generate(StatusCodes.Status.OK.message, contentType, bodyLength, shouldBeAttachment);
 
         return new Response(header, body);
     }
