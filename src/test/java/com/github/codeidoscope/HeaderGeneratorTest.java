@@ -9,7 +9,6 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class HeaderGeneratorTest {
-    private StatusCodes statusCodes;
 
     @Test
     void aNewHeaderObjectWithCorrectDataIsCreated() {
