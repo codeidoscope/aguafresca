@@ -16,21 +16,20 @@ class HeaderGenerator {
         this.getDateTimeNow = getDateTimeNow;
     }
 
-    Header generate(String statusCode, String type, int length) {
+    Header generate(String statusCode, String type, int length, Boolean shouldBeAttachment) {
         String header = PROTOCOL + " " + statusCode + "\n"
                 + "Date: " + getDateTimeNow + "\n"
                 + "Content-Type: " + type + "\n"
                 + "Content-Length: " + length + "\n"
                 + "Accept-Ranges: " + ACCEPT_RANGES
-                + generateContentDisposition(type, length);
+                + generateContentDisposition(shouldBeAttachment);
 
         return new Header(header);
     }
 
-    String generateContentDisposition(String type, int length) {
-        int TenMbInBytes = 10485760;
-        if (type.equals("application/pdf") && length > TenMbInBytes) {
-            return "Content-Disposition: attachment\n";
+    String generateContentDisposition(Boolean shouldBeAttachment) {
+        if (shouldBeAttachment) {
+            return "\nContent-Disposition: attachment";
         } else {
             return "";
         }

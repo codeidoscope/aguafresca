@@ -6,15 +6,21 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class DirectoryHandler implements RouteHandler {
+    private final HandlerHelpers handlerHelpers = new HandlerHelpers();
+
     @Override
     public Response respondToRequest(Request request) throws IOException {
         HeaderGenerator headerGenerator = new HeaderGenerator();
 
-        String contentRootPath = Configuration.getInstance().getContentRootPath();
-        String filePath = contentRootPath + request.getPath();
+        String filePath = handlerHelpers.generateFilePath(request);
 
         Body body = new Body(generateBodyFromDirectory(filePath));
-        Header header = headerGenerator.generate("200 OK", "text/html", body.getLength());
+
+        String contentType = "text/html";
+        int bodyLength = body.getLength();
+        Boolean shouldBeAttachment = handlerHelpers.shouldBeAttachment(contentType, bodyLength);
+
+        Header header = headerGenerator.generate("200 OK", contentType, bodyLength, shouldBeAttachment);
 
         return new Response(header, body);
     }

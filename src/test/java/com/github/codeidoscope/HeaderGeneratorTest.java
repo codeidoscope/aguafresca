@@ -6,9 +6,9 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class HeaderGeneratorTest {
-
     @Test
     void aNewHeaderObjectWithCorrectDataIsCreated() {
         String dateTime = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.parse("2019-01-11T10:30:00Z[Europe/London]"));
@@ -16,48 +16,56 @@ class HeaderGeneratorTest {
         String statusCode = "200 OK";
         String type = "text/plain";
         int length = 1234;
+        Boolean shouldBeAttachment = true;
 
-        String headerString = "HTTP/1.1 200 OK\nDate: Fri, 11 Jan 2019 10:30:00 GMT\nContent-Type: text/plain\nContent-Length: 1234\nAccept-Ranges: bytes";
+        String headerString = "HTTP/1.1 200 OK\n" +
+                "Date: Fri, 11 Jan 2019 10:30:00 GMT\n" +
+                "Content-Type: text/plain\n" +
+                "Content-Length: 1234\n" +
+                "Accept-Ranges: bytes" +
+                "\nContent-Disposition: attachment";
         Header expectedHeader = new Header(headerString);
-
-        Header generatedHeader = headerGenerator.generate(statusCode, type, length);
+        Header generatedHeader = headerGenerator.generate(statusCode, type, length, shouldBeAttachment);
 
         assertEquals(expectedHeader.getHeaderString(), generatedHeader.getHeaderString());
     }
 
     @Test
-    void contentDispositionIsReturnedIfTheFileIsAPdfLargerThanTenMb() {
+    void generatedHeaderShouldHaveFieldsOnSeparateNewLines() {
         String dateTime = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.parse("2019-01-11T10:30:00Z[Europe/London]"));
         HeaderGenerator headerGenerator = new HeaderGenerator(dateTime);
+        String statusCode = "200 OK";
+        String type = "text/plain";
+        int length = 1234;
+        Boolean shouldBeAttachment = true;
 
-        String contentDisposition = headerGenerator.generateContentDisposition("application/pdf", 20485760);
-        assertEquals("Content-Disposition: attachment\n", contentDisposition);
+        String erroneousHeaderString = "HTTP/1.1 200 OK" +
+                "Date: Fri, 11 Jan 2019 10:30:00 GMT" +
+                "Content-Type: text/plain" +
+                "Content-Length: 1234" +
+                "Accept-Ranges: bytes" +
+                "Content-Disposition: attachment";
+        Header expectedHeader = new Header(erroneousHeaderString);
+        Header generatedHeader = headerGenerator.generate(statusCode, type, length, shouldBeAttachment);
+
+        assertNotEquals(expectedHeader.getHeaderString(), generatedHeader.getHeaderString());
     }
 
     @Test
-    void contentDispositionIsEmptyIfTheFileIsAPdfSmallerThanTenMb() {
+    void contentDispositionIsReturnedWhenShouldBeAttachmentIsTrue() {
         String dateTime = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.parse("2019-01-11T10:30:00Z[Europe/London]"));
         HeaderGenerator headerGenerator = new HeaderGenerator(dateTime);
+        String contentDisposition = headerGenerator.generateContentDisposition(true);
 
-        String contentDisposition = headerGenerator.generateContentDisposition("application/pdf", 632806);
-        assertEquals("", contentDisposition);
+        assertEquals("\nContent-Disposition: attachment", contentDisposition);
     }
 
     @Test
-    void contentDispositionIsEmptyIfNonPdfFileIsSmallerThanTenMb() {
+    void emptyStringIsReturnedWhenShouldBeAttachmentIsFalse() {
         String dateTime = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.parse("2019-01-11T10:30:00Z[Europe/London]"));
         HeaderGenerator headerGenerator = new HeaderGenerator(dateTime);
+        String contentDisposition = headerGenerator.generateContentDisposition(false);
 
-        String contentDisposition = headerGenerator.generateContentDisposition("text/plain", 53);
-        assertEquals("", contentDisposition);
-    }
-
-    @Test
-    void contentDispositionIsEmptyIfNonPdfFileIsLargerThanTenMb() {
-        String dateTime = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.parse("2019-01-11T10:30:00Z[Europe/London]"));
-        HeaderGenerator headerGenerator = new HeaderGenerator(dateTime);
-
-        String contentDisposition = headerGenerator.generateContentDisposition("text/plain", 2632806);
         assertEquals("", contentDisposition);
     }
 }
