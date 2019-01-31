@@ -10,6 +10,11 @@ class HttpServerRunner implements ServerRunner {
     private ServerConnection serverConnection;
     private boolean serverShouldContinueRunning = true;
 
+    HttpServerRunner() {
+        this.serverConnection = new TCPServerConnection();
+        this.serverRouter = new ServerRouter();
+    }
+
     HttpServerRunner(ServerConnection serverConnection, Router serverRouter) {
         this.serverConnection = serverConnection;
         this.serverRouter = serverRouter;

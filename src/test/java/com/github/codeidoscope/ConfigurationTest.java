@@ -21,12 +21,23 @@ class ConfigurationTest {
         int portNumber = 4000;
         configuration.setPortNumber(portNumber);
 
-        assertEquals(configuration.getPortNumber(), portNumber);
+        assertEquals(portNumber, configuration.getPortNumber());
     }
 
     @Test
     void returns8080AsTheDefaultPortWhenNoneIsSpecified() {
         int defaultPort = 8080;
-        assertEquals(configuration.getPortNumber(), defaultPort);
+        assertEquals(defaultPort, configuration.getPortNumber());
+    }
+
+    @Test
+    void testFromArgs() throws IOException {
+        String[] arguments = {"--port", "1234", "--directory", "/testdir"};
+        int defaultPort = 1234;
+        String contentRootPath = "/testdir";
+        Configuration.getInstance().validateArgsAndSetParams(arguments);
+
+        assertEquals(defaultPort, Configuration.getInstance().getPortNumber());
+        assertEquals(contentRootPath, Configuration.getInstance().getContentRootPath());
     }
 }
