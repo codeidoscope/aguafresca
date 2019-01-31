@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class HeaderGeneratorTest {
+    private Boolean shouldBeAttachment = true;
 
     @Test
     void aNewHeaderObjectWithCorrectDataIsCreated() {
@@ -16,8 +17,6 @@ class HeaderGeneratorTest {
         HeaderGenerator headerGenerator = new HeaderGenerator(dateTime);
         String type = "text/plain";
         int length = 1234;
-        Boolean shouldBeAttachment = true;
-
         String headerString = "HTTP/1.1 200 OK\n" +
                 "Date: Fri, 11 Jan 2019 10:30:00 GMT\n" +
                 "Content-Type: text/plain\n" +
@@ -36,8 +35,6 @@ class HeaderGeneratorTest {
         HeaderGenerator headerGenerator = new HeaderGenerator(dateTime);
         String type = "text/plain";
         int length = 1234;
-        Boolean shouldBeAttachment = true;
-
         String erroneousHeaderString = "HTTP/1.1 200 OK" +
                 "Date: Fri, 11 Jan 2019 10:30:00 GMT" +
                 "Content-Type: text/plain" +

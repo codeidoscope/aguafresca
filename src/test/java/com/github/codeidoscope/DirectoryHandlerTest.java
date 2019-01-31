@@ -35,10 +35,10 @@ class DirectoryHandlerTest {
     void returnsAnHtmlLinkStringGivenAFilePath() throws IOException {
         String filePath = new File(contentRootPath + "/foo.txt").getAbsolutePath();
         String extractedPath = directoryHandler.removeBasePathFromPath(filePath);
-        String testHtmlLink = String.format("<li><a href=\"/%s\">%s</a></li>", extractedPath, extractedPath);
+        String expectedHtmlLink = String.format("<li><a href=\"/%s\">%s</a></li>", extractedPath, extractedPath);
         String htmlLink = directoryHandler.createHtmlLink(extractedPath);
 
-        assertEquals(testHtmlLink, htmlLink);
+        assertEquals(expectedHtmlLink, htmlLink);
     }
 
     @Test
@@ -47,16 +47,14 @@ class DirectoryHandlerTest {
         String htmlLinkBar = directoryHandler.createHtmlLink("bar.txt");
         String htmlLinkBaz = directoryHandler.createHtmlLink("baz.txt");
         StringBuilder htmlContent = new StringBuilder();
-
         directoryHandler.addToHtmlContent(htmlLinkFoo, htmlContent);
         directoryHandler.addToHtmlContent(htmlLinkBar, htmlContent);
         directoryHandler.addToHtmlContent(htmlLinkBaz, htmlContent);
-
-        String testHtmlContent = "<li><a href=\"/foo.txt\">foo.txt</a></li>" +
+        String expectedHtmlContent = "<li><a href=\"/foo.txt\">foo.txt</a></li>" +
                 "<li><a href=\"/bar.txt\">bar.txt</a></li>" +
                 "<li><a href=\"/baz.txt\">baz.txt</a></li>";
 
-        assertEquals(testHtmlContent, htmlContent.toString());
+        assertEquals(expectedHtmlContent, htmlContent.toString());
     }
 
     @Test
@@ -64,8 +62,7 @@ class DirectoryHandlerTest {
         StringBuilder htmlContent = new StringBuilder();
         String htmlLinkFoo = directoryHandler.createHtmlLink("foo.txt");
         directoryHandler.addToHtmlContent(htmlLinkFoo, htmlContent);
-
-        String testHtmlBody = "<!DOCTYPE html>\n" +
+        String expectedHtmlBody = "<!DOCTYPE html>\n" +
                 "<head>\n" +
                 "</head>\n" +
                 "<body>\n" +
@@ -74,7 +71,7 @@ class DirectoryHandlerTest {
                 "</html>\n";
         String htmlBody = directoryHandler.addHtmlContentToBody(htmlContent);
 
-        assertEquals(testHtmlBody, htmlBody);
+        assertEquals(expectedHtmlBody, htmlBody);
     }
 
     @Test
@@ -84,28 +81,28 @@ class DirectoryHandlerTest {
                 "<head>\n" +
                 "</head>\n" +
                 "<body>\n" +
-                "<li><a href=\"/testdirectory/othertestfile.txt\">testdirectory/othertestfile.txt</a></li><li><a href=\"/testdirectory/testfile.txt\">testdirectory/testfile.txt</a></li>\n" +
+                "<li><a href=\"/testdirectory/othertestfile.txt\">testdirectory/othertestfile.txt</a></li>" +
+                "<li><a href=\"/testdirectory/testfile.txt\">testdirectory/testfile.txt</a></li>\n" +
                 "</body>\n" +
                 "</html>\n";
-        String body = directoryHandler.generateBodyFromDirectory(directoryPath);
+        String htmlBody = directoryHandler.generateBodyFromDirectory(directoryPath);
 
-        assertEquals(expectedBody, body);
+        assertEquals(expectedBody, htmlBody);
     }
 
     @Test
     void returnsARequestContainingAGeneratedBody() throws IOException {
         DirectoryHandler directoryHandler = new DirectoryHandler();
-
         Request request = new Request();
         request.setMethod("GET");
         request.setProtocol("HTTP/1.1");
         request.setPath("/testdirectory");
-
         Body expectedBody = new Body("<!DOCTYPE html>\n" +
                 "<head>\n" +
                 "</head>\n" +
                 "<body>\n" +
-                "<li><a href=\"/testdirectory/othertestfile.txt\">testdirectory/othertestfile.txt</a></li><li><a href=\"/testdirectory/testfile.txt\">testdirectory/testfile.txt</a></li>\n" +
+                "<li><a href=\"/testdirectory/othertestfile.txt\">testdirectory/othertestfile.txt</a></li>" +
+                "<li><a href=\"/testdirectory/testfile.txt\">testdirectory/testfile.txt</a></li>\n" +
                 "</body>\n" +
                 "</html>\n");
         Response response = directoryHandler.respondToRequest(request);

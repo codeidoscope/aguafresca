@@ -27,6 +27,7 @@ class ConfigurationTest {
     @Test
     void returns8080AsTheDefaultPortWhenNoneIsSpecified() {
         int defaultPort = 8080;
+
         assertEquals(defaultPort, configuration.getPortNumber());
     }
 

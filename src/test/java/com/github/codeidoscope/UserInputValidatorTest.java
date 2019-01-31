@@ -20,8 +20,8 @@ class UserInputValidatorTest {
         UserInputValidator userInputValidator = new UserInputValidator();
         String[] arguments = {"--directory", "1234", "--port", "/testdir"};
         String userDirectory = System.getProperty("user.dir");
-
         userInputValidator.validate(arguments);
+
         assertEquals(8080, Configuration.getInstance().getPortNumber());
         assertEquals(userDirectory, Configuration.getInstance().getContentRootPath());
     }
@@ -30,7 +30,6 @@ class UserInputValidatorTest {
     void setsPortAndDirectoryAccordingToUserInputWhenInputIsCorrect() throws IOException {
         UserInputValidator userInputValidator = new UserInputValidator();
         String[] arguments = {"--port", "1234", "--directory", "/testdir"};
-
         userInputValidator.validate(arguments);
 
         assertEquals(1234, Configuration.getInstance().getPortNumber());
