@@ -60,8 +60,9 @@ jacocoTestReport {
 
 jacocoTestCoverageVerification {
     violationRules.rule {
-        limit { counter = 'INSTRUCTION'; minimum = 0.75 }
+        limit { counter = 'INSTRUCTION'; minimum = 0.50 }
     }
 }
 
 check.dependsOn jacocoTestReport
+check.dependsOn jacocoTestCoverageVerification
