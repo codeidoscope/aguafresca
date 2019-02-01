@@ -1,47 +1,46 @@
 package com.github.codeidoscope;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 public class MockServerSocketWrapper implements ServerSocketWrapper {
     @Override
-    public void create(int portNumber) throws IOException {
+    public void create(int portNumber) {
 
     }
 
     @Override
-    public void accept() throws IOException {
+    public void accept() {
 
     }
 
     @Override
-    public void close() throws IOException {
+    public void close() {
 
     }
 
     @Override
-    public InputStream getInputStream() throws IOException {
+    public InputStream getInputStream() {
         return null;
     }
 
     @Override
-    public OutputStream getOutputStream() throws IOException {
+    public OutputStream getOutputStream() {
         return null;
     }
 
     @Override
-    public void closeClientSocket() throws IOException {
+    public void closeClientSocket() {
 
     }
 
     @Override
-    public void closeInputStream() throws IOException {
+    public void closeInputStream() {
 
     }
 
     @Override
-    public void closeOutputStream() throws IOException {
+    public void closeOutputStream() {
 
     }
 }
