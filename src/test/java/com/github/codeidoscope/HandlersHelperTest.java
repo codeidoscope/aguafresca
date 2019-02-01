@@ -6,7 +6,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class HandlerHelpersTest {
+class HandlersHelperTest {
     private int lengthLargerThanTenMb = 20485760;
     private int lengthSmallerThanTenMb = 100;
     private String pdfFileType = "application/pdf";
@@ -14,52 +14,52 @@ class HandlerHelpersTest {
 
     @Test
     void contentTypeIsRetrievedFromAGivenFilePath() throws IOException {
-        HandlerHelpers handlerHelpers = new HandlerHelpers();
+        HandlersHelper handlersHelper = new HandlersHelper();
         String filePath = System.getProperty("user.dir") + "/testdirectory/testfile.txt";
         String expectedContentType = "text/plain";
-        String contentType = handlerHelpers.getContentType(filePath);
+        String contentType = handlersHelper.getContentType(filePath);
 
         assertEquals(expectedContentType, contentType);
     }
 
     @Test
     void filePathIsGeneratedFromRequest() throws IOException {
-        HandlerHelpers handlerHelpers = new HandlerHelpers();
+        HandlersHelper handlersHelper = new HandlersHelper();
         Request request = new Request();
         request.setMethod("GET");
         request.setPath("/public");
         request.setProtocol("HTTP/1.1");
         String expectedFilePath = Configuration.getInstance().getContentRootPath() + request.getPath();
-        String filePath = handlerHelpers.generateFilePath(request);
+        String filePath = handlersHelper.generateFilePath(request);
 
         assertEquals(expectedFilePath, filePath);
     }
 
     @Test
     void shouldBeAttachmentReturnsTrueIfFileIsPdfAndLargerThanTenMb() {
-        HandlerHelpers handlerHelpers = new HandlerHelpers();
+        HandlersHelper handlersHelper = new HandlersHelper();
 
-        assertTrue(handlerHelpers.shouldBeAttachment(pdfFileType, lengthLargerThanTenMb));
+        assertTrue(handlersHelper.shouldBeAttachment(pdfFileType, lengthLargerThanTenMb));
     }
 
     @Test
     void shouldBeAttachmentReturnsFalseIfFileIsPdfAndSmallerThanTenMb() {
-        HandlerHelpers handlerHelpers = new HandlerHelpers();
+        HandlersHelper handlersHelper = new HandlersHelper();
 
-        assertFalse(handlerHelpers.shouldBeAttachment(pdfFileType, lengthSmallerThanTenMb));
+        assertFalse(handlersHelper.shouldBeAttachment(pdfFileType, lengthSmallerThanTenMb));
     }
 
     @Test
     void shouldBeAttachmentReturnsFalseIfFileIsNotPdfAndLargerThanTenMb() {
-        HandlerHelpers handlerHelpers = new HandlerHelpers();
+        HandlersHelper handlersHelper = new HandlersHelper();
 
-        assertFalse(handlerHelpers.shouldBeAttachment(imageFileType, lengthLargerThanTenMb));
+        assertFalse(handlersHelper.shouldBeAttachment(imageFileType, lengthLargerThanTenMb));
     }
 
     @Test
     void shouldBeAttachmentReturnsFalseIfFileIsNotPdfAndSmallerThanTenMb() {
-        HandlerHelpers handlerHelpers = new HandlerHelpers();
+        HandlersHelper handlersHelper = new HandlersHelper();
 
-        assertFalse(handlerHelpers.shouldBeAttachment(imageFileType, lengthSmallerThanTenMb));
+        assertFalse(handlersHelper.shouldBeAttachment(imageFileType, lengthSmallerThanTenMb));
     }
 }

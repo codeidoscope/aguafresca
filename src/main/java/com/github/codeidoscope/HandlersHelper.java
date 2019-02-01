@@ -4,10 +4,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-class HandlerHelpers {
+class HandlersHelper {
     private final int TENMEGABYTESINBYTES = 10485760;
 
-    HandlerHelpers() {
+    HandlersHelper() {
     }
 
     String getContentType(String path) throws IOException {

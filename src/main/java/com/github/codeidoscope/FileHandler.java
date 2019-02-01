@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 class FileHandler implements RouteHandler {
-    private final HandlerHelpers handlerHelpers = new HandlerHelpers();
+    private final HandlersHelper handlersHelper = new HandlersHelper();
 
     @Override
     public Response respondToRequest(Request request) throws IOException {
@@ -16,9 +16,9 @@ class FileHandler implements RouteHandler {
 
         Body body = new Body(Files.readAllBytes(Paths.get(filePath)));
 
-        String contentType = handlerHelpers.getContentType(request.getPath());
+        String contentType = handlersHelper.getContentType(request.getPath());
         int bodyLength = body.getLength();
-        Boolean shouldBeAttachment = handlerHelpers.shouldBeAttachment(contentType, bodyLength);
+        Boolean shouldBeAttachment = handlersHelper.shouldBeAttachment(contentType, bodyLength);
 
         Header header = headerGenerator.generate(StatusCodes.Status.OK.message, contentType, bodyLength, shouldBeAttachment);
 
