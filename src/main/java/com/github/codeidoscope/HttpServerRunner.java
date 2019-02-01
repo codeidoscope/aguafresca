@@ -11,7 +11,7 @@ class HttpServerRunner implements ServerRunner {
     private boolean serverShouldContinueRunning = true;
 
     HttpServerRunner() {
-        this.serverConnection = new TCPServerConnection(new HttpServerSocketWrapper(), new ServerInputOutputStreamWrapper());
+        this.serverConnection = new TCPServerConnection(new HttpServerSocketWrapper(), new HttpServerInputOutputStreamWrapper());
         this.serverRouter = new ServerRouter();
     }
 
