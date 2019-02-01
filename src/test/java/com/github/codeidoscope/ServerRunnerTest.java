@@ -38,4 +38,19 @@ class ServerRunnerTest {
 
         assertEquals(Arrays.toString(output), Arrays.toString(serverConnection.sentResponse()));
     }
+
+    @Test
+    void testGetValidResourceReturnOkResponseWhenTcpConnectionIsUsed() throws IOException {
+        MockRouter mockServerRouter = new MockRouter();
+        mockServerRouter.addRoute("/testdirectory/testfile.txt", new Response(new Header("HTTP/1.1 200 OK"), new Body("Test file.")));
+        String input = "GET /testdirectory/testfile.txt HTTP/1.1\n\r\n";
+        byte[] output = "HTTP/1.1 200 OK\n\r\nTest file.".getBytes();
+        MockInputOutputStreamWrapper mockInputOutputStreamWrapper = new MockInputOutputStreamWrapper();
+        mockInputOutputStreamWrapper.setInput(input);
+        TCPServerConnection serverConnection = new TCPServerConnection(new MockServerSocketWrapper(), mockInputOutputStreamWrapper);
+        MockServerRunner mockServerRunner = new MockServerRunner(serverConnection, mockServerRouter);
+        mockServerRunner.startServer(8080);
+
+        assertEquals(Arrays.toString(output), Arrays.toString(mockInputOutputStreamWrapper.sentResponse()));
+    }
 }

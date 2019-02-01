@@ -1,41 +1,41 @@
 package com.github.codeidoscope;
 
-import java.io.BufferedReader;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.logging.Level;
 
 class TCPServerConnection implements ServerConnection {
-    private ServerSocket serverSocket;
-    private Socket socket;
+    private ServerSocketWrapper serverSocket;
+    private InputOutputStreamWrapper inputOutputStreamWrapper;
     private InputStream inputStream;
     private OutputStream outputStream;
 
+    TCPServerConnection(ServerSocketWrapper serverSocketWrapper, InputOutputStreamWrapper inputOutputStreamWrapper) {
+        this.serverSocket = serverSocketWrapper;
+        this.inputOutputStreamWrapper = inputOutputStreamWrapper;
+    }
+
     @Override
     public void createServerSocket(int portNumber) throws IOException {
-        serverSocket = new ServerSocket(portNumber);
+        serverSocket.create(portNumber);
     }
 
     @Override
     public void listenForClientConnection() throws IOException {
-        socket = serverSocket.accept();
-        inputStream = socket.getInputStream();
-        outputStream = socket.getOutputStream();
+        serverSocket.accept();
+        inputStream = serverSocket.getInputStream();
+        outputStream = serverSocket.getOutputStream();
     }
 
     @Override
     public String getInput() throws IOException {
-        return new BufferedReader(new InputStreamReader(inputStream)).readLine();
+        return inputOutputStreamWrapper.getInput(inputStream);
     }
 
     @Override
     public void sendOutput(byte[] message) throws IOException {
-        new DataOutputStream(outputStream).write(message);
+        inputOutputStreamWrapper.sendOutput(outputStream, message);
     }
 
     @Override
@@ -46,9 +46,9 @@ class TCPServerConnection implements ServerConnection {
 
     @Override
     public void closeClientConnection() throws IOException {
-        inputStream.close();
-        outputStream.close();
-        socket.close();
+        serverSocket.closeInputStream();
+        serverSocket.closeOutputStream();
+        serverSocket.closeClientSocket();
     }
 
 }
