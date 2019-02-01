@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/codeidoscope/aguafresca.png)](https://travis-ci.org/codeidoscope/aguafresca) [![codecov](https://codecov.io/gh/codeidoscope/aguafresca/branch/master/graph/badge.svg)](https://codecov.io/gh/codeidoscope/aguafresca) [![Maintainability](https://api.codeclimate.com/v1/badges/ad7ff723d172b8b0eb36/maintainability)](https://codeclimate.com/github/codeidoscope/aguafresca/maintainability)
+
 # aguafresca
 The Refreshing HTTP Server
 

@@ -1,6 +1,7 @@
 plugins {
     id 'application'
     id 'java'
+    id 'jacoco'
 }
 
 group 'com.github.codeidoscope'
@@ -44,3 +45,24 @@ wrapper {
 test {
     useJUnitPlatform()
 }
+
+jacoco {
+    toolVersion = "0.8.2"
+}
+
+jacocoTestReport {
+    group = "Reporting"
+    reports {
+        xml.enabled true
+        html.enabled true
+    }
+}
+
+jacocoTestCoverageVerification {
+    violationRules.rule {
+        limit { counter = 'INSTRUCTION'; minimum = 0.50 }
+    }
+}
+
+check.dependsOn jacocoTestReport
+check.dependsOn jacocoTestCoverageVerification
