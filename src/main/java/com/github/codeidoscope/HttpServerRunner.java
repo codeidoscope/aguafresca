@@ -26,6 +26,7 @@ class HttpServerRunner implements ServerRunner {
         serverConnection.createServerSocket(portNumber);
         while (serverShouldContinueRunning) {
             serverConnection.listenForClientConnection();
+            try {
             String input = serverConnection.getInput();
             if (input != null) {
                 Request request = requestParser.parse(input);
@@ -36,6 +37,9 @@ class HttpServerRunner implements ServerRunner {
                 serverConnection.closeClientConnection();
             }
             serverConnection.closeClientConnection();
+            } catch (IOException e) {
+                ServerLogger.serverLogger.log(Level.WARNING, "Error: " + e);
+            }
         }
         serverConnection.closeConnection();
     }
