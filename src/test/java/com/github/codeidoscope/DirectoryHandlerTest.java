@@ -11,24 +11,24 @@ import static org.junit.jupiter.api.Assertions.*;
 class DirectoryHandlerTest {
 
     private DirectoryHandler directoryHandler = new DirectoryHandler();
-    private String contentRootPath = Configuration.getInstance().getContentRootPath();
+    private String contentRootPath;
 
-    DirectoryHandlerTest() throws IOException {
+    DirectoryHandlerTest() {
     }
 
     @BeforeEach
     void setUp() throws IOException {
         Configuration.getInstance().setPortNumber(8080);
-        Configuration.getInstance().setContentRootPath(System.getProperty("user.dir"));
+        contentRootPath = System.getProperty("user.dir");
+        Configuration.getInstance().setContentRootPath(contentRootPath);
     }
 
     @Test
     void extractsTheBasePathFromAGivenPath() throws IOException {
-        String filePath = contentRootPath + "/foo.txt";
-        String expectedExtractedPath = "foo.txt";
+        String filePath = new File(contentRootPath + "/foo.txt").getAbsolutePath();
         String extractedPath = directoryHandler.removeBasePathFromPath(filePath);
 
-        assertEquals(expectedExtractedPath, extractedPath);
+        assertEquals("foo.txt", extractedPath);
     }
 
     @Test
