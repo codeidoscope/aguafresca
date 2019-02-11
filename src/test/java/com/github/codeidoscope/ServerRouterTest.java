@@ -66,4 +66,20 @@ class ServerRouterTest {
         assertFalse(serverRouter.route(request).getHeadersToString().isEmpty());
         assertEquals(expectedResponse.getBodyToString(), serverRouter.route(request).getBodyToString());
     }
+
+    @Test
+    void returnsAHeaderAndAnHtmlFormAsTheBodyWhenAFormIsRequest() throws IOException {
+        Request request = new Request();
+        request.setMethod("GET");
+        request.setPath("/form");
+        request.setProtocol("HTTP/1.1");
+
+        ServerRouter serverRouter = new ServerRouter();
+        Header header = new Header("HTTP/1.1 200 OK\nDate: Fri, 11 Jan 2019 10:30:00 GMT\nContent-Type: text/html\nContent-Length: 845\nAccept-Ranges: bytes");
+        String form = new FormHandler().generateHtmlForm();
+        Response expectedResponse = new Response(header, new Body(form));
+
+        assertFalse(serverRouter.route(request).getHeadersToString().isEmpty());
+        assertEquals(expectedResponse.getBodyToString(), serverRouter.route(request).getBodyToString());
+    }
 }
