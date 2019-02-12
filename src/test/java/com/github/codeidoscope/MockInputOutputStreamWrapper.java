@@ -5,10 +5,10 @@ import java.io.OutputStream;
 
 public class MockInputOutputStreamWrapper implements InputOutputStreamWrapper {
     private byte[] message;
-    private String input;
+    private InputStream input;
 
     @Override
-    public String getInput(InputStream inputStream) {
+    public InputStream getInput(InputStream inputStream) {
         return input;
     }
 
@@ -21,7 +21,7 @@ public class MockInputOutputStreamWrapper implements InputOutputStreamWrapper {
         return message;
     }
 
-    void setInput(String input) {
+    void setInput(InputStream input) {
         this.input = input;
     }
 }

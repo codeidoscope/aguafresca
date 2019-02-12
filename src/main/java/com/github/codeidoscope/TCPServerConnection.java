@@ -29,7 +29,7 @@ class TCPServerConnection implements ServerConnection {
     }
 
     @Override
-    public String getInput() throws IOException {
+    public InputStream getInput() throws IOException {
         return inputOutputStreamWrapper.getInput(inputStream);
     }
 

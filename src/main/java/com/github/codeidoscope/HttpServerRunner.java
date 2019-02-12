@@ -1,6 +1,7 @@
 package com.github.codeidoscope;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.logging.Level;
 
 class HttpServerRunner implements ServerRunner {
@@ -27,16 +28,16 @@ class HttpServerRunner implements ServerRunner {
         while (serverShouldContinueRunning) {
             serverConnection.listenForClientConnection();
             try {
-            String input = serverConnection.getInput();
-            if (input != null) {
-                Request request = requestParser.parse(input);
-                Response response = serverRouter.route(request);
-                byte[] serialisedResponse = responseSerialiser.serialise(response);
+                InputStream input = serverConnection.getInput();
+                if (input != null) {
+                    Request request = requestParser.parse(input);
+                    Response response = serverRouter.route(request);
+                    byte[] serialisedResponse = responseSerialiser.serialise(response);
 
-                serverConnection.sendOutput(serialisedResponse);
+                    serverConnection.sendOutput(serialisedResponse);
+                    serverConnection.closeClientConnection();
+                }
                 serverConnection.closeClientConnection();
-            }
-            serverConnection.closeClientConnection();
             } catch (IOException e) {
                 ServerLogger.serverLogger.log(Level.WARNING, "Error: " + e);
             }

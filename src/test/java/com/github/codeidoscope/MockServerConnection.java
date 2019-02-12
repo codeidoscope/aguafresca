@@ -1,8 +1,10 @@
 package com.github.codeidoscope;
 
+import java.io.InputStream;
+
 public class MockServerConnection implements ServerConnection {
     private byte[] message;
-    private String input;
+    private InputStream input;
     private HttpServerRunner serverRunner;
 
     @Override
@@ -16,7 +18,7 @@ public class MockServerConnection implements ServerConnection {
     }
 
     @Override
-    public String getInput() {
+    public InputStream getInput() {
         return input;
     }
 
@@ -40,15 +42,15 @@ public class MockServerConnection implements ServerConnection {
         return message;
     }
 
-    void setInput(String input) {
+    void setInput(InputStream input) {
         this.input = input;
     }
 
-    void setServerRunner(HttpServerRunner serverRunner){
+    void setServerRunner(HttpServerRunner serverRunner) {
         this.serverRunner = serverRunner;
     }
 
-    private void stopServerRunner(){
+    private void stopServerRunner() {
         serverRunner.stopServer();
     }
 }

@@ -1,6 +1,7 @@
 package com.github.codeidoscope;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.logging.Level;
 
 public class MockServerRunner implements ServerRunner {
@@ -19,7 +20,7 @@ public class MockServerRunner implements ServerRunner {
         ServerLogger.serverLogger.log(Level.INFO, "Connection made to port " + portNumber);
         serverConnection.createServerSocket(portNumber);
         serverConnection.listenForClientConnection();
-        String input = serverConnection.getInput();
+        InputStream input = serverConnection.getInput();
         if (input != null) {
             Request request = requestParser.parse(input);
             Response response = serverRouter.route(request);
