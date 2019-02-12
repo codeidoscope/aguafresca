@@ -14,6 +14,7 @@ class ServerRouter implements Router {
         Route route = new Route(request.getPath(), request.getMethod());
 
         setHandlerForRoute(new Route("/form", "GET"), new FormHandler());
+        setHandlerForRoute(new Route("/form_results", "POST"), new FormDataHandler());
 
         if (routes.get(route) != null) {
             return routes.get(route).respondToRequest(request);
