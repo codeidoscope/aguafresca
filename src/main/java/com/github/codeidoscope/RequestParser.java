@@ -13,15 +13,19 @@ class RequestParser {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String firstLineOfRequest = bufferedReader.readLine();
 
-        LinkedHashMap<String, String> headers = getHeaders(bufferedReader);
-        String contentLengthKey = headers.get("Content-Length");
-        String body = getBody(contentLengthKey, bufferedReader);
+        if (firstLineOfRequest != null) {
+            LinkedHashMap<String, String> headers = getHeaders(bufferedReader);
+            String contentLengthKey = headers.get("Content-Length");
+            String body = getBody(contentLengthKey, bufferedReader);
 
-        Request request = parseMethodPathProtocol(firstLineOfRequest);
-        request.setHeaders(headers);
-        request.setBody(body);
+            Request request = parseMethodPathProtocol(firstLineOfRequest);
+            request.setHeaders(headers);
+            request.setBody(body);
 
-        return request;
+            return request;
+        } else {
+            return new Request();
+        }
     }
 
     Request parseMethodPathProtocol(String firstLineOfRequest) {
