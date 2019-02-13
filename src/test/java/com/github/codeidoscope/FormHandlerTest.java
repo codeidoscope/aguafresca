@@ -2,14 +2,12 @@ package com.github.codeidoscope;
 
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class FormHandlerTest {
 
     @Test
-    void returnsAResponseWithTheCorrectBodyForAForm() throws IOException {
+    void returnsAResponseWithTheCorrectBodyForAForm(){
         FormHandler formHandler = new FormHandler();
         Request request = new Request();
         request.setMethod("GET");

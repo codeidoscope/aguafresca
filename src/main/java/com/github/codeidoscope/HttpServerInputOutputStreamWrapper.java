@@ -1,6 +1,5 @@
 package com.github.codeidoscope;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -13,6 +12,8 @@ public class HttpServerInputOutputStreamWrapper implements InputOutputStreamWrap
 
     @Override
     public void sendOutput(OutputStream outputStream, byte[] message) throws IOException {
-        new DataOutputStream(outputStream).write(message);
+        outputStream.write(message);
+        outputStream.flush();
+        outputStream.close();
     }
 }
