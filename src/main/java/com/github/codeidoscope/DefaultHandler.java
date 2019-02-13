@@ -1,22 +1,25 @@
 package com.github.codeidoscope;
 
-import java.io.IOException;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 class DefaultHandler implements RouteHandler {
-    private final HandlersHelper handlersHelper = new HandlersHelper();
 
     @Override
-    public Response respondToRequest(Request request) throws IOException {
-        HeaderGenerator headerGenerator = new HeaderGenerator();
-
+    public Response respondToRequest(Request request) {
         Body body = new Body("404 - NOT FOUND");
-
-        String contentType = handlersHelper.getContentType(request.getPath());
         int bodyLength = body.getLength();
-        Boolean shouldBeAttachment = handlersHelper.shouldBeAttachment(contentType, bodyLength);
 
-        Header header = headerGenerator.generate(StatusCodes.Status.NOT_FOUND.message, contentType, bodyLength, shouldBeAttachment);
+        return new Response(generateHeader(bodyLength), body);
+    }
 
-        return new Response(header, body);
+    private Header generateHeader(int bodyLength) {
+        String getDateTimeNow = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
+
+        return new Header("HTTP/1.1 " + StatusCodes.Status.NOT_FOUND.message + "\r\n"
+                + "Date: " + getDateTimeNow + "\r\n"
+                + "Content-Type: text/plain\r\n"
+                + "Content-Length: " + bodyLength + "\r\n"
+                + "Accept-Ranges: bytes");
     }
 }
