@@ -25,9 +25,9 @@ class RequestParser {
     }
 
     Request parseMethodPathProtocol(String firstLineOfRequest) {
-        String method = firstLineOfRequest.split("\n\r\n")[0].split(" ")[0];
-        String path = firstLineOfRequest.split("\n\r\n")[0].split(" ")[1];
-        String protocol = firstLineOfRequest.split("\n\r\n")[0].split(" ")[2];
+        String method = firstLineOfRequest.split("\r\n")[0].split(" ")[0];
+        String path = firstLineOfRequest.split("\r\n")[0].split(" ")[1];
+        String protocol = firstLineOfRequest.split("\r\n")[0].split(" ")[2];
 
         Request parsedRequest = new Request();
         parsedRequest.setMethod(method);

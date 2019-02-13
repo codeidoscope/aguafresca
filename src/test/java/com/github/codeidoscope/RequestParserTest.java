@@ -20,7 +20,7 @@ class RequestParserTest {
 
     @Test
     void correctlyParsesGETRequestAndReturnsValidRequest() {
-        Request parsedRequest = requestParser.parseMethodPathProtocol("GET /path HTTP/1.1\n\r\n");
+        Request parsedRequest = requestParser.parseMethodPathProtocol("GET /path HTTP/1.1\r\n");
 
         assertEquals(parsedRequest.getMethod(), "GET");
         assertEquals(parsedRequest.getPath(), "/path");
@@ -30,7 +30,7 @@ class RequestParserTest {
 
     @Test
     void correctlyParsesHEADRequest() {
-        Request parsedRequest = requestParser.parseMethodPathProtocol("HEAD /a_path HTTP/1.0\n\r\n");
+        Request parsedRequest = requestParser.parseMethodPathProtocol("HEAD /a_path HTTP/1.0\r\n");
 
         assertEquals(parsedRequest.getMethod(), "HEAD");
         assertEquals(parsedRequest.getPath(), "/a_path");
@@ -39,12 +39,13 @@ class RequestParserTest {
 
     @Test
     void returnsParsedRequestWithExpectedAttributes() throws IOException {
-        String rawRequest = "GET /testdirectory HTTP/1.1\n" +
-                "Host: localhost:8080\n" +
-                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8\n" +
-                "Accept-Encoding: gzip, deflate, br\n" +
-                "Content-Length: 25\n" +
-                "Accept-Language: en-GB,en-US;q=0.9,en;q=0.8,fr;q=0.7\n\r\n" +
+        String rawRequest = "GET /testdirectory HTTP/1.1\r\n" +
+                "Host: localhost:8080\r\n" +
+                "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8\r\n" +
+                "Accept-Encoding: gzip, deflate, br\r\n" +
+                "Content-Length: 25\r\n" +
+                "Accept-Language: en-GB,en-US;q=0.9,en;q=0.8,fr;q=0.7\r\n" +
+                "\r\n" +
                 "Test body";
 
         ByteArrayInputStream mockInputStream = new ByteArrayInputStream(rawRequest.getBytes());
