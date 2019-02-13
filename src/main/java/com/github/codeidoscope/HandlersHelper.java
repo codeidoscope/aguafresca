@@ -7,9 +7,6 @@ import java.nio.file.Paths;
 class HandlersHelper {
     private final int TENMEGABYTESINBYTES = 10485760;
 
-    HandlersHelper() {
-    }
-
     String getContentType(String path) throws IOException {
         return Files.probeContentType(Paths.get(path));
     }

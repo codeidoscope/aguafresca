@@ -6,7 +6,6 @@ import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class HeaderGeneratorTest {
     private Boolean shouldBeAttachment = true;
@@ -17,12 +16,12 @@ class HeaderGeneratorTest {
         HeaderGenerator headerGenerator = new HeaderGenerator(dateTime);
         String type = "text/plain";
         int length = 1234;
-        String headerString = "HTTP/1.1 200 OK\n" +
-                "Date: Fri, 11 Jan 2019 10:30:00 GMT\n" +
-                "Content-Type: text/plain\n" +
-                "Content-Length: 1234\n" +
+        String headerString = "HTTP/1.1 200 OK\r\n" +
+                "Date: Fri, 11 Jan 2019 10:30:00 GMT\r\n" +
+                "Content-Type: text/plain\r\n" +
+                "Content-Length: 1234\r\n" +
                 "Accept-Ranges: bytes" +
-                "\nContent-Disposition: attachment";
+                "\r\nContent-Disposition: attachment";
         Header expectedHeader = new Header(headerString);
         Header generatedHeader = headerGenerator.generate(StatusCodes.Status.OK.message, type, length, shouldBeAttachment);
 
@@ -35,10 +34,10 @@ class HeaderGeneratorTest {
         HeaderGenerator headerGenerator = new HeaderGenerator(dateTime);
         String type = "text/plain";
         int length = 1234;
-        String headerString = "HTTP/1.1 200 OK\n" +
-                "Date: Fri, 11 Jan 2019 10:30:00 GMT\n" +
-                "Content-Type: text/plain\n" +
-                "Content-Length: 1234\n" +
+        String headerString = "HTTP/1.1 200 OK\r\n" +
+                "Date: Fri, 11 Jan 2019 10:30:00 GMT\r\n" +
+                "Content-Type: text/plain\r\n" +
+                "Content-Length: 1234\r\n" +
                 "Accept-Ranges: bytes";
         Header expectedHeader = new Header(headerString);
         Header generatedHeader = headerGenerator.generate(StatusCodes.Status.OK.message, type, length, false);
@@ -52,7 +51,7 @@ class HeaderGeneratorTest {
         HeaderGenerator headerGenerator = new HeaderGenerator(dateTime);
         String contentDisposition = headerGenerator.generateContentDisposition(true);
 
-        assertEquals("\nContent-Disposition: attachment", contentDisposition);
+        assertEquals("\r\nContent-Disposition: attachment", contentDisposition);
     }
 
     @Test

@@ -17,10 +17,10 @@ class HeaderGenerator {
     }
 
     Header generate(String statusCode, String type, int length, Boolean shouldBeAttachment) {
-        String header = PROTOCOL + " " + statusCode + "\n"
-                + "Date: " + getDateTimeNow + "\n"
-                + "Content-Type: " + type + "\n"
-                + "Content-Length: " + length + "\n"
+        String header = PROTOCOL + " " + statusCode + "\r\n"
+                + "Date: " + getDateTimeNow + "\r\n"
+                + "Content-Type: " + type + "\r\n"
+                + "Content-Length: " + length + "\r\n"
                 + "Accept-Ranges: " + ACCEPT_RANGES
                 + generateContentDisposition(shouldBeAttachment);
 
@@ -29,7 +29,7 @@ class HeaderGenerator {
 
     String generateContentDisposition(Boolean shouldBeAttachment) {
         if (shouldBeAttachment) {
-            return "\nContent-Disposition: attachment";
+            return "\r\nContent-Disposition: attachment";
         } else {
             return "";
         }
