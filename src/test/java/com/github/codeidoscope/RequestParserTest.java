@@ -20,7 +20,7 @@ class RequestParserTest {
 
     @Test
     void correctlyParsesGETRequestAndReturnsValidRequest() {
-        Request parsedRequest = requestParser.parseMethodPathProtocol("GET /path HTTP/1.1\r\n");
+        Request parsedRequest = requestParser.createRequestFromLine("GET /path HTTP/1.1\r\n");
 
         assertEquals(parsedRequest.getMethod(), "GET");
         assertEquals(parsedRequest.getPath(), "/path");
@@ -30,7 +30,7 @@ class RequestParserTest {
 
     @Test
     void correctlyParsesHEADRequest() {
-        Request parsedRequest = requestParser.parseMethodPathProtocol("HEAD /a_path HTTP/1.0\r\n");
+        Request parsedRequest = requestParser.createRequestFromLine("HEAD /a_path HTTP/1.0\r\n");
 
         assertEquals(parsedRequest.getMethod(), "HEAD");
         assertEquals(parsedRequest.getPath(), "/a_path");

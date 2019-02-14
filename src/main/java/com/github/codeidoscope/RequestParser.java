@@ -15,10 +15,10 @@ class RequestParser {
 
         if (firstLineOfRequest != null) {
             LinkedHashMap<String, String> headers = getHeaders(bufferedReader);
-            String contentLengthKey = headers.get("Content-Length");
-            String body = getBody(contentLengthKey, bufferedReader);
+            String contentLengthValue = headers.get("Content-Length");
+            String body = getBody(contentLengthValue, bufferedReader);
 
-            Request request = parseMethodPathProtocol(firstLineOfRequest);
+            Request request = createRequestFromLine(firstLineOfRequest);
             request.setHeaders(headers);
             request.setBody(body);
 
@@ -28,15 +28,13 @@ class RequestParser {
         }
     }
 
-    Request parseMethodPathProtocol(String firstLineOfRequest) {
-        String method = firstLineOfRequest.split("\r\n")[0].split(" ")[0];
-        String path = firstLineOfRequest.split("\r\n")[0].split(" ")[1];
-        String protocol = firstLineOfRequest.split("\r\n")[0].split(" ")[2];
+    Request createRequestFromLine(String firstLineOfRequest) {
+        String[] splitLine = firstLineOfRequest.split("\r\n")[0].split(" ");
 
         Request parsedRequest = new Request();
-        parsedRequest.setMethod(method);
-        parsedRequest.setPath(path);
-        parsedRequest.setProtocol(protocol);
+        parsedRequest.setMethod(splitLine[0]);
+        parsedRequest.setPath(splitLine[1]);
+        parsedRequest.setProtocol(splitLine[2]);
 
         return parsedRequest;
     }
@@ -62,11 +60,11 @@ class RequestParser {
         return headers;
     }
 
-    private String getBody(String contentLengthKey, BufferedReader bufferedReader) throws IOException {
-        if (contentLengthKey == null) {
+    private String getBody(String contentLengthValue, BufferedReader bufferedReader) throws IOException {
+        if (contentLengthValue == null) {
             return null;
         } else {
-            int contentLengthAsInt = Integer.parseInt(contentLengthKey);
+            int contentLengthAsInt = Integer.parseInt(contentLengthValue);
             StringBuilder body = new StringBuilder();
             for (int i = 0; i < contentLengthAsInt; i++) {
                 body.append((char) bufferedReader.read());
