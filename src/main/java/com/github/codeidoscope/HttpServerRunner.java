@@ -2,45 +2,35 @@ package com.github.codeidoscope;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.logging.Level;
 
-class HttpServerRunner implements ServerRunner {
+class HttpServerRunner {
     private final RequestParser requestParser = new RequestParser();
     private final ResponseSerialiser responseSerialiser = new ResponseSerialiser();
     private Router serverRouter;
     private ServerConnection serverConnection;
     private boolean serverShouldContinueRunning = true;
+    private Executor executor;
 
     HttpServerRunner() {
-        this.serverConnection = new TCPServerConnection(new HttpServerSocketWrapper(), new HttpServerInputOutputStreamWrapper());
+        this.serverConnection = new TCPServerConnection(new HttpServerSocketWrapper());
         this.serverRouter = new ServerRouter();
+        this.executor = Executors.newCachedThreadPool();
     }
 
-    HttpServerRunner(ServerConnection serverConnection, Router serverRouter) {
+    HttpServerRunner(ServerConnection serverConnection, Router serverRouter, Executor executor) {
         this.serverConnection = serverConnection;
         this.serverRouter = serverRouter;
+        this.executor = executor;
     }
 
-    @Override
-    public void startServer(int portNumber) throws RuntimeException, IOException {
+    void startServer(int portNumber) throws RuntimeException, IOException {
         ServerLogger.serverLogger.log(Level.INFO, "Connection made to port " + portNumber);
         serverConnection.createServerSocket(portNumber);
         while (serverShouldContinueRunning) {
-            serverConnection.listenForClientConnection();
-            try {
-                InputStream input = serverConnection.getInput();
-                if (input != null) {
-                    Request request = requestParser.parse(input);
-                    Response response = serverRouter.route(request);
-                    byte[] serialisedResponse = responseSerialiser.serialise(response);
-
-                    serverConnection.sendOutput(serialisedResponse);
-                    serverConnection.closeClientConnection();
-                }
-                serverConnection.closeClientConnection();
-            } catch (IOException e) {
-                ServerLogger.serverLogger.log(Level.WARNING, "Error: " + e);
-            }
+            executor.execute(new ServerRunnable(serverConnection.acceptClientConnection()));
         }
         serverConnection.closeConnection();
     }
@@ -49,4 +39,29 @@ class HttpServerRunner implements ServerRunner {
         serverShouldContinueRunning = false;
     }
 
+    private class ServerRunnable implements Runnable {
+
+        private final ClientConnection TCPClientConnection;
+
+        ServerRunnable(ClientConnection TCPClientConnection) {
+            this.TCPClientConnection = TCPClientConnection;
+        }
+
+        @Override
+        public void run() {
+            try {
+                InputStream input = TCPClientConnection.getInput();
+                if (input != null) {
+                    Request request = requestParser.parse(input);
+                    Response response = serverRouter.route(request);
+                    byte[] serialisedResponse = responseSerialiser.serialise(response);
+
+                    TCPClientConnection.sendOutput(serialisedResponse);
+                }
+                TCPClientConnection.closeClientConnection();
+            } catch (IOException e) {
+                ServerLogger.serverLogger.log(Level.WARNING, "Error: " + e);
+            }
+        }
+    }
 }

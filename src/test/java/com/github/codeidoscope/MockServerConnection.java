@@ -1,11 +1,8 @@
 package com.github.codeidoscope;
 
-import java.io.InputStream;
-
 public class MockServerConnection implements ServerConnection {
-    private byte[] message;
-    private InputStream input;
     private HttpServerRunner serverRunner;
+    private MockClientConnection clientConnection;
 
     @Override
     public void createServerSocket(int portNumber) {
@@ -13,37 +10,18 @@ public class MockServerConnection implements ServerConnection {
     }
 
     @Override
-    public void listenForClientConnection() {
-
-    }
-
-    @Override
-    public InputStream getInput() {
-        return input;
-    }
-
-    @Override
-    public void sendOutput(byte[] message) {
-        this.message = message;
-        stopServerRunner();
+    public ClientConnection acceptClientConnection() {
+        clientConnection.setServerConnection(this);
+        return clientConnection;
     }
 
     @Override
     public void closeConnection() {
-
-    }
-
-    @Override
-    public void closeClientConnection() {
-
+        stopServerRunner();
     }
 
     byte[] sentResponse() {
-        return message;
-    }
-
-    void setInput(InputStream input) {
-        this.input = input;
+        return clientConnection.sentResponse();
     }
 
     void setServerRunner(HttpServerRunner serverRunner) {
@@ -52,5 +30,9 @@ public class MockServerConnection implements ServerConnection {
 
     private void stopServerRunner() {
         serverRunner.stopServer();
+    }
+
+    void setClientConnection(MockClientConnection mockClientConnection) {
+        this.clientConnection = mockClientConnection;
     }
 }

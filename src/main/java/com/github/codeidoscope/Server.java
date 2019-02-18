@@ -10,7 +10,6 @@ public class Server {
         try {
             new HttpServerRunner().startServer(Configuration.getInstance().getPortNumber());
         } catch (IOException e) {
-            System.out.println(e);
             ServerLogger.serverLogger.log(Level.WARNING, "Error: " + e);
         }
     }
