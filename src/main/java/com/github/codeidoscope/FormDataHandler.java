@@ -1,24 +1,28 @@
 package com.github.codeidoscope;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedHashMap;
 
 public class FormDataHandler implements RouteHandler {
-    private final HandlersHelper handlersHelper = new HandlersHelper();
+    private String getDateTimeNow = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
 
     @Override
     public Response respondToRequest(Request request) {
-        HeaderGenerator headerGenerator = new HeaderGenerator();
-
         LinkedHashMap<String, String> requestBody = parseBody(request.getBody());
 
         Body body = new Body(generateHtmlPageFromResults(requestBody));
 
         String contentType = "text/html";
         int bodyLength = body.getLength();
-        Boolean shouldBeAttachment = handlersHelper.shouldBeAttachment(contentType, bodyLength);
 
-        Header header = headerGenerator.generate(StatusCodes.Status.OK.message, contentType, bodyLength, shouldBeAttachment);
+        ResponseBuilder responseBuilder = new ResponseBuilder(StatusCodes.Status.OK)
+                .addHeader("Date", getDateTimeNow)
+                .addHeader("Content-Type", contentType)
+                .addHeader("Content-Length", String.valueOf(bodyLength))
+                .addHeader("Accept-Ranges", "bytes");
 
+        Header header = new Header(responseBuilder.setHeader());
         return new Response(header, body);
     }
 
