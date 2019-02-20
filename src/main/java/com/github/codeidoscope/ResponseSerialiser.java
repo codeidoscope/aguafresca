@@ -9,7 +9,7 @@ class ResponseSerialiser {
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
         outputStream.write(response.getHeadersToBytes());
-        outputStream.write("\n\r\n".getBytes());
+        outputStream.write("\r\n".getBytes());
         outputStream.write(response.getBodyToBytes());
         return outputStream.toByteArray();
     }

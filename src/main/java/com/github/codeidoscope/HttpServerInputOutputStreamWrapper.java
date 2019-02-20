@@ -8,6 +8,5 @@ class HttpServerInputOutputStreamWrapper {
     void sendOutput(OutputStream outputStream, byte[] message) throws IOException {
         outputStream.write(message);
         outputStream.flush();
-        outputStream.close();
     }
 }
