@@ -21,7 +21,6 @@ class HeaderGenerator {
                 + "Date: " + getDateTimeNow + "\r\n"
                 + "Content-Type: " + type + "\r\n"
                 + "Content-Length: " + length + "\r\n"
-                + "Accept-Ranges: " + ACCEPT_RANGES
                 + generateContentDisposition(shouldBeAttachment);
 
         return new Header(header);
@@ -29,7 +28,7 @@ class HeaderGenerator {
 
     String generateContentDisposition(Boolean shouldBeAttachment) {
         if (shouldBeAttachment) {
-            return "\r\nContent-Disposition: attachment";
+            return "Content-Disposition: attachment\r\n";
         } else {
             return "";
         }
