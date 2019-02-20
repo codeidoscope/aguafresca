@@ -20,8 +20,7 @@ class HeaderGeneratorTest {
                 "Date: Fri, 11 Jan 2019 10:30:00 GMT\r\n" +
                 "Content-Type: text/plain\r\n" +
                 "Content-Length: 1234\r\n" +
-                "Accept-Ranges: bytes" +
-                "\r\nContent-Disposition: attachment";
+                "Content-Disposition: attachment\r\n";
         Header expectedHeader = new Header(headerString);
         Header generatedHeader = headerGenerator.generate(StatusCodes.Status.OK.message, type, length, shouldBeAttachment);
 
@@ -37,8 +36,7 @@ class HeaderGeneratorTest {
         String headerString = "HTTP/1.1 200 OK\r\n" +
                 "Date: Fri, 11 Jan 2019 10:30:00 GMT\r\n" +
                 "Content-Type: text/plain\r\n" +
-                "Content-Length: 1234\r\n" +
-                "Accept-Ranges: bytes";
+                "Content-Length: 1234\r\n";
         Header expectedHeader = new Header(headerString);
         Header generatedHeader = headerGenerator.generate(StatusCodes.Status.OK.message, type, length, false);
 
@@ -51,7 +49,7 @@ class HeaderGeneratorTest {
         HeaderGenerator headerGenerator = new HeaderGenerator(dateTime);
         String contentDisposition = headerGenerator.generateContentDisposition(true);
 
-        assertEquals("\r\nContent-Disposition: attachment", contentDisposition);
+        assertEquals("Content-Disposition: attachment\r\n", contentDisposition);
     }
 
     @Test
