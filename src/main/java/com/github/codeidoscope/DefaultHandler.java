@@ -16,10 +16,11 @@ class DefaultHandler implements RouteHandler {
     private Header generateHeader(int bodyLength) {
         String getDateTimeNow = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
 
-        return new Header("HTTP/1.1 " + StatusCodes.Status.NOT_FOUND.message + "\r\n"
-                + "Date: " + getDateTimeNow + "\r\n"
-                + "Content-Type: text/plain\r\n"
-                + "Content-Length: " + bodyLength + "\r\n"
-                + "Accept-Ranges: bytes");
+        ResponseBuilder responseBuilder = new ResponseBuilder(StatusCodes.Status.OK)
+                .addHeader("Date", getDateTimeNow)
+                .addHeader("Content-Type", "text/plain")
+                .addHeader("Content-Length", String.valueOf(bodyLength));
+
+        return new Header(responseBuilder.setHeader());
     }
 }
