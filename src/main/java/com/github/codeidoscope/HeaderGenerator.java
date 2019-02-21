@@ -5,7 +5,6 @@ import java.time.format.DateTimeFormatter;
 
 class HeaderGenerator {
     private static final String PROTOCOL = "HTTP/1.1";
-    private static final String ACCEPT_RANGES = "bytes";
     private final String getDateTimeNow;
 
     HeaderGenerator() {
