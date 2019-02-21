@@ -3,6 +3,7 @@ package com.github.codeidoscope;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 
@@ -97,14 +98,7 @@ class DirectoryHandlerTest {
         request.setMethod("GET");
         request.setProtocol("HTTP/1.1");
         request.setPath("/testdirectory");
-        Body expectedBody = new Body("<!DOCTYPE html>\n" +
-                "<head>\n" +
-                "</head>\n" +
-                "<body>\n" +
-                "<li><a href=\"/testdirectory/othertestfile.txt\">testdirectory/othertestfile.txt</a></li>" +
-                "<li><a href=\"/testdirectory/testfile.txt\">testdirectory/testfile.txt</a></li>\n" +
-                "</body>\n" +
-                "</html>\n");
+        Body expectedBody = new Body(new ByteArrayInputStream("<!DOCTYPE html>\n<head>\n</head>\n<body>\n<li><a href=\"/testdirectory/othertestfile.txt\">testdirectory/othertestfile.txt</a></li><li><a href=\"/testdirectory/testfile.txt\">testdirectory/testfile.txt</a></li>\n</body>\n</html>\n".getBytes()));
         Response response = directoryHandler.respondToRequest(request);
 
         assertFalse(response.getHeadersToString().isEmpty());

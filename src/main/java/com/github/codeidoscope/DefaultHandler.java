@@ -1,5 +1,7 @@
 package com.github.codeidoscope;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -7,10 +9,15 @@ class DefaultHandler implements RouteHandler {
 
     @Override
     public Response respondToRequest(Request request) {
-        Body body = new Body("404 - NOT FOUND");
-        int bodyLength = body.getLength();
+        String content = "404 - NOT FOUND";
+        int bodyLength = content.length();
+        String contentType = "text/plain";
 
-        return new Response(generateHeader(bodyLength), body);
+        InputStream generatedContent = new ByteArrayInputStream(content.getBytes());
+        Body body = new Body(generatedContent);
+
+        return new Response(generateHeader(bodyLength), body, contentType);
+
     }
 
     private Header generateHeader(int bodyLength) {

@@ -41,6 +41,7 @@ class HttpServerRunner {
 
     private class ServerRunnable implements Runnable {
 
+        private ResponseSender responseSender = new ResponseSender();
         private final ClientConnection TCPClientConnection;
 
         ServerRunnable(ClientConnection TCPClientConnection) {
@@ -56,7 +57,9 @@ class HttpServerRunner {
                     Response response = serverRouter.route(request);
                     byte[] serialisedResponse = responseSerialiser.serialise(response);
 
-                    TCPClientConnection.sendOutput(serialisedResponse);
+//                    TCPClientConnection.sendOutput(serialisedResponse);
+
+                    responseSender.send(TCPClientConnection.getOutputStream(), response);
                 }
                 TCPClientConnection.closeClientConnection();
             } catch (IOException e) {

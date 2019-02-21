@@ -21,7 +21,7 @@ class ResponseBuilderTest {
         responseBuilder.addHeader("key", "value");
 
         String expectedResponse = "HTTP/1.1 200 OK\r\n" +
-                "key: value";
+                "key: value\r\n";
 
         assertEquals(expectedResponse, responseBuilder.setHeader());
     }

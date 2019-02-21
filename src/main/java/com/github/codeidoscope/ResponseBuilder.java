@@ -32,7 +32,7 @@ public class ResponseBuilder {
             responseString.append(String.format("%s: %s%s", field.getKey(), field.getValue(), CRLF));
         }
 
-        return responseString.toString().trim();
+        return responseString.toString();
     }
 
     public ResponseBuilder setBody(byte[] body) {

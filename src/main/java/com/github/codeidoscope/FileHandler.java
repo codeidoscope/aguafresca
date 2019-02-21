@@ -1,5 +1,7 @@
 package com.github.codeidoscope;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -14,11 +16,15 @@ class FileHandler implements RouteHandler {
     public Response respondToRequest(Request request) throws IOException {
         String contentRootPath = Configuration.getInstance().getContentRootPath();
         String filePath = contentRootPath + request.getPath();
+        File file = new File(filePath);
+        FileInputStream fileInputStream = new FileInputStream(file);
 
-        Body body = new Body(Files.readAllBytes(Paths.get(filePath)));
+        System.out.println("request path = " + request.getPath());
+
+        Body body = new Body(fileInputStream);
+        int bodyLength = Files.readAllBytes(Paths.get(filePath)).length;
 
         String contentType = handlersHelper.getContentType(request.getPath());
-        int bodyLength = body.getLength();
         Boolean shouldBeAttachment = handlersHelper.shouldBeAttachment(contentType, bodyLength);
 
         ResponseBuilder responseBuilder = new ResponseBuilder(StatusCodes.Status.OK)
@@ -31,6 +37,6 @@ class FileHandler implements RouteHandler {
         }
 
         Header header = new Header(responseBuilder.setHeader());
-        return new Response(header, body);
+        return new Response(header, body, contentType);
     }
 }

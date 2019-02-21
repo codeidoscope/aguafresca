@@ -13,7 +13,7 @@ class ServerRunnerTest {
     @Test
     void testGetValidResourceReturnsOkResponse() throws IOException {
         MockRouter mockServerRouter = new MockRouter();
-        mockServerRouter.addRoute("/testdirectory/testfile.txt", new Response(new Header("HTTP/1.1 200 OK"), new Body("Test file.")));
+        mockServerRouter.addRoute("/testdirectory/testfile.txt", new Response(new Header("HTTP/1.1 200 OK"), new Body(new ByteArrayInputStream("Test file.".getBytes())), "text/plain"));
         ByteArrayInputStream input = new ByteArrayInputStream("GET /testdirectory/testfile.txt HTTP/1.1\r\n".getBytes());
         byte[] output = "HTTP/1.1 200 OK\r\nTest file.".getBytes();
         MockServerConnection mockServerConnection = new MockServerConnection();
@@ -30,7 +30,7 @@ class ServerRunnerTest {
     @Test
     void testGetInvalidResourceReturnsNotFoundResponse() throws IOException {
         MockRouter mockServerRouter = new MockRouter();
-        mockServerRouter.addRoute("/", new Response(new Header("HTTP/1.1 404 Not Found"), new Body("404 Not Found")));
+        mockServerRouter.addRoute("/", new Response(new Header("HTTP/1.1 404 Not Found"), new Body(new ByteArrayInputStream("Test file.".getBytes())), "text/plain"));
         ByteArrayInputStream input = new ByteArrayInputStream("GET / HTTP/1.1\r\n".getBytes());
         byte[] output = "HTTP/1.1 404 Not Found\r\n404 Not Found".getBytes();
         MockServerConnection mockServerConnection = new MockServerConnection();

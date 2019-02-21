@@ -1,27 +1,19 @@
 package com.github.codeidoscope;
 
-import java.nio.charset.StandardCharsets;
+import java.io.InputStream;
 
 class Body {
-    private final byte[] body;
+    private InputStream body;
 
-    Body(byte[] body) {
+    Body(InputStream body) {
         this.body = body;
     }
 
-    Body(String body) {
-        this.body = body.getBytes();
-    }
-
-    byte[] toBytes() {
+    InputStream getBody() {
         return body;
     }
 
     String getBodyString() {
-        return new String(body, StandardCharsets.UTF_8);
-    }
-
-    int getLength() {
-        return body.length;
+        return String.valueOf(body);
     }
 }

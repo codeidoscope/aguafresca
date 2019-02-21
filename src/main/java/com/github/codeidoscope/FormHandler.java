@@ -1,5 +1,7 @@
 package com.github.codeidoscope;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -8,10 +10,12 @@ public class FormHandler implements RouteHandler {
 
     @Override
     public Response respondToRequest(Request request) {
-        Body body = new Body(generateHtmlForm());
-
+        String generatedPage = generateHtmlForm();
+        int bodyLength = generatedPage.length();
         String contentType = "text/html";
-        int bodyLength = body.getLength();
+
+        InputStream generatedContent = new ByteArrayInputStream(generatedPage.getBytes());
+        Body body = new Body(generatedContent);
 
         ResponseBuilder responseBuilder = new ResponseBuilder(StatusCodes.Status.OK)
                 .addHeader("Date", getDateTimeNow)
@@ -19,7 +23,7 @@ public class FormHandler implements RouteHandler {
                 .addHeader("Content-Length", String.valueOf(bodyLength));
 
         Header header = new Header(responseBuilder.setHeader());
-        return new Response(header, body);
+        return new Response(header, body, contentType);
     }
 
     String generateHtmlForm() {

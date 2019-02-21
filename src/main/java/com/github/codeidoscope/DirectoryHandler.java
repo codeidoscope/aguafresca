@@ -1,7 +1,9 @@
 package com.github.codeidoscope;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.ZonedDateTime;
@@ -11,23 +13,24 @@ public class DirectoryHandler implements RouteHandler {
     private final HandlersHelper handlersHelper = new HandlersHelper();
     private String getDateTimeNow = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
 
-
     @Override
     public Response respondToRequest(Request request) throws IOException {
         String filePath = handlersHelper.generateFilePath(request);
 
-        Body body = new Body(generateBodyFromDirectory(filePath));
+        String generatedPage = generateBodyFromDirectory(filePath);
+        int bodyLength = generatedPage.length();
+        InputStream generatedContent = new ByteArrayInputStream(generatedPage.getBytes());
+
+        Body body = new Body(generatedContent);
 
         String contentType = "text/html";
-        int bodyLength = body.getLength();
-
         ResponseBuilder responseBuilder = new ResponseBuilder(StatusCodes.Status.OK)
                 .addHeader("Date", getDateTimeNow)
                 .addHeader("Content-Type", contentType)
                 .addHeader("Content-Length", String.valueOf(bodyLength));
 
         Header header = new Header(responseBuilder.setHeader());
-        return new Response(header, body);
+        return new Response(header, body, contentType);
     }
 
     String removeBasePathFromPath(String path) throws IOException {

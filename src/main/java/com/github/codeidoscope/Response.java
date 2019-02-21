@@ -1,12 +1,18 @@
 package com.github.codeidoscope;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+
 public class Response {
     private Header headers;
     private Body body;
+    private String contentType;
 
-    Response(Header headers, Body body) {
+    Response(Header headers, Body body, String contentType) {
         this.headers = headers;
         this.body = body;
+        this.contentType = contentType;
     }
 
     byte[] getHeadersToBytes() {
@@ -17,11 +23,15 @@ public class Response {
         return headers.getHeaderString();
     }
 
-    byte[] getBodyToBytes() {
-        return body.toBytes();
+    public String getContentType() {
+        return contentType;
     }
 
-    String getBodyToString() {
-        return body.getBodyString();
+    public InputStream getBody() {
+        return body.getBody();
+    }
+
+    String getBodyToString() throws IOException {
+        return Arrays.toString(body.getBody().readAllBytes());
     }
 }

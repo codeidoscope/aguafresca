@@ -3,6 +3,9 @@ package com.github.codeidoscope;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.LinkedHashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,7 +20,7 @@ class FormDataHandlerTest {
     }
 
     @Test
-    void returnsAResponseWithTheCorrectBodyForAForm() {
+    void returnsAResponseWithTheCorrectBodyForAForm() throws IOException {
         Request request = new Request();
         request.setMethod("POST");
         request.setPath("form_results");
@@ -31,15 +34,7 @@ class FormDataHandlerTest {
         }};
         request.setHeaders(expectedHeaders);
         request.setBody("name=King+Arthur&quest=Defeat+the+Rabbit+of+Caerbannog&colour=blue&speed=4");
-        Body expectedBody = new Body("<!DOCTYPE html>\n" +
-                "<html>\n" +
-                "<body>\n" +
-                "<p>Your name is: King Arthur</p><br>\n" +
-                "<p>Your quest is to: Defeat the Rabbit of Caerbannog</p><br>\n" +
-                "<p>Your favourite colour is: blue</p><br>\n" +
-                "<p>According to you, the average air speed velocity of a laden swallow in mph is: 4mph</p><br>\n" +
-                "</body>\n" +
-                "</html>");
+        Body expectedBody = new Body(new ByteArrayInputStream("<!DOCTYPE html>\n<html>\n<body>\n<p>Your name is: King Arthur</p><br>\n<p>Your quest is to: Defeat the Rabbit of Caerbannog</p><br>\n<p>Your favourite colour is: blue</p><br>\n<p>According to you, the average air speed velocity of a laden swallow in mph is: 4mph</p><br>\n</body>\n</html>".getBytes()));
         Response response = formDataHandler.respondToRequest(request);
 
         assertFalse(response.getHeadersToString().isEmpty());

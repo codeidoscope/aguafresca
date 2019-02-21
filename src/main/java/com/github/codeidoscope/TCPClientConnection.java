@@ -28,4 +28,9 @@ class TCPClientConnection implements ClientConnection {
     public void closeClientConnection() throws IOException {
         httpClientSocketWrapper.close();
     }
+
+    @Override
+    public OutputStream getOutputStream() throws IOException {
+        return httpClientSocketWrapper.getOutputStream();
+    }
 }

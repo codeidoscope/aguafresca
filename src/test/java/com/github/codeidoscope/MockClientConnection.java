@@ -1,6 +1,8 @@
 package com.github.codeidoscope;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 
 public class MockClientConnection implements ClientConnection {
     private MockServerConnection mockServerConnection;
@@ -20,6 +22,11 @@ public class MockClientConnection implements ClientConnection {
     @Override
     public void closeClientConnection() {
         mockServerConnection.closeConnection();
+    }
+
+    @Override
+    public OutputStream getOutputStream() throws IOException {
+        return null;
     }
 
     void setServerConnection(MockServerConnection mockServerConnection) {
