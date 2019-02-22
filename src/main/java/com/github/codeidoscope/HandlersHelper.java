@@ -11,7 +11,7 @@ class HandlersHelper {
         return Files.probeContentType(Paths.get(path));
     }
 
-    Boolean shouldBeAttachment(String type, int length) {
+    Boolean shouldBeAttachment(String type, long length) {
         return type.equals("application/pdf") && length > TEN_MEGABYTES_IN_BYTES;
     }
 
