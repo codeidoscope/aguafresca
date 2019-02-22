@@ -25,6 +25,7 @@ class FormDataHandlerTest {
         request.setMethod("POST");
         request.setPath("form_results");
         request.setProtocol("HTTP/1.1");
+
         LinkedHashMap<String, String> expectedHeaders = new LinkedHashMap<>() {{
             put("Host", "localhost:8080");
             put("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8");
@@ -32,9 +33,11 @@ class FormDataHandlerTest {
             put("Accept-Language", "en-GB,en-US;q=0.9,en;q=0.8,fr;q=0.7");
             put("Content-Length", "25");
         }};
+
         request.setHeaders(expectedHeaders);
         request.setBody("name=King+Arthur&quest=Defeat+the+Rabbit+of+Caerbannog&colour=blue&speed=4");
         Body expectedBody = new Body(new ByteArrayInputStream("<!DOCTYPE html>\n<html>\n<body>\n<p>Your name is: King Arthur</p><br>\n<p>Your quest is to: Defeat the Rabbit of Caerbannog</p><br>\n<p>Your favourite colour is: blue</p><br>\n<p>According to you, the average air speed velocity of a laden swallow in mph is: 4mph</p><br>\n</body>\n</html>".getBytes()));
+
         Response response = formDataHandler.respondToRequest(request);
 
         assertFalse(response.getHeadersToString().isEmpty());

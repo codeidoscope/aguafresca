@@ -6,7 +6,6 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 class TCPClientConnection implements ClientConnection {
-    private HttpServerInputOutputStreamWrapper inputOutputStreamWrapper = new HttpServerInputOutputStreamWrapper();
     private HttpClientSocketWrapper httpClientSocketWrapper;
 
     TCPClientConnection(Socket socket) {
@@ -16,12 +15,6 @@ class TCPClientConnection implements ClientConnection {
     @Override
     public InputStream getInput() throws IOException {
         return httpClientSocketWrapper.getInputStream();
-    }
-
-    @Override
-    public void sendOutput(byte[] message) throws IOException {
-        OutputStream outputStream = httpClientSocketWrapper.getOutputStream();
-        inputOutputStreamWrapper.sendOutput(outputStream, message);
     }
 
     @Override

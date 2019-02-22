@@ -58,6 +58,7 @@ class RequestParserTest {
         }};
 
         Request request = requestParser.parse(mockInputStream);
+
         assertEquals("GET", request.getMethod());
         assertEquals("/testdirectory", request.getPath());
         assertEquals("HTTP/1.1", request.getProtocol());

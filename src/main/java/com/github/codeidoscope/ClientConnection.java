@@ -7,8 +7,6 @@ import java.io.OutputStream;
 public interface ClientConnection {
     InputStream getInput() throws IOException;
 
-    void sendOutput(byte[] message) throws IOException;
-
     void closeClientConnection() throws IOException;
 
     OutputStream getOutputStream() throws IOException;

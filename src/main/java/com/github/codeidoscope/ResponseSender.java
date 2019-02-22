@@ -8,7 +8,6 @@ import java.io.OutputStream;
 class ResponseSender {
     void send(OutputStream outputStream, Response response) throws IOException {
         BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream);
-
         outputStream.write(response.getHeadersToBytes());
         outputStream.write("\r\n".getBytes());
 

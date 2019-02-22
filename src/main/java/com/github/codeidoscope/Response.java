@@ -2,7 +2,6 @@ package com.github.codeidoscope;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Arrays;
 
 public class Response {
     private Header headers;
@@ -23,7 +22,7 @@ public class Response {
         return headers.getHeaderString();
     }
 
-    public String getContentType() {
+    String getContentType() {
         return contentType;
     }
 
@@ -32,6 +31,6 @@ public class Response {
     }
 
     String getBodyToString() throws IOException {
-        return Arrays.toString(body.getBody().readAllBytes());
+        return body.getBodyString();
     }
 }

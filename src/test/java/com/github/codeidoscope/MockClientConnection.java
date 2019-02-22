@@ -1,22 +1,17 @@
 package com.github.codeidoscope;
 
-import java.io.IOException;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
 public class MockClientConnection implements ClientConnection {
     private MockServerConnection mockServerConnection;
     private InputStream input;
-    private byte[] message;
+    private ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
 
     @Override
-    public InputStream getInput()  {
+    public InputStream getInput() {
         return input;
-    }
-
-    @Override
-    public void sendOutput(byte[] message) {
-        this.message = message;
     }
 
     @Override
@@ -25,19 +20,19 @@ public class MockClientConnection implements ClientConnection {
     }
 
     @Override
-    public OutputStream getOutputStream() throws IOException {
-        return null;
+    public OutputStream getOutputStream() {
+        return outputStream;
     }
 
     void setServerConnection(MockServerConnection mockServerConnection) {
         this.mockServerConnection = mockServerConnection;
     }
 
-    void setInput(InputStream inputStream){
+    void setInput(InputStream inputStream) {
         this.input = inputStream;
     }
 
     byte[] sentResponse() {
-        return message;
+        return outputStream.toByteArray();
     }
 }

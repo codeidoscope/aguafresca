@@ -47,10 +47,12 @@ class DirectoryHandlerTest {
         String htmlLinkFoo = directoryHandler.createHtmlLink("foo.txt");
         String htmlLinkBar = directoryHandler.createHtmlLink("bar.txt");
         String htmlLinkBaz = directoryHandler.createHtmlLink("baz.txt");
+
         StringBuilder htmlContent = new StringBuilder();
         directoryHandler.addToHtmlContent(htmlLinkFoo, htmlContent);
         directoryHandler.addToHtmlContent(htmlLinkBar, htmlContent);
         directoryHandler.addToHtmlContent(htmlLinkBaz, htmlContent);
+
         String expectedHtmlContent = "<li><a href=\"/foo.txt\">foo.txt</a></li>" +
                 "<li><a href=\"/bar.txt\">bar.txt</a></li>" +
                 "<li><a href=\"/baz.txt\">baz.txt</a></li>";
@@ -63,6 +65,7 @@ class DirectoryHandlerTest {
         StringBuilder htmlContent = new StringBuilder();
         String htmlLinkFoo = directoryHandler.createHtmlLink("foo.txt");
         directoryHandler.addToHtmlContent(htmlLinkFoo, htmlContent);
+
         String expectedHtmlBody = "<!DOCTYPE html>\n" +
                 "<head>\n" +
                 "</head>\n" +
@@ -70,6 +73,7 @@ class DirectoryHandlerTest {
                 "<li><a href=\"/foo.txt\">foo.txt</a></li>\n" +
                 "</body>\n" +
                 "</html>\n";
+
         String htmlBody = directoryHandler.addHtmlContentToBody(htmlContent);
 
         assertEquals(expectedHtmlBody, htmlBody);
@@ -78,6 +82,7 @@ class DirectoryHandlerTest {
     @Test
     void generatesHtmlPageBasedOnContentOfDirectory() throws IOException {
         String directoryPath = Configuration.getInstance().getContentRootPath() + "/testdirectory";
+
         String expectedBody = "<!DOCTYPE html>\n" +
                 "<head>\n" +
                 "</head>\n" +
@@ -86,6 +91,7 @@ class DirectoryHandlerTest {
                 "<li><a href=\"/testdirectory/testfile.txt\">testdirectory/testfile.txt</a></li>\n" +
                 "</body>\n" +
                 "</html>\n";
+
         String htmlBody = directoryHandler.generateBodyFromDirectory(directoryPath);
 
         assertEquals(expectedBody, htmlBody);
@@ -98,7 +104,9 @@ class DirectoryHandlerTest {
         request.setMethod("GET");
         request.setProtocol("HTTP/1.1");
         request.setPath("/testdirectory");
+
         Body expectedBody = new Body(new ByteArrayInputStream("<!DOCTYPE html>\n<head>\n</head>\n<body>\n<li><a href=\"/testdirectory/othertestfile.txt\">testdirectory/othertestfile.txt</a></li><li><a href=\"/testdirectory/testfile.txt\">testdirectory/testfile.txt</a></li>\n</body>\n</html>\n".getBytes()));
+
         Response response = directoryHandler.respondToRequest(request);
 
         assertFalse(response.getHeadersToString().isEmpty());

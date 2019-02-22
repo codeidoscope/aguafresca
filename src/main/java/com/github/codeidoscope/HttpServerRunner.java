@@ -8,7 +8,6 @@ import java.util.logging.Level;
 
 class HttpServerRunner {
     private final RequestParser requestParser = new RequestParser();
-    private final ResponseSerialiser responseSerialiser = new ResponseSerialiser();
     private Router serverRouter;
     private ServerConnection serverConnection;
     private boolean serverShouldContinueRunning = true;
@@ -42,26 +41,23 @@ class HttpServerRunner {
     private class ServerRunnable implements Runnable {
 
         private ResponseSender responseSender = new ResponseSender();
-        private final ClientConnection TCPClientConnection;
+        private final ClientConnection clientConnection;
 
-        ServerRunnable(ClientConnection TCPClientConnection) {
-            this.TCPClientConnection = TCPClientConnection;
+        ServerRunnable(ClientConnection clientConnection) {
+            this.clientConnection = clientConnection;
         }
 
         @Override
         public void run() {
             try {
-                InputStream input = TCPClientConnection.getInput();
+                InputStream input = clientConnection.getInput();
                 if (input != null) {
                     Request request = requestParser.parse(input);
                     Response response = serverRouter.route(request);
-                    byte[] serialisedResponse = responseSerialiser.serialise(response);
 
-//                    TCPClientConnection.sendOutput(serialisedResponse);
-
-                    responseSender.send(TCPClientConnection.getOutputStream(), response);
+                    responseSender.send(clientConnection.getOutputStream(), response);
                 }
-                TCPClientConnection.closeClientConnection();
+                clientConnection.closeClientConnection();
             } catch (IOException e) {
                 ServerLogger.serverLogger.log(Level.WARNING, "Error: " + e);
             }

@@ -29,7 +29,9 @@ class HandlersHelperTest {
         request.setMethod("GET");
         request.setPath("/public");
         request.setProtocol("HTTP/1.1");
+
         String expectedFilePath = Configuration.getInstance().getContentRootPath() + request.getPath();
+
         String filePath = handlersHelper.generateFilePath(request);
 
         assertEquals(expectedFilePath, filePath);

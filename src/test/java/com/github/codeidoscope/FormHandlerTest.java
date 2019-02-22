@@ -16,9 +16,11 @@ class FormHandlerTest {
         request.setMethod("GET");
         request.setPath("/form");
         request.setProtocol("HTTP/1.1");
+
         Header headers = new Header("HTTP/1.1 200 OK\nDate: Fri, 11 Jan 2019 10:30:00 GMT\nContent-Type: text/html\nContent-Length: 845\nAccept-Ranges: bytes");
         Body body = new Body(new ByteArrayInputStream(formHandler.generateHtmlForm().getBytes()));
         Response expectedResponse = new Response(headers, body, "text/html");
+
         Response requestResponse = formHandler.respondToRequest(request);
 
         assertFalse(requestResponse.getHeadersToString().isEmpty());

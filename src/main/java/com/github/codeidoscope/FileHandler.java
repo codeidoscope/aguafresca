@@ -19,8 +19,6 @@ class FileHandler implements RouteHandler {
         File file = new File(filePath);
         FileInputStream fileInputStream = new FileInputStream(file);
 
-        System.out.println("request path = " + request.getPath());
-
         Body body = new Body(fileInputStream);
         int bodyLength = Files.readAllBytes(Paths.get(filePath)).length;
 
