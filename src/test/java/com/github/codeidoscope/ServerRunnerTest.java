@@ -1,55 +1,42 @@
 package com.github.codeidoscope;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.ByteArrayInputStream;
+import java.io.BufferedWriter;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ServerRunnerTest {
+    private ServerRunnerProcess serverRunnerProcess;
 
-    @Test
-    void testGetValidResourceReturnsOkResponse() throws IOException {
-        ByteArrayInputStream input = new ByteArrayInputStream("GET /testdirectory/testfile.txt HTTP/1.1\r\n".getBytes());
-        MockClientConnection mockClientConnection = new MockClientConnection();
-        mockClientConnection.setInput(input);
+    @BeforeEach
+    void setUp() throws IOException {
+        serverRunnerProcess = ServerRunnerProcess.start();
+    }
 
-        MockServerConnection mockServerConnection = new MockServerConnection();
-        mockServerConnection.setClientConnection(mockClientConnection);
-
-        MockRouter mockServerRouter = new MockRouter();
-        mockServerRouter.addRoute("/testdirectory/testfile.txt", new Response(new Header("HTTP/1.1 200 OK"), new Body(new ByteArrayInputStream("Test file.".getBytes())), "text/plain"));
-
-        HttpServerRunner serverRunner = new HttpServerRunner(mockServerConnection, mockServerRouter, Runnable::run);
-        mockServerConnection.setServerRunner(serverRunner);
-
-        serverRunner.startServer(8080);
-
-        byte[] output = "HTTP/1.1 200 OK\r\nTest file.".getBytes();
-
-        assertEquals(new String(output), new String(mockServerConnection.sentResponse()));
+    @AfterEach
+    void tearDown() throws InterruptedException, ExecutionException, TimeoutException {
+        serverRunnerProcess.stop();
+        serverRunnerProcess.awaitTermination(2, TimeUnit.SECONDS);
     }
 
     @Test
-    void testGetInvalidResourceReturnsNotFoundResponse() throws IOException {
-        ByteArrayInputStream input = new ByteArrayInputStream("GET / HTTP/1.1\r\n".getBytes());
-        MockClientConnection mockClientConnection = new MockClientConnection();
-        mockClientConnection.setInput(input);
+    void testSomethingWorks() throws IOException {
+        OutputStream stdin = serverRunnerProcess.getOutputStream();
 
-        MockServerConnection mockServerConnection = new MockServerConnection();
-        mockServerConnection.setClientConnection(mockClientConnection);
+        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stdin));
 
-        MockRouter mockServerRouter = new MockRouter();
-        mockServerRouter.addRoute("/", new Response(new Header("HTTP/1.1 404 Not Found"), new Body(new ByteArrayInputStream("404 Not Found".getBytes())), "text/plain"));
-
-        HttpServerRunner serverRunner = new HttpServerRunner(mockServerConnection, mockServerRouter, Runnable::run);
-        mockServerConnection.setServerRunner(serverRunner);
-
-        serverRunner.startServer(8080);
-
-        byte[] expectedOutput = "HTTP/1.1 404 Not Found\r\n404 Not Found".getBytes();
-
-        assertEquals(new String(expectedOutput), new String(mockServerConnection.sentResponse()));
+        writer.write("GET localhost:8080/ HTTP/1.1");
+        writer.newLine();
+        writer.flush();
+        writer.close();
     }
 }

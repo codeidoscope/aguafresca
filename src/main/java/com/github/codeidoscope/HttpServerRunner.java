@@ -2,6 +2,7 @@ package com.github.codeidoscope;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.Socket;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.logging.Level;
@@ -13,16 +14,10 @@ class HttpServerRunner {
     private boolean serverShouldContinueRunning = true;
     private Executor executor;
 
-    HttpServerRunner() {
-        this.serverConnection = new TCPServerConnection(new HttpServerSocketWrapper());
+    HttpServerRunner() throws IOException {
+        this.serverConnection = new ServerConnection();
         this.serverRouter = new ServerRouter();
         this.executor = Executors.newCachedThreadPool();
-    }
-
-    HttpServerRunner(ServerConnection serverConnection, Router serverRouter, Executor executor) {
-        this.serverConnection = serverConnection;
-        this.serverRouter = serverRouter;
-        this.executor = executor;
     }
 
     void startServer(int portNumber) throws RuntimeException, IOException {
@@ -41,23 +36,23 @@ class HttpServerRunner {
     private class ServerRunnable implements Runnable {
 
         private ResponseSender responseSender = new ResponseSender();
-        private final ClientConnection clientConnection;
+        private Socket socket;
 
-        ServerRunnable(ClientConnection clientConnection) {
-            this.clientConnection = clientConnection;
+        ServerRunnable(Socket socket) {
+            this.socket = socket;
         }
 
         @Override
         public void run() {
             try {
-                InputStream input = clientConnection.getInput();
+                InputStream input = socket.getInputStream();
                 if (input != null) {
                     Request request = requestParser.parse(input);
                     Response response = serverRouter.route(request);
 
-                    responseSender.send(clientConnection.getOutputStream(), response);
+                    responseSender.send(socket.getOutputStream(), response);
                 }
-                clientConnection.closeClientConnection();
+                socket.close();
             } catch (IOException e) {
                 ServerLogger.serverLogger.log(Level.WARNING, "Error: " + e);
             }
