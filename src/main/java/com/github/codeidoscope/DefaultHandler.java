@@ -11,12 +11,11 @@ class DefaultHandler implements RouteHandler {
     public Response respondToRequest(Request request) {
         String content = "404 - NOT FOUND";
         int bodyLength = content.length();
-        String contentType = "text/plain";
 
         InputStream generatedContent = new ByteArrayInputStream(content.getBytes());
         Body body = new Body(generatedContent);
 
-        return new Response(generateHeader(bodyLength), body, contentType);
+        return new Response(generateHeader(bodyLength), body);
 
     }
 

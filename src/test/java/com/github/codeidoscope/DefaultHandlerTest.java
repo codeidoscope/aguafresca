@@ -19,7 +19,7 @@ class DefaultHandlerTest {
 
         Header headers = new Header("HTTP/1.1 404 Not Found\nDate: Fri, 11 Jan 2019 10:30:00 GMT\nContent-Type: text/plain\nContent-Length: 15\nAccept-Ranges: bytes");
         Body body = new Body(new ByteArrayInputStream("404 - NOT FOUND".getBytes()));
-        Response expectedResponse = new Response(headers, body, "text/plain");
+        Response expectedResponse = new Response(headers, body);
 
         Response requestResponse = defaultHandler.respondToRequest(request);
 

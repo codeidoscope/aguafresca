@@ -26,7 +26,7 @@ public class FormDataHandler implements RouteHandler {
                 .addHeader("Content-Length", String.valueOf(bodyLength));
 
         Header header = new Header(responseBuilder.setHeader());
-        return new Response(header, body, contentType);
+        return new Response(header, body);
     }
 
     String generateHtmlPageFromResults(LinkedHashMap<String, String> requestBody) {

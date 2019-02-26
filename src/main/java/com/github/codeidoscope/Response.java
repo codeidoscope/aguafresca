@@ -6,12 +6,10 @@ import java.io.InputStream;
 public class Response {
     private Header headers;
     private Body body;
-    private String contentType;
 
-    Response(Header headers, Body body, String contentType) {
+    Response(Header headers, Body body) {
         this.headers = headers;
         this.body = body;
-        this.contentType = contentType;
     }
 
     byte[] getHeadersToBytes() {
@@ -20,10 +18,6 @@ public class Response {
 
     String getHeadersToString() {
         return headers.getHeaderString();
-    }
-
-    String getContentType() {
-        return contentType;
     }
 
     public InputStream getBody() {

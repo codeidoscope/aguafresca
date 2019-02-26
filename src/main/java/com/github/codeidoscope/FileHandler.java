@@ -33,6 +33,6 @@ class FileHandler implements RouteHandler {
         }
 
         Header header = new Header(responseBuilder.setHeader());
-        return new Response(header, body, contentType);
+        return new Response(header, body);
     }
 }
