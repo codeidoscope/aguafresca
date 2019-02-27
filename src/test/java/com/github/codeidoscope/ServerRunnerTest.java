@@ -1,42 +1,64 @@
 package com.github.codeidoscope;
 
+import java.net.http.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
+import java.net.URI;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ServerRunnerTest {
-    private ServerRunnerProcess serverRunnerProcess;
+    private HttpServerRunner serverRunner;
+    private Thread serverRunnerThread;
+    private int port = 8080;
+    private HttpClient client;
 
     @BeforeEach
     void setUp() throws IOException {
-        serverRunnerProcess = ServerRunnerProcess.start();
+        Configuration.getInstance().setPortNumber(port);
+        Configuration.getInstance().setContentRootPath(System.getProperty("user.dir"));
+
+        serverRunner = new HttpServerRunner();
+
+        this.serverRunnerThread = new Thread(() -> {
+            try {
+                serverRunner.startServer(port);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        this.client = HttpClient.newBuilder()
+                .version(HttpClient.Version.HTTP_1_1)
+                .build();
+
+        serverRunnerThread.start();
     }
 
     @AfterEach
-    void tearDown() throws InterruptedException, ExecutionException, TimeoutException {
-        serverRunnerProcess.stop();
-        serverRunnerProcess.awaitTermination(2, TimeUnit.SECONDS);
+    void tearDown() throws InterruptedException, IOException {
+        serverRunner.stopServer();
+        serverRunnerThread.join();
     }
 
     @Test
-    void testSomethingWorks() throws IOException {
-        OutputStream stdin = serverRunnerProcess.getOutputStream();
+    void validRequestReturnsValidResponse() throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://localhost:" + port + "/testdirectory/testfile.txt")).build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(stdin));
+        assertEquals(200, response.statusCode());
+        assertEquals("Test file.", response.body());
+    }
 
-        writer.write("GET localhost:8080/ HTTP/1.1");
-        writer.newLine();
-        writer.flush();
-        writer.close();
+    @Test
+    void invalidRequestReturnsNotFoundResponse() throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create("http://localhost:" + port + "/testdirectory/doesnotexist.txt")).build();
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+        assertEquals(404, response.statusCode());
+        assertEquals("404 - NOT FOUND", response.body());
     }
 }
