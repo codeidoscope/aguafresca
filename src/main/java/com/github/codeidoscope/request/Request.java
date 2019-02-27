@@ -1,4 +1,4 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.request;
 
 import java.util.LinkedHashMap;
 
@@ -9,7 +9,7 @@ public class Request {
     private LinkedHashMap<String, String> headers;
     private String body;
 
-    String getMethod() {
+    public String getMethod() {
         return method;
     }
 
@@ -17,7 +17,7 @@ public class Request {
         return path;
     }
 
-    String getProtocol() {
+    public String getProtocol() {
         return protocol;
     }
 
@@ -25,23 +25,23 @@ public class Request {
         return body;
     }
 
-    LinkedHashMap<String, String> getHeaders() {
+    public LinkedHashMap<String, String> getHeaders() {
         return headers;
     }
 
-    void setMethod(String method) {
+    public void setMethod(String method) {
         this.method = method;
     }
 
-    void setPath(String path) {
+    public void setPath(String path) {
         this.path = path;
     }
 
-    void setProtocol(String protocol) {
+    public void setProtocol(String protocol) {
         this.protocol = protocol;
     }
 
-    void setHeaders(LinkedHashMap<String, String> headers) {
+    public void setHeaders(LinkedHashMap<String, String> headers) {
         this.headers = headers;
     }
 

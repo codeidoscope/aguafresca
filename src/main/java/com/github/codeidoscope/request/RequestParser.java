@@ -1,4 +1,6 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.request;
+
+import com.github.codeidoscope.ServerLogger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -7,9 +9,9 @@ import java.io.InputStreamReader;
 import java.util.LinkedHashMap;
 import java.util.logging.Level;
 
-class RequestParser {
+public class RequestParser {
 
-    Request parse(InputStream inputStream) throws IOException {
+    public Request parse(InputStream inputStream) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String firstLineOfRequest = bufferedReader.readLine();
 
@@ -28,7 +30,7 @@ class RequestParser {
         }
     }
 
-    Request createRequestFromLine(String firstLineOfRequest) {
+    public Request createRequestFromLine(String firstLineOfRequest) {
         String[] splitLine = firstLineOfRequest.split("\r\n")[0].split(" ");
 
         Request parsedRequest = new Request();

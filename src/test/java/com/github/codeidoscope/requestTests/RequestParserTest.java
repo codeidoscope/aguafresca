@@ -1,4 +1,4 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.requestTests;
 
 import com.github.codeidoscope.request.Request;
 import com.github.codeidoscope.request.RequestParser;
