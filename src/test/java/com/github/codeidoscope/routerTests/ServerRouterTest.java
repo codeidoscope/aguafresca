@@ -1,5 +1,6 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.routerTests;
 
+import com.github.codeidoscope.Configuration;
 import com.github.codeidoscope.handlers.FormHandler;
 import com.github.codeidoscope.request.Request;
 import com.github.codeidoscope.response.Body;

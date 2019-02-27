@@ -1,4 +1,4 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.routerTests;
 
 import com.github.codeidoscope.request.Request;
 import com.github.codeidoscope.response.Response;

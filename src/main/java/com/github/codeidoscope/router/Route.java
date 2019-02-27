@@ -1,4 +1,4 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.router;
 
 import java.util.Objects;
 

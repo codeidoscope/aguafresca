@@ -1,5 +1,7 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.router;
 
+import com.github.codeidoscope.Configuration;
+import com.github.codeidoscope.handlers.RouteHandler;
 import com.github.codeidoscope.handlers.DefaultHandler;
 import com.github.codeidoscope.handlers.DirectoryHandler;
 import com.github.codeidoscope.handlers.FileHandler;
@@ -13,7 +15,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-class ServerRouter implements Router {
+public class ServerRouter implements Router {
     private Map<Route, RouteHandler> routes = new HashMap<>();
 
     @Override
