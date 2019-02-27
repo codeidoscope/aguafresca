@@ -3,13 +3,13 @@ package com.github.codeidoscope;
 import java.io.File;
 import java.io.IOException;
 
-class Configuration {
+public class Configuration {
 
     private static Configuration INSTANCE;
     private String contentRootPath;
     private int portNumber = 8080;
 
-    static Configuration getInstance() throws IOException {
+    public static Configuration getInstance() throws IOException {
         if (INSTANCE == null) {
             INSTANCE = new Configuration();
         }
@@ -26,15 +26,15 @@ class Configuration {
         return file.getCanonicalPath();
     }
 
-    void setContentRootPath(String contentRootPath) throws IOException {
+    public void setContentRootPath(String contentRootPath) throws IOException {
         this.contentRootPath = makeCanonicalPath(contentRootPath);
     }
 
-    String getContentRootPath() {
+    public String getContentRootPath() {
         return contentRootPath;
     }
 
-    void setPortNumber(int portNumber) {
+    public void setPortNumber(int portNumber) {
         this.portNumber = portNumber;
     }
 

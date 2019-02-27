@@ -1,5 +1,12 @@
 package com.github.codeidoscope;
 
+import com.github.codeidoscope.request.Request;
+import com.github.codeidoscope.request.RequestParser;
+import com.github.codeidoscope.response.Response;
+import com.github.codeidoscope.response.ResponseSender;
+import com.github.codeidoscope.router.Router;
+import com.github.codeidoscope.router.ServerRouter;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
@@ -20,17 +27,22 @@ class HttpServerRunner {
         this.executor = Executors.newCachedThreadPool();
     }
 
-    void startServer(int portNumber) throws RuntimeException, IOException {
+    void startServer(int portNumber) throws IOException {
         ServerLogger.serverLogger.log(Level.INFO, "Connection made to port " + portNumber);
         serverConnection.createServerSocket(portNumber);
         while (serverShouldContinueRunning) {
-            executor.execute(new ServerRunnable(serverConnection.acceptClientConnection()));
+            try {
+                executor.execute(new ServerRunnable(serverConnection.acceptClientConnection()));
+            } catch (IOException e) {
+                ServerLogger.serverLogger.log(Level.INFO, "Error: " + e);
+            }
         }
         serverConnection.closeConnection();
     }
 
-    void stopServer() {
+    void stopServer() throws IOException {
         serverShouldContinueRunning = false;
+        serverConnection.closeConnection();
     }
 
     private class ServerRunnable implements Runnable {
