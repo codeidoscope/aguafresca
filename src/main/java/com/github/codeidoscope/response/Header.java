@@ -1,4 +1,4 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.response;
 
 import java.nio.charset.StandardCharsets;
 

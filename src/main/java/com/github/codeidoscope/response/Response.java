@@ -1,4 +1,4 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.response;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +16,7 @@ public class Response {
         return headers.toBytes();
     }
 
-    String getHeadersToString() {
+    public String getHeadersToString() {
         return headers.getHeaderString();
     }
 
@@ -24,7 +24,7 @@ public class Response {
         return body.getBody();
     }
 
-    String getBodyToString() throws IOException {
+    public String getBodyToString() throws IOException {
         return body.getBodyString();
     }
 }

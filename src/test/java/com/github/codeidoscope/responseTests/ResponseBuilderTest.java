@@ -1,5 +1,6 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.responseTests;
 
+import com.github.codeidoscope.StatusCodes;
 import com.github.codeidoscope.response.ResponseBuilder;
 import org.junit.jupiter.api.Test;
 

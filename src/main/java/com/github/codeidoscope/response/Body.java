@@ -1,4 +1,4 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.response;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +17,7 @@ public class Body {
         return body;
     }
 
-    String getBodyString() throws IOException {
+    public String getBodyString() throws IOException {
         StringBuilder stringBuilder = new StringBuilder();
         String line;
 

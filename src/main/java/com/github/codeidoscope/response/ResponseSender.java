@@ -1,11 +1,11 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.response;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
-class ResponseSender {
-    void send(OutputStream outputStream, Response response) throws IOException {
+public class ResponseSender {
+    public void send(OutputStream outputStream, Response response) throws IOException {
         outputStream.write(response.getHeadersToBytes());
         outputStream.write("\r\n".getBytes());
 

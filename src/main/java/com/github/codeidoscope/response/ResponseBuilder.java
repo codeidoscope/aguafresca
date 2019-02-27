@@ -1,4 +1,6 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.response;
+
+import com.github.codeidoscope.StatusCodes;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -19,7 +21,7 @@ public class ResponseBuilder {
         return this;
     }
 
-    String getHeader(String key) {
+    public String getHeader(String key) {
         return header.get(key);
     }
 
