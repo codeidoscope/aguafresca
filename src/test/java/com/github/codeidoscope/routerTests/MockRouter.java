@@ -1,5 +1,9 @@
 package com.github.codeidoscope;
 
+import com.github.codeidoscope.request.Request;
+import com.github.codeidoscope.response.Response;
+import com.github.codeidoscope.router.Router;
+
 import java.util.HashMap;
 import java.util.Map;
 

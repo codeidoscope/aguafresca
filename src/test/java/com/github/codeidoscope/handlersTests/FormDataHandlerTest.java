@@ -1,9 +1,12 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.handlersTests;
 
+import com.github.codeidoscope.handlers.FormDataHandler;
+import com.github.codeidoscope.request.Request;
+import com.github.codeidoscope.response.Body;
+import com.github.codeidoscope.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.LinkedHashMap;

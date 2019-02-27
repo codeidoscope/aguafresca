@@ -1,11 +1,18 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.handlers;
+
+import com.github.codeidoscope.response.Body;
+import com.github.codeidoscope.response.Header;
+import com.github.codeidoscope.request.Request;
+import com.github.codeidoscope.response.Response;
+import com.github.codeidoscope.response.ResponseBuilder;
+import com.github.codeidoscope.StatusCodes;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-class DefaultHandler implements RouteHandler {
+public class DefaultHandler implements RouteHandler {
 
     @Override
     public Response respondToRequest(Request request) {

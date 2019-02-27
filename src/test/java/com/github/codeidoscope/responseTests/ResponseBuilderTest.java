@@ -1,5 +1,6 @@
 package com.github.codeidoscope;
 
+import com.github.codeidoscope.response.ResponseBuilder;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;

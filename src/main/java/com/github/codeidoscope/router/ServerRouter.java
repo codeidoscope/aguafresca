@@ -1,5 +1,13 @@
 package com.github.codeidoscope;
 
+import com.github.codeidoscope.handlers.DefaultHandler;
+import com.github.codeidoscope.handlers.DirectoryHandler;
+import com.github.codeidoscope.handlers.FileHandler;
+import com.github.codeidoscope.handlers.FormDataHandler;
+import com.github.codeidoscope.handlers.FormHandler;
+import com.github.codeidoscope.request.Request;
+import com.github.codeidoscope.response.Response;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;

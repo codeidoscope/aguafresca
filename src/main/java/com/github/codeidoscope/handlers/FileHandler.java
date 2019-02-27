@@ -1,4 +1,12 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.handlers;
+
+import com.github.codeidoscope.response.Body;
+import com.github.codeidoscope.Configuration;
+import com.github.codeidoscope.response.Header;
+import com.github.codeidoscope.request.Request;
+import com.github.codeidoscope.response.Response;
+import com.github.codeidoscope.response.ResponseBuilder;
+import com.github.codeidoscope.StatusCodes;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -6,7 +14,7 @@ import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
-class FileHandler implements RouteHandler {
+public class FileHandler implements RouteHandler {
     private final HandlersHelper handlersHelper = new HandlersHelper();
     private String getDateTimeNow = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
 

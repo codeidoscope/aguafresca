@@ -1,5 +1,13 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.handlersTests;
 
+import com.github.codeidoscope.Configuration;
+import com.github.codeidoscope.handlers.FileHandler;
+import com.github.codeidoscope.handlers.RouteHandler;
+import com.github.codeidoscope.request.Request;
+import com.github.codeidoscope.response.Body;
+import com.github.codeidoscope.response.Header;
+import com.github.codeidoscope.response.Response;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.io.ByteArrayInputStream;
@@ -8,6 +16,12 @@ import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FileHandlerTest {
+
+    @BeforeEach
+    void setUp() throws IOException {
+        Configuration.getInstance().setPortNumber(8080);
+        Configuration.getInstance().setContentRootPath(System.getProperty("user.dir"));
+    }
 
     @Test
     void returnsAResponseWithTheCorrectBodyForATextFile() throws IOException {

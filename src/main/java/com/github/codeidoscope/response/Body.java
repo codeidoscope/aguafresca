@@ -6,10 +6,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
-class Body {
+public class Body {
     private InputStream body;
 
-    Body(InputStream body) {
+    public Body(InputStream body) {
         this.body = body;
     }
 

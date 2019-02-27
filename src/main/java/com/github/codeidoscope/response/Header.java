@@ -2,10 +2,10 @@ package com.github.codeidoscope;
 
 import java.nio.charset.StandardCharsets;
 
-class Header {
+public class Header {
     private final byte[] header;
 
-    Header(String header) {
+    public Header(String header) {
         this.header = header.getBytes();
     }
 

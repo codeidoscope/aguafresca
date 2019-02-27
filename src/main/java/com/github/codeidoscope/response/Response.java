@@ -7,7 +7,7 @@ public class Response {
     private Header headers;
     private Body body;
 
-    Response(Header headers, Body body) {
+    public Response(Header headers, Body body) {
         this.headers = headers;
         this.body = body;
     }

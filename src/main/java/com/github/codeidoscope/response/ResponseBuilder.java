@@ -10,11 +10,11 @@ public class ResponseBuilder {
     private byte[] body;
     private String CRLF = "\r\n";
 
-    ResponseBuilder(StatusCodes.Status statusCode) {
+    public ResponseBuilder(StatusCodes.Status statusCode) {
         this.statusCode = statusCode;
     }
 
-    ResponseBuilder addHeader(String key, String value) {
+    public ResponseBuilder addHeader(String key, String value) {
         header.put(key, value);
         return this;
     }
@@ -23,7 +23,7 @@ public class ResponseBuilder {
         return header.get(key);
     }
 
-    String setHeader() {
+    public String setHeader() {
         StringBuilder responseString = new StringBuilder();
 
         responseString.append(String.format("%s %s%s", PROTOCOL, statusCode.message, CRLF));

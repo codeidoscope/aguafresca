@@ -1,5 +1,10 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.handlersTests;
 
+import com.github.codeidoscope.Configuration;
+import com.github.codeidoscope.handlers.DirectoryHandler;
+import com.github.codeidoscope.request.Request;
+import com.github.codeidoscope.response.Body;
+import com.github.codeidoscope.response.Response;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

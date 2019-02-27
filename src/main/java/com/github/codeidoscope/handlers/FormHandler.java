@@ -1,4 +1,11 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.handlers;
+
+import com.github.codeidoscope.response.Body;
+import com.github.codeidoscope.response.Header;
+import com.github.codeidoscope.request.Request;
+import com.github.codeidoscope.response.Response;
+import com.github.codeidoscope.response.ResponseBuilder;
+import com.github.codeidoscope.StatusCodes;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -26,7 +33,7 @@ public class FormHandler implements RouteHandler {
         return new Response(header, body);
     }
 
-    String generateHtmlForm() {
+    public String generateHtmlForm() {
         return "<!DOCTYPE html>\n" +
                 "<html>\n" +
                 "<body>\n" +

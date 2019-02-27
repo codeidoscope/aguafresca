@@ -13,7 +13,7 @@ public class Request {
         return method;
     }
 
-    String getPath() {
+    public String getPath() {
         return path;
     }
 
@@ -21,7 +21,7 @@ public class Request {
         return protocol;
     }
 
-    String getBody() {
+    public String getBody() {
         return body;
     }
 

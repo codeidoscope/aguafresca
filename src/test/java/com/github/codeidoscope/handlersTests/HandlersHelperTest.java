@@ -1,5 +1,8 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.handlersTests;
 
+import com.github.codeidoscope.Configuration;
+import com.github.codeidoscope.handlers.HandlersHelper;
+import com.github.codeidoscope.request.Request;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

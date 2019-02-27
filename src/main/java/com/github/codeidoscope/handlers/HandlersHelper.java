@@ -1,21 +1,24 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.handlers;
+
+import com.github.codeidoscope.Configuration;
+import com.github.codeidoscope.request.Request;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-class HandlersHelper {
+public class HandlersHelper {
     private final int TEN_MEGABYTES_IN_BYTES = 10485760;
 
-    String getContentType(String path) throws IOException {
+    public String getContentType(String path) throws IOException {
         return Files.probeContentType(Paths.get(path));
     }
 
-    Boolean shouldBeAttachment(String type, long length) {
+    public Boolean shouldBeAttachment(String type, long length) {
         return type.equals("application/pdf") && length > TEN_MEGABYTES_IN_BYTES;
     }
 
-    String generateFilePath(Request request) throws IOException {
+    public String generateFilePath(Request request) throws IOException {
         String contentRootPath = Configuration.getInstance().getContentRootPath();
         return contentRootPath + request.getPath();
     }

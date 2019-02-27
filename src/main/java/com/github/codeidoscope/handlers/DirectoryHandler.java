@@ -1,4 +1,12 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.handlers;
+
+import com.github.codeidoscope.response.Body;
+import com.github.codeidoscope.Configuration;
+import com.github.codeidoscope.response.Header;
+import com.github.codeidoscope.request.Request;
+import com.github.codeidoscope.response.Response;
+import com.github.codeidoscope.response.ResponseBuilder;
+import com.github.codeidoscope.StatusCodes;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -33,26 +41,26 @@ public class DirectoryHandler implements RouteHandler {
         return new Response(header, body);
     }
 
-    String removeBasePathFromPath(String path) throws IOException {
+    public String removeBasePathFromPath(String path) throws IOException {
         Path absolutePath = Paths.get(path);
         Path relativePath = Paths.get(Configuration.getInstance().getContentRootPath()).relativize(absolutePath);
         return relativePath.toString();
     }
 
-    String createHtmlLink(String filePath) {
+    public String createHtmlLink(String filePath) {
         return String.format("<li><a href=\"/%s\">%s</a></li>", filePath, filePath);
     }
 
-    void addToHtmlContent(String content, StringBuilder htmlContent) {
+    public void addToHtmlContent(String content, StringBuilder htmlContent) {
         htmlContent.append(content);
     }
 
-    String addHtmlContentToBody(StringBuilder htmlContent) {
+    public String addHtmlContentToBody(StringBuilder htmlContent) {
         String htmlTemplatePath = "<!DOCTYPE html>\n<head>\n</head>\n<body>\n$body\n</body>\n</html>\n";
         return htmlTemplatePath.replace("$body", htmlContent);
     }
 
-    String generateBodyFromDirectory(String path) throws IOException {
+    public String generateBodyFromDirectory(String path) throws IOException {
         StringBuilder htmlContent = new StringBuilder();
         File[] files = new File(path).listFiles();
 

@@ -1,4 +1,11 @@
-package com.github.codeidoscope;
+package com.github.codeidoscope.handlers;
+
+import com.github.codeidoscope.response.Body;
+import com.github.codeidoscope.response.Header;
+import com.github.codeidoscope.request.Request;
+import com.github.codeidoscope.response.Response;
+import com.github.codeidoscope.response.ResponseBuilder;
+import com.github.codeidoscope.StatusCodes;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -29,7 +36,7 @@ public class FormDataHandler implements RouteHandler {
         return new Response(header, body);
     }
 
-    String generateHtmlPageFromResults(LinkedHashMap<String, String> requestBody) {
+    public String generateHtmlPageFromResults(LinkedHashMap<String, String> requestBody) {
         String name = requestBody.get("name");
         String quest = requestBody.get("quest");
         String colour = requestBody.get("colour");
@@ -49,7 +56,7 @@ public class FormDataHandler implements RouteHandler {
                 speed);
     }
 
-    LinkedHashMap<String, String> parseBody(String body) {
+    public LinkedHashMap<String, String> parseBody(String body) {
         LinkedHashMap<String, String> bodyFields = new LinkedHashMap<>();
         String[] elementsOfLine = body.split("&");
 
@@ -62,7 +69,7 @@ public class FormDataHandler implements RouteHandler {
         return bodyFields;
     }
 
-    String replacePlusSignWithSpace(String bodyElement) {
+    public String replacePlusSignWithSpace(String bodyElement) {
         String newBodyElement;
         if (bodyElement.contains("+")) {
             newBodyElement = bodyElement.replace("+", " ");

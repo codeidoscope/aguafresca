@@ -1,5 +1,7 @@
 package com.github.codeidoscope;
 
+import com.github.codeidoscope.request.Request;
+import com.github.codeidoscope.request.RequestParser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
