@@ -92,6 +92,7 @@ class DirectoryHandlerTest {
                 "<head>\n" +
                 "</head>\n" +
                 "<body>\n" +
+                "<li><a href=\"/testdirectory/largepdffile.pdf\">testdirectory/largepdffile.pdf</a></li>" +
                 "<li><a href=\"/testdirectory/othertestfile.txt\">testdirectory/othertestfile.txt</a></li>" +
                 "<li><a href=\"/testdirectory/testfile.txt\">testdirectory/testfile.txt</a></li>\n" +
                 "</body>\n" +
@@ -110,7 +111,7 @@ class DirectoryHandlerTest {
         request.setProtocol("HTTP/1.1");
         request.setPath("/testdirectory");
 
-        Body expectedBody = new Body(new ByteArrayInputStream("<!DOCTYPE html>\n<head>\n</head>\n<body>\n<li><a href=\"/testdirectory/othertestfile.txt\">testdirectory/othertestfile.txt</a></li><li><a href=\"/testdirectory/testfile.txt\">testdirectory/testfile.txt</a></li>\n</body>\n</html>\n".getBytes()));
+        Body expectedBody = new Body(new ByteArrayInputStream("<!DOCTYPE html><head></head><body><li><a href=\"/testdirectory/largepdffile.pdf\">testdirectory/largepdffile.pdf</a></li><li><a href=\"/testdirectory/othertestfile.txt\">testdirectory/othertestfile.txt</a></li><li><a href=\"/testdirectory/testfile.txt\">testdirectory/testfile.txt</a></li></body></html>\n".getBytes()));
 
         Response response = directoryHandler.respondToRequest(request);
 

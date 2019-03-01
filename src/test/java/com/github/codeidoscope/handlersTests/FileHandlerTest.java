@@ -40,4 +40,17 @@ class FileHandlerTest {
         assertFalse(requestResponse.getHeadersToString().isEmpty());
         assertEquals(expectedResponse.getBodyToString(), requestResponse.getBodyToString());
     }
+
+    @Test
+    void headersContainContentDispositionFieldIfFileServedIsPdf() throws IOException {
+        RouteHandler fileHandler = new FileHandler();
+        Request request = new Request();
+        request.setMethod("GET");
+        request.setPath("/testdirectory/largepdffile.pdf");
+        request.setProtocol("HTTP/1.1");
+
+        Response requestResponse = fileHandler.respondToRequest(request);
+
+        assertTrue(requestResponse.getHeadersToString().contains("Content-Disposition"));
+    }
 }
