@@ -11,7 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ResponseBuilderTest {
     @Test
     void addResponseHeader() {
-        ResponseBuilder responseBuilder = new ResponseBuilder(StatusCodes.Status.OK);
+        ResponseBuilder responseBuilder = new ResponseBuilder(StatusCodes.OK);
         responseBuilder.addHeader("key", "value");
 
         assertEquals(responseBuilder.getHeader("key"), "value");
@@ -19,7 +19,7 @@ class ResponseBuilderTest {
 
     @Test
     void convertsToString() {
-        ResponseBuilder responseBuilder = new ResponseBuilder(StatusCodes.Status.OK);
+        ResponseBuilder responseBuilder = new ResponseBuilder(StatusCodes.OK);
         responseBuilder.addHeader("key", "value");
 
         String expectedResponse = "HTTP/1.1 200 OK\r\n" +
@@ -30,7 +30,7 @@ class ResponseBuilderTest {
 
     @Test
     void addBody() {
-        ResponseBuilder responseBuilder = new ResponseBuilder(StatusCodes.Status.OK);
+        ResponseBuilder responseBuilder = new ResponseBuilder(StatusCodes.OK);
         responseBuilder.setBody("Test body".getBytes());
 
         assertEquals("Test body", new String(responseBuilder.getBody(), StandardCharsets.UTF_8));

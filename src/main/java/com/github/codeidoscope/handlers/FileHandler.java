@@ -31,7 +31,7 @@ public class FileHandler implements RouteHandler {
         String contentType = handlersHelper.getContentType(request.getPath());
         Boolean shouldBeAttachment = handlersHelper.shouldBeAttachment(contentType, bodyLength);
 
-        ResponseBuilder responseBuilder = new ResponseBuilder(StatusCodes.Status.OK)
+        ResponseBuilder responseBuilder = new ResponseBuilder(StatusCodes.OK)
                 .addHeader("Date", getDateTimeNow)
                 .addHeader("Content-Type", contentType)
                 .addHeader("Content-Length", String.valueOf(bodyLength));

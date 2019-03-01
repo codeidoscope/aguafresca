@@ -24,7 +24,7 @@ public class FormHandler implements RouteHandler {
         InputStream generatedContent = new ByteArrayInputStream(generatedPage.getBytes());
         Body body = new Body(generatedContent);
 
-        ResponseBuilder responseBuilder = new ResponseBuilder(StatusCodes.Status.OK)
+        ResponseBuilder responseBuilder = new ResponseBuilder(StatusCodes.OK)
                 .addHeader("Date", getDateTimeNow)
                 .addHeader("Content-Type", contentType)
                 .addHeader("Content-Length", String.valueOf(bodyLength));

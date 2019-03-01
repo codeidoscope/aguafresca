@@ -1,14 +1,12 @@
 package com.github.codeidoscope;
 
-public class StatusCodes {
-    public enum Status {
-        OK("200 OK"),
-        NOT_FOUND("404 Not Found");
+public enum StatusCodes {
+    OK("200 OK"),
+    NOT_FOUND("404 Not Found");
 
-        public final String message;
+    public final String message;
 
-        Status(String message) {
-            this.message = message;
-        }
+    StatusCodes(String message) {
+        this.message = message;
     }
 }

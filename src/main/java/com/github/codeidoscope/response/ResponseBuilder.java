@@ -6,13 +6,13 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ResponseBuilder {
-    private StatusCodes.Status statusCode;
+    private StatusCodes statusCode;
     private final String PROTOCOL = "HTTP/1.1";
     private Map<String, String> header = new LinkedHashMap<>();
     private byte[] body;
     private String CRLF = "\r\n";
 
-    public ResponseBuilder(StatusCodes.Status statusCode) {
+    public ResponseBuilder(StatusCodes statusCode) {
         this.statusCode = statusCode;
     }
 

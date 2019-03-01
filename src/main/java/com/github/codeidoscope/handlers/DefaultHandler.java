@@ -29,7 +29,7 @@ public class DefaultHandler implements RouteHandler {
     private Header generateHeader(int bodyLength) {
         String getDateTimeNow = DateTimeFormatter.RFC_1123_DATE_TIME.format(ZonedDateTime.now());
 
-        ResponseBuilder responseBuilder = new ResponseBuilder(StatusCodes.Status.NOT_FOUND)
+        ResponseBuilder responseBuilder = new ResponseBuilder(StatusCodes.NOT_FOUND)
                 .addHeader("Date", getDateTimeNow)
                 .addHeader("Content-Type", "text/plain")
                 .addHeader("Content-Length", String.valueOf(bodyLength));

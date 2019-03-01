@@ -27,7 +27,7 @@ public class FormDataHandler implements RouteHandler {
         Body body = new Body(generatedContent);
 
         String contentType = "text/html";
-        ResponseBuilder responseBuilder = new ResponseBuilder(StatusCodes.Status.OK)
+        ResponseBuilder responseBuilder = new ResponseBuilder(StatusCodes.OK)
                 .addHeader("Date", getDateTimeNow)
                 .addHeader("Content-Type", contentType)
                 .addHeader("Content-Length", String.valueOf(bodyLength));
