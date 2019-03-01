@@ -49,20 +49,16 @@ public class RequestParser {
             if (line.equals("")) {
                 break;
             } else {
-                try {
-                    String[] elementsOfLine = line.split(" ", 2);
-                    String key = elementsOfLine[0].substring(0, elementsOfLine[0].length() - 1);
-                    String value = elementsOfLine[1].trim();
-                    headers.put(key, value);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    ServerLogger.serverLogger.log(Level.WARNING, "Error: " + e);
-                }
+                String[] elementsOfLine = line.split(" ", 2);
+                String key = elementsOfLine[0].substring(0, elementsOfLine[0].length() - 1);
+                String value = elementsOfLine[1].trim();
+                headers.put(key, value);
             }
         }
         return headers;
     }
 
-    private String getBody(String contentLengthValue, BufferedReader bufferedReader) throws IOException {
+    public String getBody(String contentLengthValue, BufferedReader bufferedReader) throws IOException {
         if (contentLengthValue == null) {
             return null;
         } else {

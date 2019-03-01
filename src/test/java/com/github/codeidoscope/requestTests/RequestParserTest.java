@@ -5,8 +5,11 @@ import com.github.codeidoscope.request.RequestParser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.LinkedHashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -66,5 +69,24 @@ class RequestParserTest {
         assertEquals("HTTP/1.1", request.getProtocol());
         assertEquals(expectedHeaders, request.getHeaders());
         assertTrue(request.getBody().contains("Test body"));
+    }
+
+    @Test
+    void returnsEmptyRequestIfFirstLineOfRequestIsNull() throws IOException {
+        InputStream inputStream = new ByteArrayInputStream("".getBytes());
+        Request parsedRequest = requestParser.parse(inputStream);
+
+        assertNull(parsedRequest.getHeaders());
+        assertNull(parsedRequest.getBody());
+    }
+
+    @Test
+    void getBodyReturnsNullIfContentLengthValueIsNull() throws IOException {
+        InputStream inputStream = new ByteArrayInputStream("test".getBytes());
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+        String body = requestParser.getBody(null, bufferedReader);
+
+        assertNull(body);
     }
 }
