@@ -80,9 +80,9 @@ submitted.
 
 ## How does it work?
 
-Please find attached a diagram of the entire application and its flow:
+Please find attached a diagram of the entire application and its flow ([click here for full size](https://raw.githubusercontent.com/codeidoscope/aguafresca/master/aguafresca.png?raw=true)):
 
-![Diagram of the application](aguafresca.png)
+![Diagram of the application](https://raw.githubusercontent.com/codeidoscope/aguafresca/master/aguafresca.png?raw=true)
 
 - The server is created using the arguments given by the user (port and directory), or using the default settings if no
 argument is provided. The input validation is limited, and the server will start with the default settings if it only
