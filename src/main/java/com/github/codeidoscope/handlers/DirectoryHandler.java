@@ -41,6 +41,22 @@ public class DirectoryHandler implements RouteHandler {
         return new Response(header, body);
     }
 
+    public String generateBodyFromDirectory(String path) throws IOException {
+        StringBuilder htmlContent = new StringBuilder();
+        File[] files = new File(path).listFiles();
+
+        if (files != null) {
+            for (File file : files) {
+                String filePath;
+                filePath = file.getCanonicalPath();
+                filePath = removeBasePathFromPath(filePath);
+                String link = createHtmlLink(filePath);
+                addToHtmlContent(link, htmlContent);
+            }
+        }
+        return addHtmlContentToBody(htmlContent);
+    }
+
     public String removeBasePathFromPath(String path) throws IOException {
         Path absolutePath = Paths.get(path);
         Path relativePath = Paths.get(Configuration.getInstance().getContentRootPath()).relativize(absolutePath);
@@ -58,21 +74,5 @@ public class DirectoryHandler implements RouteHandler {
     public String addHtmlContentToBody(StringBuilder htmlContent) {
         String htmlTemplatePath = "<!DOCTYPE html>\n<head>\n</head>\n<body>\n$body\n</body>\n</html>\n";
         return htmlTemplatePath.replace("$body", htmlContent);
-    }
-
-    public String generateBodyFromDirectory(String path) throws IOException {
-        StringBuilder htmlContent = new StringBuilder();
-        File[] files = new File(path).listFiles();
-
-        if (files != null) {
-            for (File file : files) {
-                String filePath;
-                filePath = file.getCanonicalPath();
-                filePath = removeBasePathFromPath(filePath);
-                String link = createHtmlLink(filePath);
-                addToHtmlContent(link, htmlContent);
-            }
-        }
-        return addHtmlContentToBody(htmlContent);
     }
 }

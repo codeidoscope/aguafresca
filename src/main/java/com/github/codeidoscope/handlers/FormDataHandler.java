@@ -36,26 +36,6 @@ public class FormDataHandler implements RouteHandler {
         return new Response(header, body);
     }
 
-    public String generateHtmlPageFromResults(LinkedHashMap<String, String> requestBody) {
-        String name = requestBody.get("name");
-        String quest = requestBody.get("quest");
-        String colour = requestBody.get("colour");
-        String speed = requestBody.get("speed");
-        return String.format("<!DOCTYPE html>\n" +
-                        "<html>\n" +
-                        "<body>\n" +
-                        "<p>Your name is: %s</p><br>\n" +
-                        "<p>Your quest is to: %s</p><br>\n" +
-                        "<p>Your favourite colour is: %s</p><br>\n" +
-                        "<p>According to you, the average air speed velocity of a laden swallow in mph is: %smph</p><br>\n" +
-                        "</body>\n" +
-                        "</html>",
-                name,
-                quest,
-                colour,
-                speed);
-    }
-
     public LinkedHashMap<String, String> parseBody(String body) {
         LinkedHashMap<String, String> bodyFields = new LinkedHashMap<>();
         String[] elementsOfLine = body.split("&");
@@ -77,5 +57,25 @@ public class FormDataHandler implements RouteHandler {
             return bodyElement;
         }
         return newBodyElement;
+    }
+
+    public String generateHtmlPageFromResults(LinkedHashMap<String, String> requestBody) {
+        String name = requestBody.get("name");
+        String quest = requestBody.get("quest");
+        String colour = requestBody.get("colour");
+        String speed = requestBody.get("speed");
+        return String.format("<!DOCTYPE html>\n" +
+                        "<html>\n" +
+                        "<body>\n" +
+                        "<p>Your name is: %s</p><br>\n" +
+                        "<p>Your quest is to: %s</p><br>\n" +
+                        "<p>Your favourite colour is: %s</p><br>\n" +
+                        "<p>According to you, the average air speed velocity of a laden swallow in mph is: %smph</p><br>\n" +
+                        "</body>\n" +
+                        "</html>",
+                name,
+                quest,
+                colour,
+                speed);
     }
 }

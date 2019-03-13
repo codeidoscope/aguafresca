@@ -1,13 +1,10 @@
 package com.github.codeidoscope.request;
 
-import com.github.codeidoscope.ServerLogger;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.LinkedHashMap;
-import java.util.logging.Level;
 
 public class RequestParser {
 
@@ -29,18 +26,6 @@ public class RequestParser {
             return new Request();
         }
     }
-
-    public Request createRequestFromLine(String firstLineOfRequest) {
-        String[] splitLine = firstLineOfRequest.split("\r\n")[0].split(" ");
-
-        Request parsedRequest = new Request();
-        parsedRequest.setMethod(splitLine[0]);
-        parsedRequest.setPath(splitLine[1]);
-        parsedRequest.setProtocol(splitLine[2]);
-
-        return parsedRequest;
-    }
-
 
     private LinkedHashMap<String, String> getHeaders(BufferedReader bufferedReader) throws IOException {
         LinkedHashMap<String, String> headers = new LinkedHashMap<>();
@@ -69,5 +54,16 @@ public class RequestParser {
             }
             return body.toString().trim();
         }
+    }
+
+    public Request createRequestFromLine(String firstLineOfRequest) {
+        String[] splitLine = firstLineOfRequest.split("\r\n")[0].split(" ");
+
+        Request parsedRequest = new Request();
+        parsedRequest.setMethod(splitLine[0]);
+        parsedRequest.setPath(splitLine[1]);
+        parsedRequest.setProtocol(splitLine[2]);
+
+        return parsedRequest;
     }
 }
