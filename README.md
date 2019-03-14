@@ -11,7 +11,7 @@ This is an 8th Light Apprenticeship project.
 
 #### Requirements
 - Java 11 (I followed the instructions provided in [this blog](https://solarianprogrammer.com/2018/09/28/installing-openjdk-macos/) to do so)
-- Gradle (Instructions available [here](https://gradle.org/install/))
+- Gradle 5.2.1 (Instructions available [here](https://gradle.org/install/))
 
 (I'm intending to have this run on Mac, so if you're on Linux or Windows, please report back as to how it works!)
 
@@ -29,17 +29,10 @@ small PDF files; and some light text files.
 
 (These were to big to be hosted on Github, hence the separate download).
 
-Once you have managed to copy the repository onto your local machine, run the following:
-- `gradle build` - to build the file
-- `gradle run` - to start the server
-
-The following commands are the commands I would like to be using, but a recent attempt at setting up this project on my
-personal machine has shown me that it doesn't work. You may try it, but it might not work. While I look into the issue, 
-please use `gradle run` and head over to the `/public` folder to experience my server in all its (lackluster) glory.
+Once you have managed to copy the repository onto your local machine, make sure that you are using the correct versions of Java and Gradle, and run the following:
 - `./gradlew jar` - to package the file
-- `java -jar build/server.jar --port <port number> --directory <directory path>` - Run this in your terminal window,
-and pick a port number and a path (or don't, it should still work if you don't add the `--port` and `--directory` 
-arguments).
+- `./gradlew build` - to assemble and test the project
+- `java -jar build/libs/aguafresca-1.0-SNAPSHOT.jar --port <port number> --directory <directory path>` - Run this in your terminal window, and pick a port number and a path (or don't, it should still work if you don't add the `--port` and `--directory` arguments).
 
 ### Running the tests
 In order to run the tests, you can either use Gradle from the CLI, or configure IntelliJ to run the tests for you in the
