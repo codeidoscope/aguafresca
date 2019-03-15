@@ -23,16 +23,20 @@ In order to have your very own Aguafresca server, you will need to clone, downlo
 Pick your weapon and let's get started!
 
 In order to enjoy all the features it offers, I recommend you add the files in 
-[this folder](https://drive.google.com/file/d/1Mwj8RdqFh2zgtP9DtBGt4bkZLIYCgb_u/view?usp=sharing) to the `/public` folder.
+[this folder](https://drive.google.com/open?id=1hiuCHiDQaZyQjT8GH5H7BWR6eGFaA06K) to the `/public` folder.
 There are different image types: JPEG (large and small), GIF, PNG; a large and a small MP4 video files; a large and a
 small PDF files; and some light text files.
 
 (These were to big to be hosted on Github, hence the separate download).
 
-Once you have managed to copy the repository onto your local machine, make sure that you are using the correct versions of Java and Gradle, and run the following:
+Once you have managed to copy the repository onto your local machine, make sure that you are using the correct versions 
+of Java and Gradle, and run the following:
 - `./gradlew jar` - to package the file
 - `./gradlew build` - to assemble and test the project
-- `java -jar build/libs/aguafresca-1.0-SNAPSHOT.jar --port <port number> --directory <directory path>` - Run this in your terminal window, and pick a port number and a path (or don't, it should still work if you don't add the `--port` and `--directory` arguments).
+- `java -jar build/libs/aguafresca-1.0-SNAPSHOT.jar --port 8080 --directory ./public` - Run this in 
+your terminal window. Feel free to use another port or another directory, or not give any arguments.
+
+Head over to "Using it" to play around with it.
 
 ### Running the tests
 In order to run the tests, you can either use Gradle from the CLI, or configure IntelliJ to run the tests for you in the
@@ -133,3 +137,8 @@ I know mitigating for this behaviour by creating a request that has `null` heade
 my `DefaultHandler`, which responds with a 404. This is not ideal behaviour, but it is adequate as that `null` request
 never appears on the actual browser, so whatever page you were on will still be the same when Chrome's Ping Of Death is 
 sent and my server catches it.
+
+- A number of errors are caught and shown in the command line when serving some text files. The server behaves as 
+expected and will serve everything just fine, but I have not spent time looking into the reason why these errors 
+are displayed or how to mitigate for them. These errors also appear when serving media files (videos and sound files),
+but this is due to the streaming process, and this behaviour is expected for these files.
